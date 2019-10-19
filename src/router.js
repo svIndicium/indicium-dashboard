@@ -1,6 +1,10 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
+import { authGuard } from './auth/authGuard';
+import Create from './views/user/CreateUser.vue';
+import List from './views/user/ListUser.vue';
+import View from './views/user/ViewUser.vue';
 
 Vue.use(Router);
 
@@ -12,14 +16,71 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home,
+      meta: {
+        breadcrumb: [
+          { name: 'Dashboard' },
+        ],
+      },
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+      path: '/users',
+      name: 'listUser',
+      component: List,
+      beforeEnter: authGuard,
+      meta: {
+        breadcrumb: [
+          {
+            name: 'Dashboard',
+            link: '/',
+          },
+          {
+            name: 'Leden',
+          },
+        ],
+      },
+    },
+    {
+      path: '/users/create',
+      name: 'createUser',
+      component: Create,
+      beforeEnter: authGuard,
+      meta: {
+        breadcrumb: [
+          {
+            name: 'Dashboard',
+            link: '/',
+          },
+          {
+            name: 'Leden',
+            link: '/users',
+          },
+          {
+            name: 'Voeg lid toe',
+          },
+        ],
+      },
+    },
+    {
+      path: '/users/:userId',
+      name: 'viewUser',
+      component: View,
+      props: true,
+      beforeEnter: authGuard,
+      meta: {
+        breadcrumb: [
+          {
+            name: 'Dashboard',
+            link: '/',
+          },
+          {
+            name: 'Leden',
+            link: '/users',
+          },
+          {
+            name: 'Bekijk lid',
+          },
+        ],
+      },
     },
   ],
 });
