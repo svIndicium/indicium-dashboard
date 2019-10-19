@@ -1,0 +1,38 @@
+git:
+  depth: false
+
+node_js:
+  - "10.8.0"
+
+env:
+  global:
+    - secure: "PviFZc+xXmM1tYgSUe4chwxnDwdpYXFC2Q5RvSM1lqxNe6XtfJJnE0SCrvyNwFH3bpMxa7hl8JgWcI5XNRbBDYD5r22fxK0UPwT+L5vI+Ry4jq09bS6YeWUJM1KLtp6cgQEvSMHzQBAX7QpoFS4kqAO+FA8Yz2/w2IVYyek0iEK3RmM0F9lwbyqCObCtSmBrOAfz9sEdvu5Y2z9R6TJlvmgiDD8zmRy54wXaD3hv6SiEh/fZln9Csn3dKXrfwxtw21X4O0h5MtCeURhdVCdXP6IFGtjry8+ueLBm7tPYlPerLwShh8+gySmoZu6VpUlAFpDnkIJvUm+GFcJO+fcc+BD1loTa43rzMMd9TmlP2pKbqJPWcwUR0d8Zf+pG/ZrUTyzfOmEnNS8GWIGDFIXLOvZSk08yZAFJRXHCTrXvNyTSMMQZ3PnrG94JZ+egsamEBVizym00uZ6oRy8tBxn014C9nguhF3NrqyYborRzmSsnlItqF0lHVwmg6Qv0eW2/g3TQrtDcg1s0dJtUY8XZ6UKstPyD9SOIl30IqKktFKardzOpjrQEfFYAY4wOsb0iTsrt0/rItgttEhcNdqdiOFaXeMOW8N00xQPGpjxt/Hm8S33aGJMam8+DX8sBQC827QCPhWzukB3LXYxxFB0RJK40nvUcbBF583vgzWyxp6Q="
+    - secure: "VO8yENeE/RtRWLwjSKryfF7qgR/mu0T+JPL/ObnAwejgv327bja67ICM1xC54A6mwY26iWD5PQL/eCp1Qo4MRf5ScEG1nASqc7tq17utzpFg4kBLxweLlXK/FfG1IbU/OGZie4+Q5i3xjsA6CCtYbO2Msyv/8bb4qHrHdTttci+dTj+01XXMgffCLvH/T+z7/zoqqW09r/ueTaHQaC9GcAFwB8MJrM2yLPbjPE0gLkqb0pFpiKhfG4GvVukE7KGSOu98NcwUVyXMelYniVNY1CV67eGg4FI1Q9PfaAAuvWfIQwBId756IPBmDO74Ph7WzDaNxKQHRlehZpo7i36Jo2Z08+NV/wBUB1R41XiT+i7TmFiB6IT4yu2CnyA6KvHZonm5hMTaT/8V+DLM79Jh7FIILBKbPFmCpKnFOiOG5dybrAtEZOn4amZP/KxantTGMtWxZl1EjjhqgKowiqU1p4x8e7+YpwDqwIoL4ghr8rWH3tZElB5z/kRtJkGChQTnzHWatXB4hIrT/Pc/saSFArQi7dbSA8q9x/ufGUZRnp/KZLrBay2K/jRnyI6l0cw4NIw1zVx6ZuZUE8c1pkdxfhm/F7jEVdu0qm2P0rFswSAZWCqFrS9LwAUyJkUiWgFSTokP0Y+pgNHDLwzca3Nc3T/aVog4G+jChZNDbM0XWEc="
+
+addons:
+  sonarcloud:
+    organization: "indicium"
+    token:
+      secure: "Zji/yqq+BYCY7y+vljtl7KiudWNYccnnus3aByeZnG5/nDojSKFYbPB+MmQGOEYwZrcF1zc13jv9IOVntZftDiIItZchORQOMtme/ukeHMgahopjFQtiz+P6gE7fgejtVartb12NedLj1egkLyiesKzdcBT3DQErL1RAXF9g/CN53aYnownWAxHv/DM6jMyrqVggdIFmEcq78Ppmp7vUA4A4AI/cWPsHhHb3o7YGX26Q8FszAzwT/NBTP64XoK/UfuBhY9nFZVSy6dvHElaKngJsjnO7VadWgBFm0ccEwPOsACUplXs14wCMpHW6pyz8jfUrxm6XW62eR+8l+IdnIz1KsguKOLTf9A3UADxT8i1yNrnjpLm6oq4y1NvA5MYcYL6dNDcKCJchoJdyFhmehMNzczSYR4tDBq/3O/QYm0XRxhuJx52l35FT88wUUYnJjRXJHiYcN2XAe0XLgUIC/C6rTSRpfohBKTM8Zy4Z61xByGGYIH4Fpw3M+05F8jSklKT2CDY9MKNCGVzZuKKLDWwHyIOzoaobn+Ce0xz6h61c8A7OHYh3WZvF3dQWOT9+GIerpJS/PMwqxProLNh0N1TK/xTley4KSI4vFNSe7QF4OXoLHEwZIzhSIRE/Ex5GHABdgN6+wQbqqfYckAZDLFeOtc9ThUO9ni5I6OnGS0w="
+
+
+cache:
+  npm: true
+
+install:
+  - npm install
+
+script:
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then sonar-scanner; fi'
+  - echo "Skipping tests"
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "stable"; elif [ "$TRAVIS_BRANCH" == "dev" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
+  - docker build -t docker.pkg.github.com/svindicium/indicium-dashboard/website:$TAG .
+
+deploy:
+  provider: script
+  script:
+    echo "$DOCKER_PASS" | docker login docker.pkg.github.com -u "$DOCKER_USER" --password-stdin;
+    docker push docker.pkg.github.com/svindicium/indicium-dashboard/website:$TAG;
+  on:
+    all_branches: true
+
