@@ -75,6 +75,10 @@ export default {
     isNavShown: true,
     items: [
       {
+        title: 'Studierichtingen',
+        url: 'listStudyType',
+      },
+      {
         title: 'Leden',
         url: 'listUser',
       },

@@ -2,9 +2,11 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import { authGuard } from './auth/authGuard';
-import Create from './views/user/CreateUser.vue';
-import List from './views/user/ListUser.vue';
-import View from './views/user/ViewUser.vue';
+import CreateUser from './views/user/CreateUser.vue';
+import ListUser from './views/user/ListUser.vue';
+import ViewUser from './views/user/ViewUser.vue';
+import ListStudyType from './views/studytype/ListStudyType';
+import CreateStudyType from './views/studytype/CreateStudyType';
 
 Vue.use(Router);
 
@@ -25,7 +27,7 @@ export default new Router({
     {
       path: '/users',
       name: 'listUser',
-      component: List,
+      component: ListUser,
       beforeEnter: authGuard,
       meta: {
         breadcrumb: [
@@ -42,7 +44,7 @@ export default new Router({
     {
       path: '/users/create',
       name: 'createUser',
-      component: Create,
+      component: CreateUser,
       beforeEnter: authGuard,
       meta: {
         breadcrumb: [
@@ -63,7 +65,7 @@ export default new Router({
     {
       path: '/users/:userId',
       name: 'viewUser',
-      component: View,
+      component: ViewUser,
       props: true,
       beforeEnter: authGuard,
       meta: {
@@ -78,6 +80,44 @@ export default new Router({
           },
           {
             name: 'Bekijk lid',
+          },
+        ],
+      },
+    },
+    {
+      path: '/studytypes',
+      name: 'listStudyType',
+      component: ListStudyType,
+      beforeEnter: authGuard,
+      meta: {
+        breadcrumb: [
+          {
+            name: 'Dashboard',
+            link: '/',
+          },
+          {
+            name: 'Studierichingen',
+          },
+        ],
+      },
+    },
+    {
+      path: '/studytypes/create',
+      name: 'createStudyType',
+      component: CreateStudyType,
+      beforeEnter: authGuard,
+      meta: {
+        breadcrumb: [
+          {
+            name: 'Dashboard',
+            link: '/',
+          },
+          {
+            name: 'Studierichtingen',
+            link: '/studytypes',
+          },
+          {
+            name: 'Voeg studierichting toe',
           },
         ],
       },
