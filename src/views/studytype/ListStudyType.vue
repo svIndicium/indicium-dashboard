@@ -1,6 +1,8 @@
 <template>
   <div class="center">
-    <Button url="/studytypes/create" v-if="this.$auth.hasPermission('create:studyType')">Voeg een studierichting toe</Button>
+    <Button url="/studytypes/create" v-if="this.$auth.hasPermission('create:studyType')">
+      Voeg een studierichting toe
+    </Button>
     <table>
       <tr>
         <th>id</th>

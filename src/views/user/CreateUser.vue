@@ -64,7 +64,7 @@ export default {
   },
   watch: {
     selectedStudyType(value) {
-      this.user.studyTypeId = parseInt(value);
+      this.user.studyTypeId = parseInt(value, 10);
     },
   },
 };

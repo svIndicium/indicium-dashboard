@@ -20,8 +20,12 @@
           <router-link to="/" @click.native="hideNav" prefetch>Home</router-link>
         </li>
         <li v-for="item in items" :key="item.title + item.url">
-          <a v-if="item.url.startsWith('http')" @click="hideNav" :href="item.url" target="_blank">{{ item.title }}</a>
-          <router-link v-else :to="{name: item.url}" @click.native="hideNav" prefetch>{{ item.title }}</router-link>
+          <a v-if="item.url.startsWith('http')" @click="hideNav" :href="item.url" target="_blank">
+            {{ item.title }}
+          </a>
+          <router-link v-else :to="{name: item.url}" @click.native="hideNav" prefetch>
+            {{ item.title }}
+          </router-link>
         </li>
         <li v-if="this.$auth.isAuthenticated">
           <a @click="logout">
