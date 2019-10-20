@@ -1,5 +1,6 @@
 <template>
   <div>
+    <NavToggle></NavToggle>
     <NavBar></NavBar>
     <breadcrumbs></breadcrumbs>
     <slot></slot>
@@ -9,10 +10,11 @@
 <script>
 import NavBar from './NavBar.vue';
 import Breadcrumbs from '../components/Breadcrumbs';
+import NavToggle from '../components/NavToggle';
 
 export default {
   name: 'Layout',
-  components: { Breadcrumbs, NavBar },
+  components: { NavToggle, Breadcrumbs, NavBar },
 };
 </script>
 
