@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import Button from '../../components/button.vue';
 
 export default {

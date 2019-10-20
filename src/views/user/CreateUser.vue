@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import TextInput from '../../components/TextInput.vue';
 import Button from '../../components/button.vue';
 import SelectInput from '../../components/SelectInput.vue';

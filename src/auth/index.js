@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import createAuth0Client from '@auth0/auth0-spa-js';
-import axios from 'axios';
 
 /** Define a default action to perform after authentication */
 const DEFAULT_REDIRECT_CALLBACK = () => window.history.replaceState({}, document.title, window.location.pathname);
@@ -131,7 +130,9 @@ export const useAuth0 = ({
 
 // CreateUser a simple Vue plugin to expose the wrapper object throughout the application
 export const Auth0Plugin = {
+  // eslint-disable-next-line no-shadow
   install(Vue, options) {
+    // eslint-disable-next-line no-param-reassign
     Vue.prototype.$auth = useAuth0(options);
   },
 };
