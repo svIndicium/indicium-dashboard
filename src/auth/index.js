@@ -30,7 +30,7 @@ export const useAuth0 = ({
         auth0Client: null,
         popupOpen: false,
         error: null,
-        scopes: [],
+        scopes: localStorage.getItem('scopes') ? JSON.parse(localStorage.getItem('scopes')) : [],
       };
     },
     methods: {
@@ -89,13 +89,13 @@ export const useAuth0 = ({
     },
     /** Use this lifecycle method to instantiate the SDK client */
     async created() {
-      // Create a new instance of the SDK client using members of the given options object
+      // CreateUser a new instance of the SDK client using members of the given options object
       this.auth0Client = await createAuth0Client({
         domain: options.domain,
         client_id: options.clientId,
         audience: options.audience,
         redirect_uri: redirectUri,
-        scope: 'create:user,admin:user',
+        scope: 'create:user,admin:user,create:studyType',
       });
 
       try {
@@ -129,7 +129,7 @@ export const useAuth0 = ({
   return instance;
 };
 
-// Create a simple Vue plugin to expose the wrapper object throughout the application
+// CreateUser a simple Vue plugin to expose the wrapper object throughout the application
 export const Auth0Plugin = {
   install(Vue, options) {
     Vue.prototype.$auth = useAuth0(options);
