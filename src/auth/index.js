@@ -8,8 +8,6 @@ const DEFAULT_REDIRECT_CALLBACK = () => window.history.replaceState({}, document
 let instance;
 
 
-axios.defaults.headers.common.Authorization = `Bearer ${JSON.parse(localStorage.getItem('token'))}`;
-
 /** Returns the current instance of the SDK */
 export const getInstance = () => instance;
 
@@ -112,7 +110,7 @@ export const useAuth0 = ({
           this.scopes = JSON.parse(atob(token.split('.')[1])).scope.split(' ');
           localStorage.setItem('scopes', JSON.stringify(this.scopes));
           localStorage.setItem('token', JSON.stringify(token));
-          axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+          this.$api.defaults.headers.common.Authorization = `Bearer ${token}`;
           // Notify subscribers that the redirect callback has happened, passing the appState
           // (useful for retrieving any pre-authentication state)
           onRedirectCallback(appState);

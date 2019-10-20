@@ -28,7 +28,7 @@ export default {
   }),
   methods: {
     async getUsers() {
-      const { data } = await axios.get('http://localhost:8080/api/user');
+      const { data } = await this.$api.get('/api/user');
       this.users = data;
     },
     viewUser(userId) {

@@ -28,7 +28,7 @@ export default {
   }),
   methods: {
     async getUser() {
-      const { data } = await axios.get(`http://localhost:8080/api/user/${this.userId}`);
+      const { data } = await this.$api.get(`/api/user/${this.userId}`);
       this.user = data;
     },
     getMonthAsString(currentMonth) {

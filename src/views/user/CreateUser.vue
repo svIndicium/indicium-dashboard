@@ -50,13 +50,13 @@ export default {
     };
   },
   async created() {
-    const { data } = await axios.get('http://localhost:8080/api/studytype');
+    const { data } = await this.$api.get('/api/studytype');
     this.studyTypes = data;
   },
   methods: {
     async createUser() {
       try {
-        await axios.post('http://localhost:8080/api/user', this.user);
+        await this.$api.post('/api/user', this.user);
         await this.$router.push({ name: 'listUser' });
       } catch (err) {
         this.error = err.response.data.message;
