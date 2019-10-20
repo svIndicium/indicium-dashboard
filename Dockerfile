@@ -9,4 +9,4 @@ RUN npm run build
 FROM nginx
 # Copy needed files
 COPY nginx.config /etc/nginx/conf.d/default.conf
-COPY --from=base build /usr/share/nginx/html
+COPY --from=base dist /usr/share/nginx/html
