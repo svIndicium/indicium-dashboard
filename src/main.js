@@ -4,24 +4,40 @@ import './plugins/busje';
 import App from './App.vue';
 import router from './router';
 
-import { domain, clientId, audience } from '../auth_config.json';
+import { domain, clientId, audience } from '../auth_config';
+import { domain as devDomain, clientId as devClientId, audience as devAudience } from '../auth_config_dev';
 
 import { Auth0Plugin } from './auth';
 
 Vue.config.productionTip = false;
 
-Vue.use(Auth0Plugin, {
-  domain,
-  clientId,
-  audience,
-  onRedirectCallback: (appState) => {
-    router.push(
-      appState && appState.targetUrl
-        ? appState.targetUrl
-        : window.location.pathname,
-    );
-  },
-});
+if (process.env.TRAVIS_BRANCH === 'master' && process.env.NODE_ENV === 'production') {
+  Vue.use(Auth0Plugin, {
+    domain,
+    clientId,
+    audience,
+    onRedirectCallback: (appState) => {
+      router.push(
+        appState && appState.targetUrl
+          ? appState.targetUrl
+          : window.location.pathname,
+      );
+    },
+  });
+} else {
+  Vue.use(Auth0Plugin, {
+    domain: devDomain,
+    clientId: devClientId,
+    audience: devAudience,
+    onRedirectCallback: (appState) => {
+      router.push(
+        appState && appState.targetUrl
+          ? appState.targetUrl
+          : window.location.pathname,
+      );
+    },
+  });
+}
 
 new Vue({
   router,
