@@ -11,6 +11,8 @@ import { Auth0Plugin } from './auth';
 
 Vue.config.productionTip = false;
 
+console.log(process.env.TRAVIS_BRANCH);
+
 if (process.env.TRAVIS_BRANCH === 'master' && process.env.NODE_ENV === 'production') {
   Vue.use(Auth0Plugin, {
     domain,
