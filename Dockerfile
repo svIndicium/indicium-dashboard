@@ -4,7 +4,7 @@ FROM node:alpine AS base
 COPY . .
 ENV TRAVIS_BRANCH=$TRAVIS_BRANCH
 # Build project
-RUN npm run build
+RUN VUE_APP_TRAVIS_BRANCH=kek npm run build
 
 # ---- Prod ----
 FROM nginx
