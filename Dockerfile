@@ -2,6 +2,7 @@
 FROM node:alpine AS base
 # Copy project file
 COPY . .
+ENV TRAVIS_BRANCH=$TRAVIS_BRANCH
 # Build project
 RUN npm run build
 
