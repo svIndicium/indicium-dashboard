@@ -11,33 +11,20 @@ import { Auth0Plugin } from './auth';
 
 Vue.config.productionTip = false;
 
-if (process.env.VUE_APP_BRANCH === 'master' && process.env.NODE_ENV === 'production') {
-  Vue.use(Auth0Plugin, {
-    domain,
-    clientId,
-    audience,
-    onRedirectCallback: (appState) => {
-      router.push(
-        appState && appState.targetUrl
-          ? appState.targetUrl
-          : window.location.pathname,
-      );
-    },
-  });
-} else {
-  Vue.use(Auth0Plugin, {
-    domain: devDomain,
-    clientId: devClientId,
-    audience: devAudience,
-    onRedirectCallback: (appState) => {
-      router.push(
-        appState && appState.targetUrl
-          ? appState.targetUrl
-          : window.location.pathname,
-      );
-    },
-  });
-}
+const devEnv = !(process.env.VUE_APP_BRANCH === 'master' && process.env.NODE_ENV === 'production');
+
+Vue.use(Auth0Plugin, {
+  domain: devEnv ? devDomain : domain,
+  clientId: devEnv ? devClientId : clientId,
+  audience: devEnv ? devAudience : audience,
+  onRedirectCallback: (appState) => {
+    router.push(
+      appState && appState.targetUrl
+        ? appState.targetUrl
+        : window.location.pathname,
+    );
+  },
+});
 
 new Vue({
   router,
