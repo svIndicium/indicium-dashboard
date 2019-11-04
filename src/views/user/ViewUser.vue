@@ -10,7 +10,7 @@
       <h5>Afstudeerrichting</h5>
       <p>{{this.user.studyType.name}}</p>
       <h5>Ontvangt nieuwsbrief?</h5>
-      <p>{{this.user.toReceiveNewsLetter ? 'Ja' : 'Nee'}}</p>
+      <p>{{this.user.toReceiveNewsletter ? 'Ja' : 'Nee'}}</p>
       <Button size="m" url="/users">Terug</Button>
     </div>
 </template>

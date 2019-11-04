@@ -14,7 +14,7 @@
                  displayAttribute="name"
                  label="Studierichting"></SelectInput><br>
     <label for="nieuwsbrief">Wilt de nieuwsbrief ontvangen?</label>
-    <input type="checkbox" v-model="user.toReceiveNewsLetter" id="nieuwsbrief"><br>
+    <input type="checkbox" v-model="user.toReceiveNewsletter" id="nieuwsbrief"><br>
     <Button size="m" :callback="createUser">Voeg toe</Button>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
         phoneNumber: '',
         dateOfBirth: '',
         studyTypeId: 'first',
-        toReceiveNewsLetter: false,
+        toReceiveNewsletter: false,
       },
       error: '',
     };

@@ -29,16 +29,5 @@ export default {
       });
     },
   },
-  data() {
-    return {
-      token: '',
-    };
-  },
-  created() {
-    this.$auth.getTokenSilently()
-      .then((t) => {
-        this.token = t;
-      });
-  },
 };
 </script>
