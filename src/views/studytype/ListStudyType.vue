@@ -1,6 +1,6 @@
 <template>
   <div class="center">
-    <Button url="/studytypes/create" v-if="this.$auth.hasPermission('create:studyType')">
+    <Button url="/studytypes/create" :disabled="!this.$auth.hasPermission('create:studyType')">
       Voeg een studierichting toe
     </Button>
     <table>
