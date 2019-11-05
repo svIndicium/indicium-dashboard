@@ -1,5 +1,8 @@
 <template>
-  <button v-if="callback" @click="callback" :class="['btn', size, center ? 'center' : '']">
+  <button v-if="disabled" :class="['btn', 'disabled', size, center ? 'center' : '']">
+    <slot></slot>
+  </button>
+  <button v-else-if="callback" @click="callback" :class="['btn', size, center ? 'center' : '']">
     <slot></slot>
   </button>
   <a v-else-if="url.startsWith('http')" :href="url" :class="['btn', size, center ? 'center' : '']">
@@ -29,6 +32,15 @@ export default {
     },
     callback: {
       type: Function,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  computed: {
+    getButtonClass() {
+      return ['btn', this.size, this.center ? 'center' : '', this.disabled ? 'disabled' : ''];
     },
   },
 };
@@ -68,6 +80,15 @@ export default {
       -webkit-box-shadow: 0 0 32px rgba(181, 187, 201, 0.8);
       -moz-box-shadow: 0 0 32px rgba(181, 187, 201, 0.8);
       box-shadow: 0 0 32px rgba(181, 187, 201, 0.8);
+    }
+
+    &.disabled {
+      background-color: #CCCCCC;
+      box-shadow: none;
+      cursor: default;
+      &:hover {
+        box-shadow: none;
+      }
     }
   }
 </style>
