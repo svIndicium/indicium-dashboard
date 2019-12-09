@@ -1,7 +1,7 @@
 <template>
     <div class="center">
       <h4>{{fullName}}</h4>
-      <h5>Email</h5>
+      <h5>E-mailadres</h5>
       <a :href="mailtoLink">{{this.user.email}}</a>
       <h5>Telefoonnummer</h5>
       <p>{{this.user.phoneNumber}}</p>
@@ -32,18 +32,18 @@ export default {
     },
     getMonthAsString(currentMonth) {
       const monthList = [
-        'Januari',
-        'Februari',
-        'Maart',
-        'April',
-        'Mei',
-        'Juni',
-        'Juli',
-        'Augustus',
-        'September',
-        'Oktober',
-        'November',
-        'December',
+        'januari',
+        'februari',
+        'maart',
+        'april',
+        'mei',
+        'juni',
+        'juli',
+        'augustus',
+        'september',
+        'oktober',
+        'november',
+        'december',
       ];
 
       return monthList[currentMonth];
