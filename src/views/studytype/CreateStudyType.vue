@@ -1,5 +1,5 @@
 <template>
-  <div class="center">
+  <div class="">
     <p class="error">{{JSON.stringify(error)}}</p>
     <TextInput v-model="studyType.name" placeholder="Naam" />
     <Button size="m" :callback="createStudyType">Voeg toe</Button>

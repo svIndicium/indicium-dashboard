@@ -3,9 +3,9 @@
     <div v-if="$auth.loading">
       <Loading></Loading>
     </div>
+
     <div v-else>
-      <h3>Ledenadministratie</h3>
-      <Button url="/users">Ga</Button>
+        <p>Officall Indicium society dashboard for all things!! It's a GODDD.</p>
     </div>
   </div>
 </template>
@@ -16,7 +16,6 @@ import Button from '../components/button.vue';
 
 export default {
   components: {
-    Button,
     Loading,
   },
   methods: {

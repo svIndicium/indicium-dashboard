@@ -1,5 +1,5 @@
 <template>
-    <div class="center">
+    <div class="">
       <h4>{{fullName}}</h4>
       <h5>Email</h5>
       <a :href="mailtoLink">{{this.user.email}}</a>
@@ -11,7 +11,7 @@
       <p>{{this.user.studyType.name}}</p>
       <h5>Ontvangt nieuwsbrief?</h5>
       <p>{{this.user.toReceiveNewsletter ? 'Ja' : 'Nee'}}</p>
-      <Button size="m" url="/users">Terug</Button>
+      <Button size="m" url="/leden">Terug</Button>
     </div>
 </template>
 

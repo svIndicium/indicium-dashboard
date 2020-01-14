@@ -1,5 +1,5 @@
 <template>
-  <div class="center">
+  <div class="">
     <Button url="/studytypes/create" :disabled="!this.$auth.hasPermission('create:studyType')">
       Voeg een studierichting toe
     </Button>

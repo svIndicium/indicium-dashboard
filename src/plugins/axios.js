@@ -5,9 +5,14 @@ const instance = axios.create();
 
 Vue.prototype.$http = instance;
 
-const apiInstance = axios.create({
-  baseURL: process.env.VUE_APP_BRANCH === 'dev' ? 'https://lit.dev.indicium.hu' : process.env.NODE_ENV === 'production' ? 'https://lit.indicium.hu' : 'http://localhost:8080',
-});
+
+const baseURL = process.env.VUE_APP_BRANCH === 'dev'
+    ? 'https://lit.dev.indicium.hu'
+    : process.env.NODE_ENV === 'production'
+        ? 'https://lit.indicium.hu'
+        : 'https://lit.dev.indicium.hu'
+
+const apiInstance = axios.create({ baseURL: 'https://lit.dev.indicium.hu' });
 
 apiInstance.defaults.headers.common.Authorization = `Bearer ${JSON.parse(localStorage.getItem('token'))}`;
 

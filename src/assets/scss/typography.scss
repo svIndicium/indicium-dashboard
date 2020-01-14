@@ -1,7 +1,7 @@
 // @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap');
 
 h1 {
-  font-size: 48px;
+  font-size: 44px;
   font-weight: 700;
   line-height: 140%;
   font-style: normal;
@@ -9,7 +9,7 @@ h1 {
   margin-bottom: 0;
 
   @media screen and (max-width: $bp-tablet-md) {
-    font-size: 44px;
+    font-size: 32px;
   }
 
   @media screen and (max-width: $bp-mobile-lg) {
