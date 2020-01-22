@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "NODE_ENV=development vue-cli-service serve --port 8083",
+    "serve": "cross-env NODE_ENV=development vue-cli-service serve --port 8083",
+    "dev": "cross-env NODE_ENV=development VUE_APP_BRANCH=dev vue-cli-service serve --port 8083",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -20,6 +21,7 @@
     "@vue/cli-service": "^3.11.0",
     "@vue/eslint-config-airbnb": "^4.0.0",
     "babel-eslint": "^10.0.1",
+    "cross-env": "^6.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "sass": "^1.18.0",
