@@ -49,9 +49,6 @@ import AnimatedLine from '../components/AnimatedLine'
 export default {
     components: {
         AnimatedLine
-    },
-    mounted() {
-        console.log('utlllll', this.$utils)
     }
 }
 </script>
