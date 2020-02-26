@@ -3,6 +3,7 @@
         <Sidebar />
 
         <div class="view">
+            <p>{{process.env.VUE_APP_BRANCH}}</p>
             <BreadCrumbs />
             <h1>{{ this.$route.meta.title }}</h1>
             <div class="panel">
