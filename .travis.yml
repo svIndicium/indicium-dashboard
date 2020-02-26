@@ -36,7 +36,7 @@ script:
   - echo "Skipping tests"
   - export VUE_APP_BRANCH=$TRAVIS_BRANCH
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "stable"; elif [ "$TRAVIS_BRANCH" == "dev" ]; then echo "latest"; else echo $TRAVIS_BRANCH | tr "/" -; fi`
-  - docker build -t docker.pkg.github.com/svindicium/indicium-dashboard/dashboard:$TAG .
+  - docker build --build-arg VUE_APP_BRANCH -t docker.pkg.github.com/svindicium/indicium-dashboard/dashboard:$TAG .
 
 deploy:
   provider: script

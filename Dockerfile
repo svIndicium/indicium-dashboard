@@ -3,7 +3,9 @@ FROM node:alpine AS base
 # Copy project file
 COPY . .
 # Build project
-RUN VUE_APP_BRANCH=$TRAVIS_BRANCH npm run build
+ARG VUE_APP_BRANCH
+ENV VUE_APP_BRANCH=$VUE_APP_BRANCH
+RUN npm run build
 
 # ---- Prod ----
 FROM nginx
