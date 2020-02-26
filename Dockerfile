@@ -5,7 +5,7 @@ COPY . .
 # Build project
 ARG VUE_APP_BRANCH
 ENV VUE_APP_BRANCH=$VUE_APP_BRANCH
-RUN npm run build
+RUN VUE_APP_BRANCH=$VUE_APP_BRANCH npm run build
 
 # ---- Prod ----
 FROM nginx
