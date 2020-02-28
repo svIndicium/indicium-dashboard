@@ -18,6 +18,14 @@
                     <router-link to="/leden">Leden</router-link>
                     <ul class="sub-menu">
                         <li>
+                            <router-link to="/leden/aanmeldingen">Aanmeldingen</router-link>
+                            <ul class="sub-menu">
+                                <li>
+                                    <router-link to="/leden/aanmeldingen/onvoltooid">Nog te behandelen</router-link>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
                             <router-link to="/leden/create">Creeer</router-link>
                         </li>
                     </ul>

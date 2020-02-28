@@ -7,6 +7,7 @@ import ListUser from './views/user/ListUser.vue';
 import ViewUser from './views/user/ViewUser.vue';
 import ListStudyType from './views/studytype/ListStudyType';
 import CreateStudyType from './views/studytype/CreateStudyType';
+import ListRegistrations from './views/registration/ListRegistrations';
 
 Vue.use(Router);
 
@@ -61,6 +62,29 @@ export default new Router({
                     },
                     {
                         name: 'Voeg lid toe',
+                    },
+                ],
+            },
+        },
+        {
+            path: '/leden/aanmeldingen',
+            name: 'ListRegistrations',
+            component: ListRegistrations,
+            props: true,
+            beforeEnter: authGuard,
+            meta: {
+                title: 'Lid',
+                breadcrumb: [
+                    {
+                        name: 'Dashboard',
+                        link: '/',
+                    },
+                    {
+                        name: 'Leden',
+                        link: '/leden',
+                    },
+                    {
+                        name: 'Aanmeldingen',
                     },
                 ],
             },
