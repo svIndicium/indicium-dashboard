@@ -27,7 +27,7 @@ export default {
   }),
   methods: {
     async getUser() {
-      const { data } = await this.$api.get(`/api/user/${this.userId}`);
+      const { data } = await this.$api.get(`/user/${this.userId}`);
       this.user = data;
     },
     getMonthAsString(currentMonth) {

@@ -54,13 +54,13 @@ export default {
         };
     },
     async created() {
-        const { data } = await this.$api.get("/api/studytype");
+        const { data } = await this.$api.get("/studytype");
         this.studyTypes = data;
     },
     methods: {
         async createUser() {
             try {
-                await this.$api.post("/api/user", this.user);
+                await this.$api.post("/user", this.user);
                 await this.$router.push({ name: "listUser" });
             } catch (err) {
                 this.error = err.response.data.message;
