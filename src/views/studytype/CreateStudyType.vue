@@ -25,7 +25,7 @@ export default {
   methods: {
     async createStudyType() {
       try {
-        await this.$api.post('/api/studytype', this.studyType);
+        await this.$api.post('/studytype', this.studyType);
         await this.$router.push({ name: 'listStudyType' });
       } catch (err) {
         this.error = err.response.data.message;

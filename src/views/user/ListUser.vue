@@ -1,5 +1,5 @@
 <template>
-    <div class>
+    <div>
         <table>
             <tr>
                 <th>id</th>
@@ -23,7 +23,7 @@ export default {
     }),
     methods: {
         async getUsers() {
-            const { data } = await this.$api.get("/api/user");
+            const { data } = await this.$api.get("/user");
             this.users = data;
         },
         viewUser(userId) {

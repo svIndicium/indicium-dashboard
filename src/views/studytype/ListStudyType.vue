@@ -29,7 +29,7 @@ export default {
   }),
   methods: {
     async getStudyTypes() {
-      const { data } = await this.$api.get('/api/studytype');
+      const { data } = await this.$api.get('/studytype');
       this.studyTypes = data;
     },
   },
