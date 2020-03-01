@@ -34,7 +34,6 @@ export default {
                 const { data } = await this.$api.get("/user");
                 this.users = data;
             } catch (e) {
-                console.log(e);
                 this.error = e;
             }
         },
