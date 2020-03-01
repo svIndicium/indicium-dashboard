@@ -25,7 +25,7 @@
       methods: {
           async getRegistrations() {
               try {
-                  const { data } = await this.$api.get("/registration");
+                  const { data } = await this.$api.get("/registration?finalized=false");
                   this.registrations = data;
               } catch (e) {
                   this.error = e;
