@@ -33,7 +33,7 @@
                     </ul>
                 </li>
                 <li>
-                    <router-link to="/studytypes">Studie richtingen</router-link>
+                    <router-link to="/studytypes">Studierichtingen</router-link>
                     <ul class="sub-menu">
                         <li>
                             <router-link to="/studytypes/create">Creeer</router-link>
