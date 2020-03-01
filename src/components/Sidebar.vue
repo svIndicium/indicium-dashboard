@@ -4,7 +4,9 @@
             <img src="/indicium-logo-left.svg" alt="Indicium">
         </div>
 
-        <div class="menu-items">
+        <ProfileItem v-if="!$auth.loading"></ProfileItem>
+
+        <div class="menu-items" v-if="!$auth.loading">
             <ul>
                 <li>
                     <router-link to="/activiteiten">Activiteiten</router-link>
@@ -14,7 +16,7 @@
                         </li>
                     </ul>
                 </li>
-                <li>
+                <li v-if="this.$auth.hasPermission('admin:user')">
                     <router-link to="/leden">Leden</router-link>
                     <ul class="sub-menu">
                         <li>
@@ -25,7 +27,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>
+                        <li v-if="this.$auth.hasPermission('create:user')">
                             <router-link to="/leden/create">Creeer</router-link>
                         </li>
                     </ul>
@@ -53,11 +55,19 @@
 
 <script>
 import AnimatedLine from '../components/AnimatedLine'
+import ProfileItem from './ProfileItem';
 
 export default {
     components: {
+        ProfileItem,
         AnimatedLine
-    }
+    },
+    data() {
+       return {
+           user: {},
+           token: {}
+       }
+    },
 }
 </script>
 
