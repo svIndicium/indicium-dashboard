@@ -1,6 +1,7 @@
 <template>
     <div>
-        <table>
+        <Button url="/leden/create">Voeg toe</Button>
+        <table v-if="!error">
             <tr>
                 <th>id</th>
                 <th>Naam</th>
@@ -12,19 +13,29 @@
                 <td>{{user.email}}</td>
             </tr>
         </table>
+        <div v-else>
+            {{ error.message }}
+        </div>
     </div>
 </template>
 
 <script>
+import Button from '../../components/button';
 export default {
     name: "List",
+    components: { Button },
     data: () => ({
-        users: []
+        users: [],
+        error: null
     }),
     methods: {
         async getUsers() {
-            const { data } = await this.$api.get("/user");
-            this.users = data;
+            try {
+                const { data } = await this.$api.get("/user");
+                this.users = data;
+            } catch (e) {
+                this.error = e;
+            }
         },
         viewUser(userId) {
             this.$router.push({ name: "viewUser", params: { userId } });

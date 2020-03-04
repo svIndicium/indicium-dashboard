@@ -7,6 +7,9 @@ import ListUser from './views/user/ListUser.vue';
 import ViewUser from './views/user/ViewUser.vue';
 import ListStudyType from './views/studytype/ListStudyType';
 import CreateStudyType from './views/studytype/CreateStudyType';
+import ListRegistrations from './views/registration/ListRegistrations';
+import ListUnfinalizedRegistrations from './views/registration/ListUnfinalizedRegistrations';
+import ViewRegistration from './views/registration/ViewRegistration';
 
 Vue.use(Router);
 
@@ -61,6 +64,81 @@ export default new Router({
                     },
                     {
                         name: 'Voeg lid toe',
+                    },
+                ],
+            },
+        },
+        {
+            path: '/leden/aanmeldingen',
+            name: 'ListRegistrations',
+            component: ListRegistrations,
+            beforeEnter: authGuard,
+            meta: {
+                title: 'Aanmeldingen',
+                breadcrumb: [
+                    {
+                        name: 'Dashboard',
+                        link: '/',
+                    },
+                    {
+                        name: 'Leden',
+                        link: '/leden',
+                    },
+                    {
+                        name: 'Aanmeldingen',
+                    },
+                ],
+            },
+        },
+        {
+            path: '/leden/aanmeldingen/onvoltooid',
+            name: 'ListUnfinalizedRegistrations',
+            component: ListUnfinalizedRegistrations,
+            beforeEnter: authGuard,
+            meta: {
+                title: 'Nog te behandelen aanmeldingen',
+                breadcrumb: [
+                    {
+                        name: 'Dashboard',
+                        link: '/',
+                    },
+                    {
+                        name: 'Leden',
+                        link: '/leden',
+                    },
+                    {
+                        name: 'Aanmeldingen',
+                        link: '/leden/aanmeldingen',
+                    },
+                    {
+                        name: 'Onvoltooid',
+                    },
+                ],
+            },
+        },
+        {
+            path: '/leden/aanmeldingen/:registrationId',
+            name: 'viewRegistration',
+            component: ViewRegistration,
+            props: true,
+            beforeEnter: authGuard,
+            meta: {
+                title: 'Aanmelding',
+                breadcrumb: [
+                    {
+                        name: 'Dashboard',
+                        link: '/',
+                    },
+                    {
+                        name: 'Leden',
+                        link: '/leden',
+                    },
+                    {
+                        name: 'Aanmeldingen',
+                        link: '/leden/aanmeldingen',
+                    },
+                    {
+                        name: 'Detail',
                     },
                 ],
             },
