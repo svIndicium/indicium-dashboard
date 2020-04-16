@@ -112,7 +112,7 @@ export const useAuth0 = ({
                     const token = await this.getTokenSilently();
                     this.scopes = JSON.parse(atob(token.split('.')[1])).scope.split(' ');
                     localStorage.setItem('scopes', JSON.stringify(this.scopes));
-                    localStorage.setItem('token', JSON.stringify(token));
+                    localStorage.setItem('token', token);
                     this.$api.defaults.headers.common.Authorization = `Bearer ${token}`;
                     // Notify subscribers that the redirect callback has happened, passing the appState
                     // (useful for retrieving any pre-authentication state)

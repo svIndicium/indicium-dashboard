@@ -14,6 +14,6 @@ const baseURL = process.env.VUE_APP_BRANCH === 'dev'
 
 const apiInstance = axios.create({ baseURL: baseURL });
 
-apiInstance.defaults.headers.common.Authorization = `Bearer ${JSON.parse(localStorage.getItem('token'))}`;
+apiInstance.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('token')}`;
 
 Vue.prototype.$api = apiInstance;
