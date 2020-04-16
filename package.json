@@ -9,7 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@auth0/auth0-spa-js": "^1.6.4",
+    "@auth0/auth0-spa-js": "^1.6.5",
     "axios": "^0.19.2",
     "core-js": "^2.6.5",
     "vue": "^2.6.10",
@@ -18,7 +18,7 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",
     "@vue/cli-plugin-eslint": "^3.11.0",
-    "@vue/cli-service": "^4.1.2",
+    "@vue/cli-service": "^4.2.3",
     "@vue/eslint-config-airbnb": "^4.0.0",
     "babel-eslint": "^10.0.1",
     "cross-env": "^6.0.3",
@@ -27,7 +27,7 @@
     "sass": "^1.25.0",
     "sass-loader": "^7.1.0",
     "vue-cli-plugin-axios": "^0.0.4",
-    "vue-cli-plugin-vuetify": "^2.0.3",
+    "vue-cli-plugin-vuetify": "^2.0.5",
     "vue-template-compiler": "^2.6.10"
   }
 }
