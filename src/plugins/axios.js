@@ -2,6 +2,7 @@ import Vue from 'vue';
 import axios from 'axios';
 import { Service } from 'axios-middleware';
 import DataMiddleware from '../middleware/DataMiddleware';
+import AuthMiddleware from '../middleware/AuthMiddleware';
 
 const instance = axios.create();
 
@@ -19,9 +20,8 @@ const apiInstance = axios.create({ baseURL: baseURL });
 const service = new Service(apiInstance);
 
 service.register([
-    new DataMiddleware()
+    new DataMiddleware(),
+    new AuthMiddleware()
 ]);
-
-apiInstance.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('token')}`;
 
 Vue.prototype.$api = apiInstance;
