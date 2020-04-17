@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import axios from 'axios';
+import { Service } from 'axios-middleware';
+import DataMiddleware from '../middleware/DataMiddleware';
 
 const instance = axios.create();
 
@@ -13,6 +15,12 @@ const baseURL = process.env.VUE_APP_BRANCH === 'dev'
         : 'https://lit.dev.indicium.hu/api/v1';
 
 const apiInstance = axios.create({ baseURL: baseURL });
+
+const service = new Service(apiInstance);
+
+service.register([
+    new DataMiddleware()
+]);
 
 apiInstance.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('token')}`;
 
