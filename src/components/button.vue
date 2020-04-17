@@ -5,7 +5,7 @@
     <button v-else-if="callback" @click="callback" :class="['btn', size, center ? 'center' : '']">
         <slot></slot>
     </button>
-    <a v-else-if="url.startsWith('http')" :href="url" :class="['btn', size, center ? 'center' : '']">
+    <a v-else-if="url.startsWith('http') || url.startsWith('mailto:')" :href="url" :class="['btn', size, center ? 'center' : '']">
         <slot></slot>
     </a>
     <router-link v-else :to="url" :class="['btn', size, center ? 'center' : '']">

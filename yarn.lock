@@ -8172,6 +8172,11 @@ table@^5.2.3:
     slice-ansi "^2.1.0"
     string-width "^3.0.0"
 
+tabler-icons@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/tabler-icons/-/tabler-icons-1.5.0.tgz#29de8677bc8789ae218b04592e1b01b0d57082b1"
+  integrity sha512-2LwCu67chBbe9gtpOsWeb1akC2tTbFnTqdgA9r4nDMy2bc+rsd7kx7TXaPN1vJnm4e3BpZTNmTrRZIKfSY/aZQ==
+
 tapable@^0.1.8:
   version "0.1.10"
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-0.1.10.tgz#29c35707c2b70e50d07482b5d202e8ed446dafd4"

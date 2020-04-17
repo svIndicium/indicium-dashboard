@@ -1,9 +1,10 @@
 <template>
     <div>
         <div v-if="!!this.registration">
+            {{this.registration}}
             <h4>{{fullName}}</h4>
             <h5>E-mailadres</h5>
-            <a :href="mailtoLink">{{this.registration.email}}</a>
+            <a :href="mailtoLink">{{this.registration.mailAddress}}</a> <div>{{!!this.registration.verifiedAt ? 'Bevestigd' : 'Nog niet bevestigd'}}</div>
             <h5>Telefoonnummer</h5>
             <p>{{this.registration.phoneNumber}}</p>
             <h5>Geboortedatum</h5>

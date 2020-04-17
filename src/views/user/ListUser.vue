@@ -1,54 +1,75 @@
 <template>
     <div>
-        <Button url="/leden/create">Voeg toe</Button>
-        <table v-if="!error">
+        <div v-if="loading">
+            <Loading />
+        </div>
+        <table v-else-if="!error">
             <tr>
-                <th>id</th>
-                <th>Naam</th>
-                <th>Email</th>
+                <th>Voornaam</th>
+                <th>Achternaam</th>
             </tr>
             <tr v-for="(user, idx) in users" :key="idx" @click="viewUser(user.id)">
-                <td>{{user.id}}</td>
-                <td>{{ getFullName(user) }}</td>
-                <td>{{user.email}}</td>
+                <td>{{user.firstName}}</td>
+                <td>{{getFullLastName(user)}}</td>
             </tr>
         </table>
         <div v-else>
-            {{ error.message }}
+            <div class="errorcontainer">
+                <Icon type="alert-circle" class="icon" />
+                <span class="message">
+                    {{ errorMessage }}
+                </span>
+            </div>
+            <Button :callback="getUsers" size="l" class="button"><Icon type="refresh" class="buttonicon" />Probeer opnieuw</Button>
         </div>
     </div>
 </template>
 
 <script>
+import Loading from '../../components/Loading';
+import Icon from '../../components/Icon';
 import Button from '../../components/button';
+
 export default {
     name: "List",
-    components: { Button },
+    components: { Button, Icon, Loading },
     data: () => ({
         users: [],
-        error: null
+        error: null,
+        loading: false,
     }),
     methods: {
         async getUsers() {
+            this.loading = true;
             try {
                 const { data } = await this.$api.get("/user");
                 this.users = data;
             } catch (e) {
+                console.log(e);
                 this.error = e;
             }
+            this.loading = false;
         },
         viewUser(userId) {
             this.$router.push({ name: "viewUser", params: { userId } });
         },
-        getFullName(user) {
+        getFullLastName(user) {
             if (user.middleName) {
-                return `${user.firstName} ${user.middleName} ${user.lastName}`;
+                return `${user.middleName} ${user.lastName}`;
             }
-            return `${user.firstName} ${user.lastName}`;
+            return `${user.lastName}`;
         }
     },
     async created() {
         await this.getUsers();
+    },
+    computed: {
+        errorMessage() {
+            // if (this.error.message === 'Network Error') {
+            //     return 'Netwerk fout';
+            // }
+            return this.error.message;
+        }
     }
 };
 </script>
@@ -89,4 +110,32 @@ table {
         }
     }
 }
+
+.errorcontainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    color: #FAC052;
+
+    .icon {
+        width: 32px;
+        height: 32px;
+        font-size: 32px;
+    }
+
+    .message {
+        padding-left: 8px;
+    }
+}
+
+.button {
+    margin-top: 16px;
+    .buttonicon {
+        font-size: 16px;
+        padding-right: 4px;
+    }
+
+}
+
+
 </style>
