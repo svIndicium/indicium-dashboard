@@ -24,13 +24,11 @@
                 },
                 {
                     title: 'aanmeldingen',
-                    routeName: 'listStudyType',
-                    children: [
-                        {
-                            title: 'nog te behandelen',
-                            routeName: 'ledenoverzicht'
-                        },
-                    ]
+                    routeName: 'aanmeldingenoverzicht'
+                },
+                {
+                    title: 'Studierichtingen',
+                    routeName: 'studierichtingenoverzicht'
                 },
             ]
         })

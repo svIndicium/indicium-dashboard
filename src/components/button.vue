@@ -8,6 +8,9 @@
     <a v-else-if="url.startsWith('http') || url.startsWith('mailto:')" :href="url" :class="['btn', size, center ? 'center' : '']">
         <slot></slot>
     </a>
+    <router-link v-else-if="routeName" :to="{name: routeName}" :class="['btn', size, center ? 'center' : '']">
+        <slot></slot>
+    </router-link>
     <router-link v-else :to="url" :class="['btn', size, center ? 'center' : '']">
         <slot></slot>
     </router-link>
@@ -29,6 +32,9 @@
             url: {
                 type: String,
                 default: '#',
+            },
+            routeName: {
+                type: String,
             },
             callback: {
                 type: Function,
