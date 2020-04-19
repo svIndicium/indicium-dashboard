@@ -32,7 +32,7 @@
 }
 
 #box_one {
-    animation: rotate 4s linear infinite;
+    animation: rotate 1.5s linear infinite;
     transform-origin: center;
 }
 

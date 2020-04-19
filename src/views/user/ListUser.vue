@@ -3,16 +3,17 @@
         <div v-if="loading">
             <Loading />
         </div>
-        <table v-else-if="!error">
-            <tr>
-                <th>Voornaam</th>
-                <th>Achternaam</th>
-            </tr>
-            <tr v-for="(user, idx) in users" :key="idx" @click="viewUser(user.id)">
-                <td>{{user.firstName}}</td>
-                <td>{{getFullLastName(user)}}</td>
-            </tr>
-        </table>
+        <div v-else-if="!error" class="table-container">
+            <div class="header">Voornaam</div>
+            <div class="header">Achternaam</div>
+            <div class="header">Acties</div>
+            <template v-for="(user, idx) in users">
+                <div v-bind:key="idx">{{user.firstName}}</div>
+                <div v-bind:key="idx">{{getFullLastName(user)}}</div>
+                <Icon v-bind:key="idx" type="pencil" />
+
+            </template>
+        </div>
         <div v-else>
             <div class="errorcontainer">
                 <Icon type="alert-circle" class="icon" />
@@ -44,6 +45,7 @@ export default {
             try {
                 const { data } = await this.$api.get("/user");
                 this.users = data;
+                this.users.push(data[0]);
             } catch (e) {
                 console.log(e);
                 this.error = e;
@@ -75,41 +77,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-table {
-    box-shadow: 0 0 20px 0 rgba(124, 124, 124, 0.1);
-    width: 50%;
-    border-collapse: collapse;
+    .table-container {
+        max-width: 500px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 32px;
+        grid-template-rows: repeat(5, 32px);
+        align-items: stretch;
 
-    th {
-        font-weight: inherit;
-        text-transform: capitalize;
-        width: fit-content;
-        border-bottom: 1px solid rgba(141, 143, 145, 0.7);
-    }
+        .header {
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
 
-    td,
-    th {
-        padding: 4px;
-    }
+        div, span {
+            line-height: 32px;
+        }
 
-    td {
-        border-bottom: 1px solid rgba(141, 143, 145, 0.44);
-    }
-
-    tr:not(:first-child) {
-        cursor: pointer;
-
-        &:hover {
-            background-color: #eee;
+        span {
+            font-size: 24px;
+            height: 32px;
         }
     }
-
-    tr:last-child {
-        td {
-            border-bottom: none;
-        }
-    }
-}
 
 .errorcontainer {
     display: flex;

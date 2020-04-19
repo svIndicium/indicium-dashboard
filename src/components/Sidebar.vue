@@ -1,73 +1,52 @@
 <template>
-    <div class="sidebar">
+    <div :class="['sidebar', collapsed ? 'collapsed' : '']">
         <div class="logo">
-            <img src="/indicium-logo-left.svg" alt="Indicium">
+            <Logo fill-color="white" :subname="false" :name="!collapsed"/>
         </div>
 
-        <ProfileItem v-if="!$auth.loading"></ProfileItem>
-
         <div class="menu-items" v-if="!$auth.loading">
-            <ul>
-                <li>
-                    <router-link to="/activiteiten">Activiteiten</router-link>
-                    <ul class="sub-menu">
-                        <li>
-                            <router-link to="/activiteiten/create">Creeer</router-link>
-                        </li>
-                    </ul>
-                </li>
-                <li v-if="this.$auth.hasPermission('admin:user')">
-                    <router-link to="/leden">Leden</router-link>
-                    <ul class="sub-menu">
-                        <li>
-                            <router-link to="/leden/aanmeldingen">Aanmeldingen</router-link>
-                            <ul class="sub-menu">
-                                <li>
-                                    <router-link to="/leden/aanmeldingen/onvoltooid">Nog te behandelen</router-link>
-                                </li>
-                            </ul>
-                        </li>
-                        <li v-if="this.$auth.hasPermission('create:user')">
-                            <router-link to="/leden/create">Creeer</router-link>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <router-link to="/studytypes">Studierichtingen</router-link>
-                    <ul class="sub-menu">
-                        <li>
-                            <router-link to="/studytypes/create">Creeer</router-link>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+            <SidebarItem :title="$auth.user.name" url="/a" :img-url="$auth.user.picture" :collapsed="collapsed"></SidebarItem>
+            <SidebarItem title="Leden" url="/leden" icon="user" v-if="hasPermission('admin:user')" :collapsed="collapsed"></SidebarItem>
+            <SidebarItem title="Activiteiten" url="/activiteiten" icon="calendar" :collapsed="collapsed"></SidebarItem>
         </div>
 
         <div class="bottom-bar">
-            <a href="https://noudadrichem.com">&copy; noudadrichem</a>
+            <SidebarItem title="Uitloggen" icon="logout" :callback="logout" :collapsed="collapsed"></SidebarItem>
+            <SidebarItem :title="collapsed ? 'Uitvouwen' : 'Invouwen'" :icon="collapsed ? 'chevron-right' : 'chevron-left'" :callback="toggleCollapse" :collapsed="collapsed"></SidebarItem>
         </div>
-
-        <AnimatedLine :bottom="0" left="-150px" :rotate="180" :interval="4000" :doHideMobile="true" />
-        <AnimatedLine bottom="48px" left="-170px" :rotate="180" :interval="5000" :doHideMobile="true" />
-        <AnimatedLine bottom="94px" left="-190px" :rotate="180" :interval="6000" :doHideMobile="true" />
     </div>
 </template>
 
 <script>
-import AnimatedLine from '../components/AnimatedLine'
-import ProfileItem from './ProfileItem';
+import SidebarItem from './SidebarItem';
+import Logo from './Logo';
 
 export default {
     components: {
-        ProfileItem,
-        AnimatedLine
+        Logo,
+        SidebarItem
     },
     data() {
        return {
            user: {},
-           token: {}
+           token: {},
+           collapsed: false
        }
     },
+    mounted() {
+    },
+    methods: {
+        hasPermission(permission) {
+            return this.$auth.hasPermission(permission);
+        },
+        toggleCollapse() {
+            this.$set(this, 'collapsed', !this.collapsed);
+            this.$eventBus.$emit('nav-toggle', this.collapsed);
+        },
+        logout() {
+            this.$auth.logout();
+        }
+    }
 }
 </script>
 
@@ -75,39 +54,42 @@ export default {
 .sidebar {
     width: var(--sidebar-width);
     height: 100vh;
-    box-shadow: inset -1px 0 0 #c6d1e0;
-    padding: 48px 24px 0 24px;
+    background-color: var(--indi-blue);
+    padding: 48px 0 24px 24px;
     display: flex;
     flex-direction: column;
+    transition: 0.5s;
 
     position: fixed;
     left: 0;
     top: 0;
 
-    .router-link-active {
-        color: var(--indi-blue);
-        position: relative;
+    &.collapsed {
+        transition: 0.5s;
+        width: 100px;
 
-        &:before {
-            content: '';
-            display: block;
-            position: absolute;
-            top:0;
-            left: -8px;
-            width: 3px;
-            border-radius: 4px;
-            height: 100%;
-            background: var(--indi-blue);
+        .logo > svg {
+            overflow-x: hidden;
+            height: 34.234px;
         }
-    }
-
-    .logo {
-        max-width: 200px;
     }
 
     .menu-items {
         flex: 1;
         margin-top: 24px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+
+    .bottom-bar {
+        @extend .menu-items;
+        flex-direction: column-reverse;
+    }
+
+    .logo {
+        margin-left: 8px;
+        width: 200px;
     }
 
     .sub-menu {
