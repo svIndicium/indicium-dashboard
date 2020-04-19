@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h2>Ledenoverzicht</h2>
         <div v-if="loading">
             <Loading />
         </div>
@@ -7,12 +8,11 @@
             <div class="header">Voornaam</div>
             <div class="header">Achternaam</div>
             <div class="header">Acties</div>
-<!--            <template v-for="(user, idx) in users">-->
-<!--                <div v-bind:key="idx">{{user.firstName}}</div>-->
-<!--                <div v-bind:key="idx">{{getFullLastName(user)}}</div>-->
-<!--                <Icon v-bind:key="idx" type="pencil" />-->
-
-<!--            </template>-->
+            <template v-for="(user, idx) in users">
+                <div v-bind:key="idx">{{user.firstName}}</div>
+                <div v-bind:key="idx">{{getFullLastName(user)}}</div>
+                <Icon v-bind:key="idx" type="pencil" />
+            </template>
         </div>
         <div v-else>
             <div class="errorcontainer">
