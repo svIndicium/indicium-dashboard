@@ -92,9 +92,5 @@ export default {
         margin-left: 8px;
         width: 200px;
     }
-
-    .sub-menu {
-        padding-left: 12px;
-    }
 }
 </style>
