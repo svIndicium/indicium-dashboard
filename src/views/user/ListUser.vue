@@ -45,9 +45,7 @@ export default {
             try {
                 const { data } = await this.$api.get("/user");
                 this.users = data;
-                this.users.push(data[0]);
             } catch (e) {
-                console.log(e);
                 this.error = e;
             }
             this.loading = false;
