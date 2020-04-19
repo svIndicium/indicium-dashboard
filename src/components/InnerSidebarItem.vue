@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="{name: routeName}" class="link">
+    <router-link :to="{name: routeName}" :class="['link', child ? 'child': '']">
         <span>{{title}}</span>
     </router-link>
 </template>
@@ -16,6 +16,11 @@
                 type: String,
                 required: true
             },
+            child: {
+                type: Boolean,
+                required: false,
+                default: false
+            }
         }
     };
 </script>
@@ -44,6 +49,9 @@
         }
     }
 
+    .child {
+        margin-left: 16px;
+    }
 
 
     .router-link-active {

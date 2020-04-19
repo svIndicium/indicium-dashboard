@@ -1,10 +1,17 @@
 <template>
-    <div class="sidebar">
-        <h3 class="title">{{title}}</h3>
-        <div class="menu-items">
-            <InnerSidebarItem v-for="(item, idx) in content" :key="idx" :title="item.title" :route-name="item.routeName"/>
+    <transition name="slide-fade" appear>
+        <div class="sidebar">
+            <h3 class="title">{{title}}</h3>
+            <div class="menu-items">
+                <template v-for="(item, idx) in content">
+                    <InnerSidebarItem  :key="idx" :title="item.title" :route-name="item.routeName" />
+                    <template v-for="(child, idx) in item.children">
+                        <InnerSidebarItem  :key="idx" :title="child.title" :route-name="child.routeName" :child="true" />
+                    </template>
+                </template>
+            </div>
         </div>
-    </div>
+    </transition>
 </template>
 
 <script>
@@ -47,5 +54,13 @@
             flex-wrap: wrap;
             flex-direction: column;
         }
+    }
+
+    .slide-fade-enter-active {
+        transition: all .3s ease;
+    }
+    .slide-fade-enter {
+        transform: translateX(-10px);
+        opacity: 0;
     }
 </style>
