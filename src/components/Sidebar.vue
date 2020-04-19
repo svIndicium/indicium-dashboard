@@ -5,13 +5,18 @@
         </div>
 
         <div class="menu-items" v-if="!$auth.loading">
-            <SidebarItem :title="$auth.user.name" url="/a" :img-url="$auth.user.picture" :collapsed="collapsed"></SidebarItem>
-            <SidebarItem title="Leden" url="/leden" icon="user" v-if="hasPermission('admin:user')" :collapsed="collapsed"></SidebarItem>
-            <SidebarItem title="Activiteiten" url="/activiteiten" icon="calendar" :collapsed="collapsed"></SidebarItem>
+            <template v-if="$auth.isAuthenticated">
+                <SidebarItem :title="$auth.user.name" url="/a" :img-url="$auth.user.picture" :collapsed="collapsed"></SidebarItem>
+                <SidebarItem title="Leden" url="/leden" icon="user" v-if="hasPermission('admin:user')" :collapsed="collapsed"></SidebarItem>
+                <SidebarItem title="Activiteiten" url="/activiteiten" icon="calendar" :collapsed="collapsed"></SidebarItem>
+            </template>
+            <template v-else>
+                <SidebarItem title="Login" :callback="login" icon="login" :collapsed="collapsed"></SidebarItem>
+            </template>
         </div>
 
         <div class="bottom-bar">
-            <SidebarItem title="Uitloggen" icon="logout" :callback="logout" :collapsed="collapsed"></SidebarItem>
+            <SidebarItem title="Uitloggen" icon="logout" :callback="logout" :collapsed="collapsed" v-if="$auth.isAuthenticated"></SidebarItem>
             <SidebarItem :title="collapsed ? 'Uitvouwen' : 'Invouwen'" :icon="collapsed ? 'chevron-right' : 'chevron-left'" :callback="toggleCollapse" :collapsed="collapsed"></SidebarItem>
         </div>
     </div>
@@ -46,7 +51,10 @@ export default {
         },
         logout() {
             this.$auth.logout();
-        }
+        },
+        login() {
+            this.$auth.loginWithRedirect();
+        },
     }
 }
 </script>
