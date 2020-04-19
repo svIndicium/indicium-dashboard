@@ -1,7 +1,11 @@
 <template>
     <div class="">
-        <TextInput v-model="studyType.name" placeholder="Naam" />
+        <h2>Nieuwe studierichting</h2>
+        <div class="form">
+            <TextInput v-model="studyType.name" placeholder="Naam" />
+        </div>
         <Button size="m" :callback="createStudyType" class="button"><Icon type="plus" class="buttonicon" /> Voeg toe</Button>
+        <Loading v-if="loading" />
     </div>
 </template>
 
@@ -9,6 +13,7 @@
     import TextInput from '../../components/TextInput';
     import Button from '../../components/button';
     import Icon from '../../components/Icon';
+    import Loading from '../../components/Loading';
 
     export default {
         name: 'CreateStudyType',
@@ -16,27 +21,35 @@
             Icon,
             TextInput,
             Button,
+            Loading,
         },
         data: () => ({
             studyType: {
                 name: '',
             },
             error: '',
+            loading: false,
         }),
         methods: {
             async createStudyType() {
+                this.loading = true;
                 try {
                     await this.$api.post('/studytype', this.studyType);
                     await this.$router.push({ name: 'studierichtingenoverzicht' });
                 } catch (err) {
                     this.error = err.response.data.message;
                 }
+                this.loading = false;
             },
         },
     };
 </script>
 
 <style lang="scss" scoped>
+
+    .form {
+        margin: 16px 0;
+    }
 
     .errorcontainer {
         display: flex;
