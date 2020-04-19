@@ -30,7 +30,7 @@ export default {
        return {
            user: {},
            token: {},
-           collapsed: false
+           collapsed: sessionStorage.getItem('sidebar-collapsed') || false
        }
     },
     mounted() {
@@ -41,6 +41,7 @@ export default {
         },
         toggleCollapse() {
             this.$set(this, 'collapsed', !this.collapsed);
+            sessionStorage.setItem('sidebar-collapsed', this.collapsed);
             this.$eventBus.$emit('nav-toggle', this.collapsed);
         },
         logout() {

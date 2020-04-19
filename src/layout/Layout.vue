@@ -23,7 +23,7 @@
             BreadCrumbs
         },
         data: () => ({
-            collapsed: false
+            collapsed: sessionStorage.getItem('sidebar-collapsed') || false
         }),
         mounted() {
             this.$eventBus.$on('nav-toggle', payload => {
