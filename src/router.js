@@ -26,22 +26,56 @@ export default new Router({
         },
         {
             path: '/leden',
-            name: 'User',
+            name: 'userDashboard',
             component: User,
             beforeEnter: authGuard,
             children: [
                 {
                     path: 'overzicht',
-                    name: 'Ledenoverzicht',
+                    name: 'ledenoverzicht',
                     component: ListUser,
-                }
+                    meta: {
+                        breadcrumb: [
+                            {
+                                name: 'Dashboard',
+                                routeName: 'dashboard',
+                            },
+                            {
+                                name: 'Leden',
+                                routeName: 'userDashboard',
+                            },
+                            {
+                                name: 'Overzicht'
+                            }
+                        ],
+                    },
+                },
+                {
+                    path: 'aanmeldingen',
+                    name: 'ledenoverzicht',
+                    component: ListUser,
+                    meta: {
+                        breadcrumb: [
+                            {
+                                name: 'Dashboard',
+                                routeName: 'dashboard',
+                            },
+                            {
+                                name: 'Leden',
+                                routeName: 'userDashboard',
+                            },
+                            {
+                                name: 'Overzicht'
+                            }
+                        ],
+                    },
+                },
             ],
             meta: {
-                title: 'Leden',
                 breadcrumb: [
                     {
                         name: 'Dashboard',
-                        link: '/',
+                        routeName: 'dashboard',
                     },
                     {
                         name: 'Leden',
