@@ -30,7 +30,7 @@ export default {
        return {
            user: {},
            token: {},
-           collapsed: sessionStorage.getItem('sidebar-collapsed') || false
+           collapsed: JSON.parse(sessionStorage.getItem('sidebar-collapsed')) || false
        }
     },
     mounted() {

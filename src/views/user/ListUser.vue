@@ -7,12 +7,12 @@
             <div class="header">Voornaam</div>
             <div class="header">Achternaam</div>
             <div class="header">Acties</div>
-            <template v-for="(user, idx) in users">
-                <div v-bind:key="idx">{{user.firstName}}</div>
-                <div v-bind:key="idx">{{getFullLastName(user)}}</div>
-                <Icon v-bind:key="idx" type="pencil" />
+<!--            <template v-for="(user, idx) in users">-->
+<!--                <div v-bind:key="idx">{{user.firstName}}</div>-->
+<!--                <div v-bind:key="idx">{{getFullLastName(user)}}</div>-->
+<!--                <Icon v-bind:key="idx" type="pencil" />-->
 
-            </template>
+<!--            </template>-->
         </div>
         <div v-else>
             <div class="errorcontainer">
