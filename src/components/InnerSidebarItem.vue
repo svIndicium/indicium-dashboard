@@ -54,7 +54,7 @@
     }
 
 
-    .router-link-active {
+    .router-link-exact-active {
         background-color: var(--indi-blue-light);
         color: var(--text-color);
         margin-right: 0;
