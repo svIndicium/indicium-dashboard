@@ -43,7 +43,6 @@
             settings: null,
             error: null,
             loading: false,
-            updatedSettings: {}
         }),
         async created() {
             this.getAppName();
@@ -55,12 +54,6 @@
                 const { data } = await this.$api.get('/settings/lit');
                 this.settings = data;
                 this.settings.sort(this.compare);
-                this.updatedSettings = [];
-                for (let settingsKey in this.settings) {
-                    if (this.settings.hasOwnProperty(settingsKey)) {
-                        this.updatedSettings[settingsKey] = {title: this.settings[settingsKey].title, value: this.settings[settingsKey].value}
-                    }
-                }
                 this.loading = false;
             },
             compare(a, b) {
