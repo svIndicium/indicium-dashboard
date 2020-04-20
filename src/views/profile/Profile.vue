@@ -55,7 +55,7 @@
         width: 100%;
         border-radius: 8px;
         padding: 24px;
-        overflow-y: scroll;
+        overflow-y: auto;
     }
 
 </style>
