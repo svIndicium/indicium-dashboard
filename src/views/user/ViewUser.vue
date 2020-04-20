@@ -135,7 +135,7 @@
             },
             prettyPhoneNumber() {
                 if (this.user.phoneNumber === undefined) return "";
-                const phoneNumber = "+31645592066";
+                const phoneNumber = this.user.phoneNumber;
                 return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(3, 4)} ${phoneNumber.slice(4, 6)} ${phoneNumber.slice(6, 8)} ${phoneNumber.slice(8, 10)} ${phoneNumber.slice(10, 12)}`;
             },
             receivesNewsletter() {
