@@ -36,8 +36,8 @@
 </template>
 
 <script>
-    import Button from '../../components/button.vue';
-    import TextInput from '../../components/TextInput';
+    import Button from '../../../components/button.vue';
+    import TextInput from '../../../components/TextInput';
     export default {
         name: 'ViewRegistration',
         components: { TextInput, Button },

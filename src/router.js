@@ -9,6 +9,7 @@ import ListUser from './views/user/ListUser';
 import Profile from './views/profile/Profile';
 import ViewProfile from './views/profile/ViewProfile';
 import ViewMailaddresses from './views/profile/ViewMailaddresses';
+import ListRegistrations from './views/user/registration/ListRegistrations';
 
 Vue.use(Router);
 
@@ -67,7 +68,7 @@ export default new Router({
                     {
                         path: 'aanmeldingen',
                         name: 'aanmeldingenoverzicht',
-                        component: ListUser,
+                        component: ListRegistrations,
                         meta: {
                             breadcrumb: [
                                 {
@@ -79,7 +80,7 @@ export default new Router({
                                     routeName: 'userDashboard',
                                 },
                                 {
-                                    name: 'Overzicht'
+                                    name: 'Aanmeldingen',
                                 }
                             ],
                         },

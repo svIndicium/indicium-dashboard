@@ -29,10 +29,6 @@
                             title: 'mailadressen',
                             routeName: 'gebruikersmailadresoverzicht'
                         },
-                        {
-                            title: 'Inschrijvingen',
-                            routeName: 'studierichtingenoverzicht'
-                        },
                     ]
                 },
             ]
