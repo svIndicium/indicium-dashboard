@@ -7,10 +7,12 @@
         <div v-else-if="!error" class="table-container">
             <div class="header">Voornaam</div>
             <div class="header">Achternaam</div>
+            <div class="header">Status</div>
             <div class="header">Acties</div>
             <template v-for="(user, idx) in users">
                 <div v-bind:key="idx">{{user.firstName}}</div>
                 <div v-bind:key="idx">{{getFullLastName(user)}}</div>
+                <div v-bind:key="idx"><StatusLabel status="success">Actief</StatusLabel></div>
                 <Icon v-bind:key="idx" type="pencil" />
             </template>
         </div>
@@ -30,10 +32,11 @@
 import Loading from '../../components/Loading';
 import Icon from '../../components/Icon';
 import Button from '../../components/button';
+import StatusLabel from '../../components/StatusLabel';
 
 export default {
     name: "List",
-    components: { Button, Icon, Loading },
+    components: { StatusLabel, Button, Icon, Loading },
     data: () => ({
         users: [],
         error: null,
@@ -78,7 +81,7 @@ export default {
     .table-container {
         max-width: 500px;
         display: grid;
-        grid-template-columns: 1fr 1fr 32px;
+        grid-template-columns: 1fr 1fr 64px 32px;
         grid-template-rows: repeat(5, 32px);
         align-items: stretch;
 
