@@ -4,9 +4,9 @@
             <h3 class="title">{{title}}</h3>
             <div class="menu-items">
                 <template v-for="(item, idx) in content">
-                    <InnerSidebarItem  :key="idx" :title="item.title" :route-name="item.routeName" />
+                    <InnerSidebarItem  :key="idx" :title="item.title" :route-name="item.routeName" :params="item.params" />
                     <template v-for="(child, idx) in item.children">
-                        <InnerSidebarItem  :key="idx" :title="child.title" :route-name="child.routeName" :child="true" />
+                        <InnerSidebarItem  :key="idx" :title="child.title" :route-name="child.routeName" :child="true" :params="child.params" />
                     </template>
                 </template>
             </div>

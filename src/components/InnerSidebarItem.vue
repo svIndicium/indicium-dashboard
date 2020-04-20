@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="{name: routeName}" :class="['link', child ? 'child': '']">
+    <router-link :to="{name: routeName, params: params}" :class="['link', child ? 'child': '']">
         <span>{{title}}</span>
     </router-link>
 </template>
@@ -15,6 +15,10 @@
             routeName: {
                 type: String,
                 required: true
+            },
+            params: {
+                type: Object,
+                required: false,
             },
             child: {
                 type: Boolean,
