@@ -167,7 +167,7 @@ export default new Router({
                                     routeName: 'gebruikersprofiel'
                                 },
                                 {
-                                    name: 'Mailaddressen',
+                                    name: 'Mailadressen',
                                 },
                             ],
                         },
