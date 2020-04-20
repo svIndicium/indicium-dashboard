@@ -83,10 +83,10 @@
                 try {
                     const { data } = await this.$api.get('/user/3');
                     this.user = { ...this.user, ...data };
+                    await this.getStudyType();
                 } catch (e) {
                     this.error = e;
                 }
-                await this.getStudyType();
             },
             async getStudyType() {
                 const { data } = await this.$api.get(`/studytype/${this.user.studyTypeId}`);
