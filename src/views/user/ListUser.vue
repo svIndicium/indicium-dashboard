@@ -68,9 +68,9 @@ export default {
     },
     computed: {
         errorMessage() {
-            // if (this.error.message === 'Network Error') {
-            //     return 'Netwerk fout';
-            // }
+            if (this.error.message === 'Network Error') {
+                return 'Netwerk fout';
+            }
             return this.error.message;
         }
     }
