@@ -6,6 +6,8 @@ import ListStudyType from './views/user/ListStudyType';
 import CreateStudyType from './views/user/CreateStudyType';
 import User from './views/user/User';
 import ListUser from './views/user/ListUser';
+import Profile from './views/profile/Profile';
+import ViewProfile from './views/profile/ViewProfile';
 
 Vue.use(Router);
 
@@ -127,6 +129,30 @@ export default new Router({
                     }
                 ]
             },
+            {
+                path: '/profiel',
+                name: 'profielDashboard',
+                component: Profile,
+                beforeEnter: authGuard,
+                children: [
+                    {
+                        path: '/',
+                        name: 'gebruikersprofiel',
+                        component: ViewProfile,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    name: 'Dashboard',
+                                    routeName: 'dashboard',
+                                },
+                                {
+                                    name: 'Profiel',
+                                },
+                            ],
+                        },
+                    }
+                ]
+            }
         ],
     }
 );
