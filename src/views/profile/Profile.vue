@@ -27,7 +27,7 @@
                     children: [
                         {
                             title: 'mailadressen',
-                            routeName: 'aanmeldingenoverzicht'
+                            routeName: 'gebruikersmailadresoverzicht'
                         },
                         {
                             title: 'Inschrijvingen',

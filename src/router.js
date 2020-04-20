@@ -8,6 +8,7 @@ import User from './views/user/User';
 import ListUser from './views/user/ListUser';
 import Profile from './views/profile/Profile';
 import ViewProfile from './views/profile/ViewProfile';
+import ViewMailaddresses from './views/profile/ViewMailaddresses';
 
 Vue.use(Router);
 
@@ -147,6 +148,26 @@ export default new Router({
                                 },
                                 {
                                     name: 'Profiel',
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        path: 'mailaddressen',
+                        name: 'gebruikersmailadresoverzicht',
+                        component: ViewMailaddresses,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    name: 'Dashboard',
+                                    routeName: 'dashboard',
+                                },
+                                {
+                                    name: 'Profiel',
+                                    routeName: 'gebruikersprofiel'
+                                },
+                                {
+                                    name: 'Mailaddressen',
                                 },
                             ],
                         },
