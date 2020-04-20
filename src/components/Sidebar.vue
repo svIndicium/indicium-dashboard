@@ -67,14 +67,14 @@ export default {
     padding: 48px 0 24px 24px;
     display: flex;
     flex-direction: column;
-    transition: 0.5s;
+    transition: width 0.5s;
 
     position: fixed;
     left: 0;
     top: 0;
 
     &.collapsed {
-        transition: 0.5s;
+        transition: width 0.5s;
         width: 100px;
 
         .logo > svg {
