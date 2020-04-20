@@ -5,15 +5,11 @@
             <Loading />
         </div>
         <div v-else-if="!error">
-            <div class="table-container">
-                <div class="header">Instelling</div>
-                <div class="header">Bijgewerkt op</div>
-                <div class="header">Bijgewerkt door</div>
-                <template v-for="(setting, idx) in settings">
-                    <div v-bind:key="'title' + idx">{{setting.title}}</div>
-                    <div v-bind:key="'ua' + idx">{{setting.updatedAt}}</div>
-                    <div v-bind:key="'ub' + idx">{{setting.updatedBy}}</div>
-                </template>
+            <div v-for="(setting, idx) in settings" :key="idx">
+                <h4>{{setting.title}}</h4>
+                <p>{{setting.description}}<br>{{getUpdatedMessage(setting)}}</p>
+                <text-input :value="setting.value" v-model="setting.value"></text-input>
+                <Button size="m" @click.native="saveSetting(setting)">Bewaar</Button>
             </div>
         </div>
         <div v-else>
@@ -32,10 +28,12 @@
     import Loading from '../../components/Loading';
     import Icon from '../../components/Icon';
     import Button from '../../components/button';
+    import TextInput from '../../components/TextInput';
 
     export default {
         name: 'SettingsPage',
         components: {
+            TextInput,
             Loading,
             Button,
             Icon,
@@ -45,6 +43,7 @@
             settings: null,
             error: null,
             loading: false,
+            updatedSettings: {}
         }),
         async created() {
             this.getAppName();
@@ -55,10 +54,61 @@
                 this.loading = true;
                 const { data } = await this.$api.get('/settings/lit');
                 this.settings = data;
+                this.settings.sort(this.compare);
+                this.updatedSettings = [];
+                for (let settingsKey in this.settings) {
+                    if (this.settings.hasOwnProperty(settingsKey)) {
+                        this.updatedSettings[settingsKey] = {title: this.settings[settingsKey].title, value: this.settings[settingsKey].value}
+                    }
+                }
                 this.loading = false;
+            },
+            compare(a, b) {
+                let comparison = 0;
+                if (a.key > b.key) {
+                    comparison = 1;
+                } else if (a.key < b.key) {
+                    comparison = -1;
+                }
+                return comparison;
             },
             getAppName() {
                 this.app = this.$route.params.app;
+            },
+            getUpdatedMessage(setting) {
+                if (setting.updatedAt === null || setting.updatedBy === null) return 'Deze instelling is nooit aangepast.';
+                return `Voor het laatst aangepast op ${this.getPrettyDateTime(setting.updatedAt)} door ${setting.updatedBy}`;
+            },
+            getMonthAsString(currentMonth) {
+                const monthList = [
+                    'januari',
+                    'februari',
+                    'maart',
+                    'april',
+                    'mei',
+                    'juni',
+                    'juli',
+                    'augustus',
+                    'september',
+                    'oktober',
+                    'november',
+                    'december',
+                ];
+
+                return monthList[currentMonth];
+            },
+            getPrettyDateTime(dateString) {
+                const date = new Date(dateString);
+                return `${this.getPrettyDate(dateString)} ${date.getHours()}:${date.getSeconds()}`;
+            },
+            getPrettyDate(dateString) {
+                const date = new Date(dateString);
+                return `${date.getDate()} ${this.getMonthAsString(date.getMonth())} ${date.getFullYear()}`;
+            },
+            async saveSetting(setting) {
+                this.loading = true;
+                const { data } = await this.$api.put(`/settings/lit/${setting.key}`, {value: setting.value});
+                this.loading = false;
             }
         },
         computed: {
@@ -74,29 +124,13 @@
 
 <style lang="scss" scoped>
 
-    .table-container {
-        max-width: 700px;
-        display: grid;
-        grid-template-columns: 2fr 1fr 1fr;
-        grid-template-rows: 32px;
-        align-items: stretch;
-
-        .header {
-            font-weight: bold;
-            font-size: 12px;
-            text-transform: uppercase;
-        }
-
-        div, span {
-            line-height: 32px;
-        }
-
-        span {
-            font-size: 24px;
-            height: 32px;
-        }
+    h4 {
+        font-size: 18px;
     }
 
+    p {
+        font-size: 14px;
+    }
 
 
     .errorcontainer {
