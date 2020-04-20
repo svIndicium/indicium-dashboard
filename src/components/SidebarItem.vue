@@ -1,5 +1,5 @@
 <template>
-    <router-link v-if="!!url" :to="url" :class="['link', collapsed ? 'collapsed' : '']">
+    <router-link v-if="!!routeName" :to="{name: routeName}" :class="['link', collapsed ? 'collapsed' : '']">
         <div v-if="!!icon">
             <Icon :type="icon" />
             <transition name="fade">
@@ -39,7 +39,7 @@
                 type: String,
                 required: true
             },
-            url: {
+            routeName: {
                 type: String,
                 required: false
             },

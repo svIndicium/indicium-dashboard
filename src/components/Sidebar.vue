@@ -6,9 +6,9 @@
 
         <div class="menu-items" v-if="!$auth.loading">
             <template v-if="$auth.isAuthenticated">
-                <SidebarItem :title="$auth.user.name" url="/profiel" :img-url="$auth.user.picture" :collapsed="collapsed"></SidebarItem>
-                <SidebarItem title="Leden" url="/leden" icon="user" v-if="hasPermission('admin:user')" :collapsed="collapsed"></SidebarItem>
-                <SidebarItem title="Activiteiten" url="/activiteiten" icon="calendar" :collapsed="collapsed"></SidebarItem>
+                <SidebarItem :title="$auth.user.name" route-name="gebruikersprofiel" :img-url="$auth.user.picture" :collapsed="collapsed"></SidebarItem>
+                <SidebarItem title="Leden" route-name="userDashboard" icon="user" v-if="hasPermission('admin:user')" :collapsed="collapsed"></SidebarItem>
+<!--                <SidebarItem title="Activiteiten" route-name="/activiteiten" icon="calendar" :collapsed="collapsed"></SidebarItem>-->
             </template>
             <template v-else>
                 <SidebarItem title="Login" :callback="login" icon="login" :collapsed="collapsed"></SidebarItem>
