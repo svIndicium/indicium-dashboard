@@ -98,7 +98,7 @@ export const useAuth0 = ({
                 client_id: options.clientId,
                 audience: options.audience,
                 redirect_uri: redirectUri,
-                scope: 'create:user,admin:user,create:studyType',
+                scope: 'create:user,admin:user,create:studyType,read:mailchimp_settings,write:mailchimp_settings,read:sendgrid_settings,write:sendgrid_settings,read:settings',
             });
 
             try {

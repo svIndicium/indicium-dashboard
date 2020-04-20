@@ -10,6 +10,10 @@ import Profile from './views/profile/Profile';
 import ViewProfile from './views/profile/ViewProfile';
 import ViewMailaddresses from './views/profile/ViewMailaddresses';
 import ListRegistrations from './views/user/registration/ListRegistrations';
+import Settings from './views/settings/Settings';
+import SettingsDashboard from './views/settings/SettingsDashboard';
+import SettingsPage from './views/settings/SettingsPage';
+import EditSetting from './views/settings/EditSetting';
 
 Vue.use(Router);
 
@@ -173,6 +177,64 @@ export default new Router({
                             ],
                         },
                     }
+                ]
+            },
+            {
+                path: '/instellingen',
+                name: 'instellingendashboard',
+                component: Settings,
+                beforeEnter: authGuard,
+                children: [
+                    {
+                        path: '/',
+                        name: 'instellingenOverzicht',
+                        component: SettingsDashboard,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    name: 'Dashboard',
+                                    routeName: 'dashboard',
+                                },
+                                {
+                                    name: 'Instellingen',
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        path: ':app',
+                        name: 'appInstellingen',
+                        component: SettingsPage,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    name: 'Dashboard',
+                                    routeName: 'dashboard',
+                                },
+                                {
+                                    name: 'Instellingen',
+                                    routeName: 'instellingenOverzicht'
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        path: ':app/:setting',
+                        name: 'instellin',
+                        component: EditSetting,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    name: 'Dashboard',
+                                    routeName: 'dashboard',
+                                },
+                                {
+                                    name: 'Instellingen',
+                                    routeName: 'instellingenOverzicht'
+                                },
+                            ],
+                        },
+                    },
                 ]
             }
         ],
