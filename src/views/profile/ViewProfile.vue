@@ -4,7 +4,7 @@
         <div v-if="loading">
             <Loading />
         </div>
-        <div v-else>
+        <div v-else-if="!error">
             <div class="section">
                 <h3 class="section-header">Algemene informatie</h3>
                 <div class="section-entry">
@@ -46,19 +46,33 @@
                 </div>
             </div>
         </div>
+        <div v-else>
+            <div class="errorcontainer">
+                <Icon type="alert-circle" class="icon" />
+                <span class="message">
+                    {{ errorMessage }}
+                </span>
+            </div>
+            <Button :callback="getUserFromService" size="l" class="button"><Icon type="refresh" class="buttonicon" />Probeer opnieuw</Button>
+        </div>
     </div>
 </template>
 
 <script>
     import Loading from '../../components/Loading';
+    import Button from '../../components/button';
+    import Icon from '../../components/Icon';
 
     export default {
         name: 'ViewProfile',
         components: {
             Loading,
+            Button,
+            Icon,
         },
         data: () => ({
             user: {},
+            error: null,
             loading: false,
         }),
         methods: {
@@ -66,8 +80,12 @@
                 this.user = this.$auth.user;
             },
             async getUserFromService() {
-                const { data } = await this.$api.get('/user/3');
-                this.user = {...this.user, ...data};
+                try {
+                    const { data } = await this.$api.get('/user/3');
+                    this.user = { ...this.user, ...data };
+                } catch (e) {
+                    this.error = e;
+                }
                 await this.getStudyType();
             },
             async getStudyType() {
@@ -113,6 +131,12 @@
                 const phoneNumber = this.user.phoneNumber;
                 return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(3, 4)} ${phoneNumber.slice(4, 6)} ${phoneNumber.slice(6, 8)} ${phoneNumber.slice(8, 10)} ${phoneNumber.slice(10, 12)}`;
             },
+            errorMessage() {
+                // if (this.error.message === 'Network Error') {
+                //     return 'Netwerk fout';
+                // }
+                return this.error.message;
+            }
         }
     };
 </script>
@@ -150,6 +174,34 @@
         .action-buttons {
             display: flex;
             justify-content: flex-end;
+        }
+
+    }
+
+
+
+    .errorcontainer {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        color: #FAC052;
+
+        .icon {
+            width: 32px;
+            height: 32px;
+            font-size: 32px;
+        }
+
+        .message {
+            padding-left: 8px;
+        }
+    }
+
+    .button {
+        margin-top: 16px;
+        .buttonicon {
+            font-size: 16px;
+            padding-right: 4px;
         }
 
     }
