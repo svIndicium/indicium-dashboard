@@ -46,6 +46,7 @@
         }),
         methods: {
             async getStudyTypes() {
+                this.error = null;
                 this.loading = true;
                 try {
                     const { data } = await this.$api.get('/studytype');

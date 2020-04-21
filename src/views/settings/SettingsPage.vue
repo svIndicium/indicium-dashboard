@@ -57,6 +57,7 @@
         },
         methods: {
             async getAvailableSettings() {
+                this.error = null;
                 try {
                     const { data } = await this.$api.get('/settings/lit');
                     this.settings = data;

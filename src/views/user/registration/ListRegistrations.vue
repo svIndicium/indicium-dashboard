@@ -26,7 +26,7 @@
                     {{ errorMessage }}
                 </span>
             </div>
-            <Button :callback="getUsers" size="l" class="button"><Icon type="refresh" class="buttonicon" />Probeer opnieuw</Button>
+            <Button :callback="getRegistrations" size="l" class="button"><Icon type="refresh" class="buttonicon" />Probeer opnieuw</Button>
         </div>
     </div>
 </template>
@@ -49,6 +49,7 @@
         }),
         methods: {
             async getRegistrations() {
+                this.error = null;
                 try {
                     const { data } = await this.$api.get("/registration");
                     this.registrations = data;

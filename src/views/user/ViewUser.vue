@@ -61,7 +61,7 @@
                     {{ errorMessage }}
                 </span>
             </div>
-            <Button :callback="getUsers" size="l" class="button"><Icon type="refresh" class="buttonicon" />Probeer opnieuw</Button>
+            <Button :callback="getUser" size="l" class="button"><Icon type="refresh" class="buttonicon" />Probeer opnieuw</Button>
         </div>
     </div>
 </template>
@@ -82,6 +82,7 @@
         }),
         methods: {
             async getUser() {
+                this.error = null;
                 const userId = this.$route.params.userId;
                 const { data } = await this.$api.get(`/user/${userId.toString().indexOf('|') !== -1 ? 'a/' : ''}${userId}`);
                 this.user = data;

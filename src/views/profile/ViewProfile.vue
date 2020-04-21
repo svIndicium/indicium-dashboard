@@ -80,6 +80,7 @@
                 this.user = this.$auth.user;
             },
             async getUserFromService() {
+                this.error = null;
                 try {
                     const { data } = await this.$api.get('/user/userinfo');
                     this.user = { ...this.user, ...data };
