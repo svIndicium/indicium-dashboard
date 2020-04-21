@@ -10,10 +10,10 @@
             <div class="header">Status</div>
             <div class="header">Acties</div>
             <template v-for="(user, idx) in users">
-                <div v-bind:key="idx">{{user.firstName}}</div>
-                <div v-bind:key="idx">{{getFullLastName(user)}}</div>
-                <div v-bind:key="idx"><StatusLabel status="success">Actief</StatusLabel></div>
-                <Icon v-bind:key="idx" type="pencil" />
+                <div v-bind:key="'firstName' + idx">{{user.firstName}}</div>
+                <div v-bind:key="'lastName' + idx">{{getFullLastName(user)}}</div>
+                <div v-bind:key="'status' + idx"><StatusLabel status="success">Actief</StatusLabel></div>
+                <Icon v-bind:key="'actions' + idx" type="pencil" />
             </template>
         </div>
         <div v-else>

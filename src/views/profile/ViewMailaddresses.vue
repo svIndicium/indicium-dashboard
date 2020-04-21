@@ -9,12 +9,12 @@
             <div class="header">Status</div>
             <div class="header">Nieuwsbrief status</div>
             <template v-for="(mailaddress, idx) in mailaddresses">
-                <div v-bind:key="idx" class="cell">{{mailaddress.address}}</div>
-                <div v-bind:key="idx" class="cell">
+                <div v-bind:key="'adres' + idx" class="cell">{{mailaddress.address}}</div>
+                <div v-bind:key="'verified' + idx" class="cell">
                     <StatusLabel v-if="mailaddress.verified" status="success" :title="`Bevestigd op ${getPrettyDateTime(mailaddress.verifiedAt)}`">Bevestigd</StatusLabel>
                     <StatusLabel v-else status="warning" :title="`Bevestiging verstuurd op ${getPrettyDateTime(mailaddress.verificationRequestedAt)}`">Nog niet bevestigd</StatusLabel>
                 </div>
-                <div v-bind:key="idx" class="cell">
+                <div v-bind:key="'newsletter' + idx" class="cell">
                     <StatusLabel v-if="!mailaddress.receivesNewsletter" status="success">Ontvangt nieuwsbrief</StatusLabel>
                     <StatusLabel v-else status="warning">Ontvangt geen nieuwsbrief</StatusLabel>
                 </div>

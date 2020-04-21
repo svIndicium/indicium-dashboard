@@ -9,9 +9,9 @@
             <div class="header">Achternaam</div>
             <div class="header">Status</div>
             <template v-for="(registration, idx) in registrations">
-                <div v-bind:key="idx">{{registration.firstName}}</div>
-                <div v-bind:key="idx">{{getFullLastName(registration)}}</div>
-                <div v-bind:key="idx">
+                <div v-bind:key="'firstName' + idx">{{registration.firstName}}</div>
+                <div v-bind:key="'lastName' + idx">{{getFullLastName(registration)}}</div>
+                <div v-bind:key="'status' + idx">
                     <StatusLabel status="warning" v-if="registration.finalizedAt === undefined && registration.verifiedAt === undefined">Wachtend op mailverificatie</StatusLabel>
                     <StatusLabel status="error" v-else-if="registration.finalizedAt === undefined">Wachtend op instemming</StatusLabel>
                     <StatusLabel status="success" v-else-if="registration.approved">Ingestemd</StatusLabel>
