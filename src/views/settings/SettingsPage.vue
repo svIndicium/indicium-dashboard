@@ -8,8 +8,12 @@
             <div v-for="(setting, idx) in settings" :key="idx">
                 <h4>{{setting.title}}</h4>
                 <p>{{setting.description}}<br>{{getUpdatedMessage(setting)}}</p>
-                <text-input :value="setting.value" v-model="setting.value"></text-input>
-                <Button size="m" @click.native="saveSetting(setting)">Bewaar</Button>
+                <div class="input">
+                    <text-input :value="setting.value" v-model="setting.value" :error="fieldErrors[setting.key]" />
+                    <div>
+                        <Button size="m" :callback="() => {}" @click.native="saveSetting(setting)" class="savebutton">Bewaar</Button>
+                    </div>
+                </div>
             </div>
         </div>
         <div v-else>
@@ -43,18 +47,23 @@
             settings: null,
             error: null,
             loading: false,
+            fieldErrors: {},
         }),
         async created() {
+            this.loading = true;
             this.getAppName();
             await this.getAvailableSettings();
+            this.loading = false;
         },
         methods: {
             async getAvailableSettings() {
-                this.loading = true;
-                const { data } = await this.$api.get('/settings/lit');
-                this.settings = data;
-                this.settings.sort(this.compare);
-                this.loading = false;
+                try {
+                    const { data } = await this.$api.get('/settings/lit');
+                    this.settings = data;
+                    this.settings.sort(this.compare);
+                } catch (e) {
+                    this.error = e;
+                }
             },
             compare(a, b) {
                 let comparison = 0;
@@ -100,7 +109,19 @@
             },
             async saveSetting(setting) {
                 this.loading = true;
-                const { data } = await this.$api.put(`/settings/lit/${setting.key}`, {value: setting.value});
+                try {
+                    const { data } = await this.$api.put(`/settings/lit/${setting.key}`, {value: setting.value});
+                    for (let settingsKey in this.settings) {
+                        if (this.settings.hasOwnProperty(settingsKey)) {
+                            if (this.settings[settingsKey].key === setting.key) {
+                                this.settings[settingsKey] = data;
+                            }
+                        }
+                    }
+                } catch (e) {
+                    const { error } = JSON.parse(e.request.response);
+                    this.fieldErrors[setting.key] = error.errors[0].message;
+                }
                 this.loading = false;
             }
         },
@@ -123,6 +144,13 @@
 
     p {
         font-size: 14px;
+    }
+
+    .input {
+        display: flex;
+        .savebutton {
+            margin-left: 16px;
+        }
     }
 
 
