@@ -13,6 +13,7 @@ import ListRegistrations from './views/user/registration/ListRegistrations';
 import Settings from './views/settings/Settings';
 import SettingsDashboard from './views/settings/SettingsDashboard';
 import SettingsPage from './views/settings/SettingsPage';
+import ViewUser from './views/user/ViewUser';
 
 Vue.use(Router);
 
@@ -33,7 +34,6 @@ export default new Router({
             },
             {
                 path: '/leden',
-                name: 'userDashboard',
                 component: User,
                 beforeEnter: authGuard,
                 meta: {
@@ -49,8 +49,8 @@ export default new Router({
                 },
                 children: [
                     {
-                        path: 'overzicht',
-                        name: 'ledenoverzicht',
+                        path: '',
+                        name: 'userDashboard',
                         component: ListUser,
                         meta: {
                             breadcrumb: [
@@ -67,6 +67,26 @@ export default new Router({
                                 }
                             ],
                         },
+                    },
+                    {
+                        path: ':userId',
+                        name: 'lid-bekijken',
+                        component: ViewUser,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    name: 'Dashboard',
+                                    routeName: 'dashboard',
+                                },
+                                {
+                                    name: 'Leden',
+                                    routeName: 'userDashboard',
+                                },
+                                {
+                                    name: 'Lid'
+                                }
+                            ],
+                        }
                     },
                     {
                         path: 'aanmeldingen',

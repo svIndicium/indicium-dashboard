@@ -20,7 +20,7 @@
             sidebar: [
                 {
                     title: 'leden',
-                    routeName: 'ledenoverzicht'
+                    routeName: 'userDashboard'
                 },
                 {
                     title: 'aanmeldingen',

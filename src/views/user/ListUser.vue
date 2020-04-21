@@ -13,7 +13,7 @@
                 <div v-bind:key="'firstName' + idx">{{user.firstName}}</div>
                 <div v-bind:key="'lastName' + idx">{{getFullLastName(user)}}</div>
                 <div v-bind:key="'status' + idx"><StatusLabel status="success">Actief</StatusLabel></div>
-                <Icon v-bind:key="'actions' + idx" type="pencil" />
+                <router-link v-bind:key="'actions' + idx" :to="{name: 'lid-bekijken', params: {userId: user.userId || user.id}}"><Icon type="pencil" /></router-link>
             </template>
         </div>
         <div v-else>
@@ -95,10 +95,10 @@ export default {
             line-height: 32px;
         }
 
-        span {
+        a {
             font-size: 24px;
-            height: 32px;
-            width: 32px;
+            height: 28px;
+            width: 28px;
         }
     }
 
