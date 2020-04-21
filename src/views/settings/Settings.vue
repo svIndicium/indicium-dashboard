@@ -24,7 +24,7 @@
             sidebar: [
                 {
                     title: 'Instellingen',
-                    routeName: 'instellingendashboard',
+                    routeName: 'instellingenDashboard',
                     children: [
                         {
                             title: 'Ledenadministratie',

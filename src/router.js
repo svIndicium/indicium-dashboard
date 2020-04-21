@@ -181,13 +181,12 @@ export default new Router({
             },
             {
                 path: '/instellingen',
-                name: 'instellingendashboard',
                 component: Settings,
                 beforeEnter: authGuard,
                 children: [
                     {
-                        path: '/',
-                        name: 'instellingenOverzicht',
+                        path: '',
+                        name: 'instellingenDashboard',
                         component: SettingsDashboard,
                         meta: {
                             breadcrumb: [
@@ -213,14 +212,14 @@ export default new Router({
                                 },
                                 {
                                     name: 'Instellingen',
-                                    routeName: 'instellingenOverzicht'
+                                    routeName: 'instellingenDashboard'
                                 },
                             ],
                         },
                     },
                     {
                         path: ':app/:setting',
-                        name: 'instellin',
+                        name: 'instellingen',
                         component: EditSetting,
                         meta: {
                             breadcrumb: [
@@ -230,7 +229,7 @@ export default new Router({
                                 },
                                 {
                                     name: 'Instellingen',
-                                    routeName: 'instellingenOverzicht'
+                                    routeName: 'instellingenDashboard'
                                 },
                             ],
                         },
