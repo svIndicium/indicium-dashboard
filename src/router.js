@@ -137,13 +137,12 @@ export default new Router({
             },
             {
                 path: '/profiel',
-                name: 'profielDashboard',
                 component: Profile,
                 beforeEnter: authGuard,
                 children: [
                     {
-                        path: '/',
-                        name: 'gebruikersprofiel',
+                        path: '',
+                        name: 'profielDashboard',
                         component: ViewProfile,
                         meta: {
                             breadcrumb: [
@@ -169,7 +168,7 @@ export default new Router({
                                 },
                                 {
                                     name: 'Profiel',
-                                    routeName: 'gebruikersprofiel'
+                                    routeName: 'profielDashboard'
                                 },
                                 {
                                     name: 'Mailadressen',
