@@ -83,7 +83,7 @@
         methods: {
             async getUser() {
                 const userId = this.$route.params.userId;
-                const { data } = await this.$api.get(`/user/${userId}`);
+                const { data } = await this.$api.get(`/user/${userId.toString().indexOf('|') !== -1 ? 'a/' : ''}${userId}`);
                 this.user = data;
                 await this.getStudyType();
             },
@@ -93,7 +93,7 @@
             },
             async getMailAddresses() {
                 const userId = this.$route.params.userId;
-                const { data } = await this.$api.get(`/user/${userId}/mailaddresses`);
+                const { data } = await this.$api.get(`/user/${userId.toString().indexOf('|') !== -1 ? 'a/' : ''}${userId}/mailaddresses`);
                 this.mailAddresses = data;
             },
             getMonthAsString(currentMonth) {
