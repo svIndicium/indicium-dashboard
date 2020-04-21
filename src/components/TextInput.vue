@@ -27,6 +27,7 @@
         border: 2px var(--indi-grey) solid;
         padding: 8px 16px;
         border-radius: 8px;
+        color: var(--text-color);
 
         &:focus {
             border: 2px var(--indi-blue) solid;
@@ -34,13 +35,13 @@
         }
 
         &.error {
-            border: 2px #E07272 solid;
+            border: 2px var(--indi-error) solid;
         }
     }
 
     .error-message {
         margin-left: 16px;
-        color: #E07272;
+        color: var(--indi-error);
         font-size: 12px;
     }
 </style>
