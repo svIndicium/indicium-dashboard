@@ -54,6 +54,15 @@
                 </div>
             </div>
         </div>
+        <div v-else>
+            <div class="errorcontainer">
+                <Icon type="alert-circle" class="icon" />
+                <span class="message">
+                    {{ errorMessage }}
+                </span>
+            </div>
+            <Button :callback="getUsers" size="l" class="button"><Icon type="refresh" class="buttonicon" />Probeer opnieuw</Button>
+        </div>
     </div>
 </template>
 
@@ -76,7 +85,7 @@
                 const userId = this.$route.params.userId;
                 const { data } = await this.$api.get(`/user/${userId}`);
                 this.user = data;
-                this.getStudyType();
+                await this.getStudyType();
             },
             async getStudyType() {
                 const { data } = await this.$api.get(`/studytype/${this.user.studyTypeId}`);
@@ -116,8 +125,12 @@
         },
         async created() {
             this.loading = true;
-            await this.getUser();
-            await this.getMailAddresses();
+            try {
+                await this.getUser();
+                await this.getMailAddresses();
+            } catch (e) {
+                this.error = e;
+            }
             this.loading = false;
         },
         computed: {
@@ -156,6 +169,12 @@
                     }
                 }
                 return false;
+            },
+            errorMessage() {
+                if (this.error.message === 'Network Error') {
+                    return 'Netwerk fout';
+                }
+                return this.error.message;
             }
         },
     };
@@ -237,5 +256,33 @@
             }
             flex-wrap: wrap;
         }
+    }
+
+    .errorcontainer {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        color: var(--indi-warning);
+
+        .icon {
+            width: 32px;
+            height: 32px;
+            font-size: 32px;
+        }
+
+        .message {
+            padding-left: 8px;
+        }
+    }
+
+    .button {
+        margin-top: 16px;
+        .buttonicon {
+            font-size: 16px;
+            width: 20px;
+            height: 20px;
+            padding-right: 4px;
+        }
+
     }
 </style>
