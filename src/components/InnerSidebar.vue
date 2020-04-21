@@ -5,8 +5,8 @@
             <div class="menu-items">
                 <template v-for="(item, idx) in content">
                     <InnerSidebarItem  :key="idx" :title="item.title" :route-name="item.routeName" :params="item.params" />
-                    <template v-for="(child, idx) in item.children">
-                        <InnerSidebarItem  :key="idx" :title="child.title" :route-name="child.routeName" :child="true" :params="child.params" />
+                    <template v-for="(child, idx1) in item.children">
+                        <InnerSidebarItem  :key="item.title + idx1" :title="child.title" :route-name="child.routeName" :child="true" :params="child.params" />
                     </template>
                 </template>
             </div>
