@@ -200,6 +200,8 @@
     .button {
         margin-top: 16px;
         .buttonicon {
+            width: 20px;
+            height: 20px;
             font-size: 16px;
             padding-right: 4px;
         }

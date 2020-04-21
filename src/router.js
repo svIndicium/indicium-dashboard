@@ -13,7 +13,6 @@ import ListRegistrations from './views/user/registration/ListRegistrations';
 import Settings from './views/settings/Settings';
 import SettingsDashboard from './views/settings/SettingsDashboard';
 import SettingsPage from './views/settings/SettingsPage';
-import EditSetting from './views/settings/EditSetting';
 
 Vue.use(Router);
 
@@ -203,23 +202,6 @@ export default new Router({
                         path: ':app',
                         name: 'appInstellingen',
                         component: SettingsPage,
-                        meta: {
-                            breadcrumb: [
-                                {
-                                    name: 'Dashboard',
-                                    routeName: 'dashboard',
-                                },
-                                {
-                                    name: 'Instellingen',
-                                    routeName: 'instellingenDashboard'
-                                },
-                            ],
-                        },
-                    },
-                    {
-                        path: ':app/:setting',
-                        name: 'instellingen',
-                        component: EditSetting,
                         meta: {
                             breadcrumb: [
                                 {

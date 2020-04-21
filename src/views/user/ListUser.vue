@@ -98,6 +98,7 @@ export default {
         span {
             font-size: 24px;
             height: 32px;
+            width: 32px;
         }
     }
 
@@ -122,6 +123,8 @@ export default {
     margin-top: 16px;
     .buttonicon {
         font-size: 16px;
+        width: 20px;
+        height: 20px;
         padding-right: 4px;
     }
 

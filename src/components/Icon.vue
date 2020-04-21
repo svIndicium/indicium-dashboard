@@ -1,5 +1,9 @@
 <template>
-    <span :class="['ti', `ti-${type}`]"></span>
+    <span class="ti">
+        <svg width="100%" height="100%">
+            <use v-bind:xlink:href="`/tabler-sprite.svg#tabler-${type}`" />
+        </svg>
+    </span>
 </template>
 
 <script>

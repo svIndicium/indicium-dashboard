@@ -84,6 +84,7 @@
             span.ti {
                 font-size: 28px;
                 padding: 0 4px;
+                width: 36px;
             }
             img {
                 width: 36px;
