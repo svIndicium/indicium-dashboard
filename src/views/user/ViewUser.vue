@@ -115,8 +115,10 @@
             },
         },
         async created() {
+            this.loading = true;
             await this.getUser();
             await this.getMailAddresses();
+            this.loading = false;
         },
         computed: {
             fullName() {
