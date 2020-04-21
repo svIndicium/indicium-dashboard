@@ -50,5 +50,6 @@
         width: 100%;
         border-radius: 8px;
         padding: 24px;
+        overflow-y: auto;
     }
 </style>
