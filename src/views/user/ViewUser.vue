@@ -1,56 +1,58 @@
 <template>
-    <div v-if="!!this.user">
-        <div class="action-buttons">
-            <Button size="l" :url="whatsAppLink" class="contact-button"><Icon type="message" class="buttonicon" />Stuur Whatsapp bericht</Button>
-            <Button size="l" :url="mailtoLink" class="contact-button"><Icon type="mail" class="buttonicon" />Stuur email</Button>
+    <div>
+        <div v-if="loading">
+            <Loading />
         </div>
-
-        <div class="section">
-            <h3 class="section-header">Contact informatie</h3>
-            <div class="section-entry">
-                <p class="key">Telefoonnummer</p>
-                <p class="value">{{this.prettyPhoneNumber}}</p>
+        <div v-else-if="!error">
+            <h2>{{fullName}}</h2>
+            <div class="action-buttons">
+                <Button size="l" :url="whatsAppLink" class="contact-button"><Icon type="message" class="buttonicon" />Stuur Whatsapp bericht</Button>
+                <Button size="l" :url="mailtoLink" class="contact-button"><Icon type="mail" class="buttonicon" />Stuur email</Button>
             </div>
-            <div v-for="(mailAddress, index) in this.mailAddresses" :key="index">
+            <div class="section">
+                <h3 class="section-header">Contact informatie</h3>
                 <div class="section-entry">
-                    <p class="key">Primaire e-mailadres</p>
-                    <p :class="['value', mailAddress.verifiedAt !== null ? '' : 'error']">{{mailAddress.address}}</p>
+                    <p class="key">Telefoonnummer</p>
+                    <p class="value">{{this.prettyPhoneNumber}}</p>
                 </div>
-                <div class="section-entry" v-if="mailAddress.verifiedAt === null">
-                    <p class="key">Verificatie aangevraagd op</p>
-                    <p class="value">{{getPrettyDateTime(mailAddress.verificationRequestedAt)}}</p>
-                </div>
-                <div class="action-buttons">
-                    <Button size="l" v-if="mailAddress.verifiedAt === null">Request new verification</Button>
+                <div v-for="(mailAddress, index) in this.mailAddresses" :key="index">
+                    <div class="section-entry">
+                        <p class="key">Primaire e-mailadres</p>
+                        <p :class="['value', mailAddress.verifiedAt !== null ? '' : 'error']">{{mailAddress.address}}</p>
+                    </div>
+                    <div class="section-entry" v-if="mailAddress.verifiedAt === null">
+                        <p class="key">Verificatie aangevraagd op</p>
+                        <p class="value">{{getPrettyDateTime(mailAddress.verificationRequestedAt)}}</p>
+                    </div>
+                    <div class="action-buttons">
+                        <Button size="l" v-if="mailAddress.verifiedAt === null">Request new verification</Button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="section">
-            <h3 class="section-header">Lidmaatschap informatie</h3>
-            <div class="section-entry">
-                <p class="key">Lid sinds</p>
-                <p class="value">1 september 2019</p>
+            <div class="section">
+                <h3 class="section-header">Lidmaatschap informatie</h3>
+                <div class="section-entry">
+                    <p class="key">Lid sinds</p>
+                    <p class="value">1 september 2019</p>
+                </div>
+                <div class="section-entry">
+                    <p class="key">Ontvangt nieuwsbrief</p>
+                    <p class="value">{{receivesNewsletter ? 'Ja' : 'Nee'}}</p>
+                </div>
             </div>
-            <div class="section-entry">
-                <p class="key">Ontvangt nieuwsbrief</p>
-                <p class="value">{{receivesNewsletter ? 'Ja' : 'Nee'}}</p>
-            </div>
-        </div>
 
-        <div class="section">
-            <h3 class="section-header">Persoonlijke informatie</h3>
-            <div class="section-entry">
-                <p class="key">Geboortedatum</p>
-                <p class="value">{{this.getPrettyDate(this.user.dateOfBirth)}}</p>
+            <div class="section">
+                <h3 class="section-header">Persoonlijke informatie</h3>
+                <div class="section-entry">
+                    <p class="key">Geboortedatum</p>
+                    <p class="value">{{this.getPrettyDate(this.user.dateOfBirth)}}</p>
+                </div>
+                <div class="section-entry" v-if="!!user.studyType">
+                    <p class="key">Studierichting</p>
+                    <p class="value">{{this.user.studyType.name}}</p>
+                </div>
             </div>
-            <div class="section-entry" v-if="!!user.studyType">
-                <p class="key">Studierichting</p>
-                <p class="value">{{this.user.studyType.name}}</p>
-            </div>
-        </div>
-        <div class="backbutton" @click="$router.go(-1)">
-            <Icon type="arrow-left" /> Terug
         </div>
     </div>
 </template>
@@ -58,18 +60,21 @@
 <script>
     import Button from '../../components/button.vue';
     import Icon from '../../components/Icon.vue';
+    import Loading from '../../components/Loading.vue';
 
     export default {
         name: 'ViewUser',
-        components: { Button, Icon },
-        props: ['userId'],
+        components: { Button, Icon, Loading },
         data: () => ({
+            loading: false,
+            error: null,
             user: {},
             mailAddresses: []
         }),
         methods: {
             async getUser() {
-                const { data } = await this.$api.get(`/user/${this.userId}`);
+                const userId = this.$route.params.userId;
+                const { data } = await this.$api.get(`/user/${userId}`);
                 this.user = data;
                 this.getStudyType();
             },
@@ -78,7 +83,8 @@
                 this.user.studyType = data;
             },
             async getMailAddresses() {
-                const { data } = await this.$api.get(`/user/${this.userId}/mailaddresses`);
+                const userId = this.$route.params.userId;
+                const { data } = await this.$api.get(`/user/${userId}/mailaddresses`);
                 this.mailAddresses = data;
             },
             getMonthAsString(currentMonth) {
