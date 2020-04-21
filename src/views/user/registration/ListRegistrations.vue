@@ -8,6 +8,7 @@
             <div class="header">Voornaam</div>
             <div class="header">Achternaam</div>
             <div class="header">Status</div>
+            <div class="header">Acties</div>
             <template v-for="(registration, idx) in registrations">
                 <div v-bind:key="'firstName' + idx">{{registration.firstName}}</div>
                 <div v-bind:key="'lastName' + idx">{{getFullLastName(registration)}}</div>
@@ -16,6 +17,9 @@
                     <StatusLabel status="error" v-else-if="registration.finalizedAt === undefined">Wachtend op instemming</StatusLabel>
                     <StatusLabel status="success" v-else-if="registration.approved">Ingestemd</StatusLabel>
                     <StatusLabel status="error" v-else>Weggestemd</StatusLabel>
+                </div>
+                <div v-bind:key="'acties' + idx">
+                    <router-link v-bind:key="'actions' + idx" :to="{name: 'aanmelding-bekijken', params: {registrationId: registration.id}}"><Icon type="pencil" /></router-link>
                 </div>
             </template>
         </div>
@@ -35,12 +39,15 @@
     import Loading from '../../../components/Loading';
     import Icon from '../../../components/Icon';
     import StatusLabel from '../../../components/StatusLabel';
+    import Button from '../../../components/button';
+
     export default {
         name: 'ListRegistrations',
         components: {
             Loading,
             Icon,
             StatusLabel,
+            Button,
         },
         data: () => ({
             registrations: null,
@@ -77,7 +84,7 @@
     .table-container {
         max-width: 700px;
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 32px;
         grid-template-rows: repeat(5, 32px);
         align-items: stretch;
 

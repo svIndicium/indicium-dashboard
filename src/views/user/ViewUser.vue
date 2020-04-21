@@ -182,17 +182,6 @@
 </script>
 
 <style lang="scss" scoped>
-    .title {
-        font-weight: normal;
-        font-size: 24px;
-    }
-
-    .subtitle {
-        color: #72c9e0;
-        font-size: 16px;
-        margin-bottom: 36px;
-    }
-
     .contact-button {
         margin-bottom: 16px;
         .buttonicon {

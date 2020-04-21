@@ -14,6 +14,7 @@ import Settings from './views/settings/Settings';
 import SettingsDashboard from './views/settings/SettingsDashboard';
 import SettingsPage from './views/settings/SettingsPage';
 import ViewUser from './views/user/ViewUser';
+import ViewRegistration from './views/user/registration/ViewRegistration';
 
 Vue.use(Router);
 
@@ -69,26 +70,6 @@ export default new Router({
                         },
                     },
                     {
-                        path: ':userId',
-                        name: 'lid-bekijken',
-                        component: ViewUser,
-                        meta: {
-                            breadcrumb: [
-                                {
-                                    name: 'Dashboard',
-                                    routeName: 'dashboard',
-                                },
-                                {
-                                    name: 'Leden',
-                                    routeName: 'userDashboard',
-                                },
-                                {
-                                    name: 'Lid'
-                                }
-                            ],
-                        }
-                    },
-                    {
                         path: 'aanmeldingen',
                         name: 'aanmeldingenoverzicht',
                         component: ListRegistrations,
@@ -107,6 +88,30 @@ export default new Router({
                                 }
                             ],
                         },
+                    },
+                    {
+                        path: 'aanmeldingen/:registrationId',
+                        name: 'aanmelding-bekijken',
+                        component: ViewRegistration,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    name: 'Dashboard',
+                                    routeName: 'dashboard',
+                                },
+                                {
+                                    name: 'Leden',
+                                    routeName: 'userDashboard',
+                                },
+                                {
+                                    name: 'Aanmeldingen',
+                                    routeName: 'aanmeldingenoverzicht'
+                                },
+                                {
+                                    name: 'Aanmelding'
+                                }
+                            ],
+                        }
                     },
                     {
                         path: 'studierichtingen',
@@ -151,7 +156,27 @@ export default new Router({
                                 }
                             ],
                         }
-                    }
+                    },
+                    {
+                        path: ':userId',
+                        name: 'lid-bekijken',
+                        component: ViewUser,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    name: 'Dashboard',
+                                    routeName: 'dashboard',
+                                },
+                                {
+                                    name: 'Leden',
+                                    routeName: 'userDashboard',
+                                },
+                                {
+                                    name: 'Lid'
+                                }
+                            ],
+                        }
+                    },
                 ]
             },
             {

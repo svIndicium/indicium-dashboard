@@ -1,36 +1,87 @@
 <template>
     <div>
-        <div v-if="!!this.registration">
-            {{this.registration}}
-            <h4>{{fullName}}</h4>
-            <h5>E-mailadres</h5>
-            <a :href="mailtoLink">{{this.registration.mailAddress}}</a> <div>{{!!this.registration.verifiedAt ? 'Bevestigd' : 'Nog niet bevestigd'}}</div>
-            <h5>Telefoonnummer</h5>
-            <p>{{this.registration.phoneNumber}}</p>
-            <h5>Geboortedatum</h5>
-            <p>{{dateOfBirth}}</p>
-            <h5>Afstudeerrichting</h5>
-            <p>{{this.registration.studyType.name}}</p>
-            <h5>Ontvangt nieuwsbrief?</h5>
-            <p>{{this.registration.toReceiveNewsletter ? 'Ja' : 'Nee'}}</p>
-            <h5>Aangemeld op</h5>
-            <p>{{dateOfRegistration}}</p>
-            <h5>Laatst bijgewerkt op</h5>
-            <p>{{dateOfLastUpdate}}</p>
-            <div v-if="finalized">
-                <h5>Beoordeeld op</h5>
-                <p>{{dateOfFinalization}}</p>
-                <h5>Beoordeeld door</h5>
-                <p>{{this.registration.finalizedBy}}</p>
-                <div v-if="!this.registration.approved">
-                    <h5>Reden van afwijzing</h5>
-                    <p>{{this.registration.comment}}</p>
+        <div v-if="loading">
+            <Loading />
+        </div>
+        <div v-else-if="!error">
+            <h2>{{fullName}}</h2>
+            <StatusLabel status="warning" v-if="registration.finalizedAt === undefined && registration.verifiedAt === undefined">Wachtend op mailverificatie</StatusLabel>
+            <StatusLabel status="error" v-else-if="registration.finalizedAt === undefined">Wachtend op instemming</StatusLabel>
+            <StatusLabel status="success" v-else-if="registration.approved">Ingestemd</StatusLabel>
+            <StatusLabel status="error" v-else>Weggestemd</StatusLabel>
+            <div class="action-buttons">
+                <Button size="l" :url="whatsAppLink" class="contact-button"><Icon type="message" class="buttonicon" />Stuur Whatsapp bericht</Button>
+                <Button size="l" :url="mailtoLink" class="contact-button"><Icon type="mail" class="buttonicon" />Stuur email</Button>
+            </div>
+            <div class="section">
+                <h3 class="section-header">Contact informatie</h3>
+                <div class="section-entry">
+                    <p class="key">Telefoonnummer</p>
+                    <p class="value">{{this.prettyPhoneNumber}}</p>
+                </div>
+                <div class="section-entry">
+                    <p class="key">Emailadres</p>
+                    <p :class="['value', registration.verifiedAt !== null ? '' : 'error']">{{registration.mailAddress}}</p>
+                </div>
+                <div class="section-entry">
+                    <p class="key">Wilt nieuwsbrief ontvangen</p>
+                    <p class="value">{{registration.toReceiveNewsletter ? 'Ja' : 'Nee'}}</p>
                 </div>
             </div>
-            <TextInput placeholder="Reden van afwijzing" v-model="reason" v-if="!finalized"></TextInput>
-            <Button size="m" url="/leden">Terug</Button>
-            <Button size="m" :callback="approveRegistration" v-if="!finalized">Stem lid in</Button>
-            <Button size="m" :callback="denyRegistration" v-if="!finalized">Stem lid weg</Button>
+            <div class="section">
+                <h3 class="section-header">Persoonlijke informatie</h3>
+                <div class="section-entry">
+                    <p class="key">Geboortedatum</p>
+                    <p class="value">{{dateOfBirth}}</p>
+                </div>
+                <div class="section-entry" v-if="!!registration.studyType">
+                    <p class="key">Studierichting</p>
+                    <p class="value">{{this.registration.studyType.name}}</p>
+                </div>
+            </div>
+            <div class="section">
+                <h3 class="section-header">Aanmeldings informatie</h3>
+                <div class="section-entry">
+                    <p class="key">Datum van aamelding</p>
+                    <p class="value">{{this.getPrettyDateTime(this.registration.created)}}</p>
+                </div>
+                <div class="section-entry" v-if="!this.registration.verifiedAt">
+                    <p class="key error">Mailadres bevestigd op</p>
+                    <p class="value error">Nog niet bevestigd</p>
+                </div>
+                <div class="section-entry" v-else>
+                    <p class="key">Mailadres bevestigd op</p>
+                    <p class="value">{{this.getPrettyDateTime(this.registration.verifiedAt)}}</p>
+                </div>
+                <div class="section-entry" v-if="finalized">
+                    <p class="key">Beoordeeld op</p>
+                    <p class="value">{{this.getPrettyDateTime(this.registration.finalizedAt)}}</p>
+                </div>
+                <div class="section-entry" v-if="finalized && !this.registration.approved">
+                    <p class="key">Reden van wegstemming</p>
+                    <p class="value">{{this.registration.reason}}</p>
+                </div>
+                <div class="section-entry" v-if="finalized">
+                    <p class="key">Resultaat</p>
+                    <p class="value">{{this.registration.approved ? 'Ingestemd' : 'Weggestemd'}}</p>
+                </div>
+                <div class="section-entry" v-if="!!this.registration.reason">
+                    <p class="key">Reden</p>
+                    <p class="value">{{this.registration.reason}}</p>
+                </div>
+            </div>
+            <TextInput placeholder="Reden" v-model="reason" v-if="!finalized" class="reason"></TextInput>
+            <Button size="m" :callback="approveRegistration" v-if="!finalized" class="finalbutton button"><Icon type="user-check" class="buttonicon" />Stem in</Button>
+            <Button size="m" :callback="denyRegistration" v-if="!finalized" class="finalbutton button"><Icon type="user-x" class="buttonicon" />Stem weg</Button>
+        </div>
+        <div v-else>
+            <div class="errorcontainer">
+                <Icon type="alert-circle" class="icon" />
+                <span class="message">
+                    {{ errorMessage }}
+                </span>
+            </div>
+            <Button :callback="getRegistration" size="l" class="button"><Icon type="refresh" class="buttonicon" />Probeer opnieuw</Button>
         </div>
     </div>
 </template>
@@ -38,20 +89,34 @@
 <script>
     import Button from '../../../components/button.vue';
     import TextInput from '../../../components/TextInput';
+    import Loading from '../../../components/Loading';
+    import Icon from '../../../components/Icon';
+    import StatusLabel from '../../../components/StatusLabel';
+
     export default {
         name: 'ViewRegistration',
-        components: { TextInput, Button },
-        props: ['registrationId'],
+        components: { StatusLabel, TextInput, Button, Loading, Icon },
         data: () => ({
-            registration: null,
+            registration: {},
             reason: '',
-            loading: true
+            loading: false,
+            error: null,
         }),
         methods: {
             async getRegistration() {
-                const { data } = await this.$api.get(`/registration/${this.registrationId}`);
-                this.registration = data;
-                this.loading = false;
+                this.error = null;
+                try {
+                    const registrationId = this.$route.params.registrationId;
+                    const { data } = await this.$api.get(`/registration/${registrationId}`);
+                    this.registration = data;
+                    await this.getStudyType();
+                } catch (e) {
+                    this.error = e;
+                }
+            },
+            async getStudyType() {
+                const { data } = await this.$api.get(`/studytype/${this.registration.studyTypeId}`);
+                this.registration.studyType = data;
             },
             getMonthAsString(currentMonth) {
                 const monthList = [
@@ -71,9 +136,13 @@
 
                 return monthList[currentMonth];
             },
-            convertDateStringToDate(dateString) {
+            getPrettyDateTime(dateString) {
                 const date = new Date(dateString);
-                return `${date.getDate()} ${this.getMonthAsString(date.getMonth())} ${date.getFullYear()}`;
+                return `${this.getPrettyDate(dateString)} ${date.getUTCHours()}:${date.getUTCMinutes()}`;
+            },
+            getPrettyDate(dateString) {
+                const date = new Date(dateString);
+                return `${date.getUTCDate()} ${this.getMonthAsString(date.getUTCMonth())} ${date.getUTCFullYear()}`;
             },
             async approveRegistration() {
                 this.loading = true;
@@ -89,48 +158,141 @@
             }
         },
         async created() {
+            this.loading = true;
             await this.getRegistration();
+            this.loading = false;
         },
         computed: {
             mailtoLink() {
-                return `mailto:${this.registration.email}`;
+                return `mailto:${this.registration.mailAddress}`;
             },
             dateOfBirth() {
-                return this.convertDateStringToDate(this.registration.dateOfBirth)
+                return this.getPrettyDate(this.registration.dateOfBirth)
             },
-            dateOfRegistration() {
-                return this.convertDateStringToDate(this.registration.created)
+            prettyPhoneNumber() {
+                if (this.registration.phoneNumber === undefined) return "";
+                const phoneNumber = this.registration.phoneNumber;
+                return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(3, 4)} ${phoneNumber.slice(4, 6)} ${phoneNumber.slice(6, 8)} ${phoneNumber.slice(8, 10)} ${phoneNumber.slice(10, 12)}`;
             },
-            dateOfLastUpdate() {
-                return this.convertDateStringToDate(this.registration.updated)
-            },
-            dateOfFinalization() {
-                return this.convertDateStringToDate(this.registration.finalizedAt)
-            },
-            finalized() {
-                return !!this.registration.finalizedAt;
+            whatsAppLink() {
+                if (this.registration.phoneNumber === undefined) return "";
+                return `https://wa.me/${this.registration.phoneNumber.replace("+", "")}`;
             },
             fullName() {
                 if (this.registration.middleName) {
                     return `${this.registration.firstName} ${this.registration.middleName} ${this.registration.lastName}`;
                 }
                 return `${this.registration.firstName} ${this.registration.lastName}`;
+            },
+            finalized() {
+                return !!this.registration.finalizedAt;
             }
         }
     };
 </script>
 
 <style lang="scss" scoped>
-p, a {
-    font-weight: bold;
-}
+    .reason {
+        margin-top: 16px;
+        margin-bottom: 8px;
+    }
 
-h5 {
-    margin-top: 4px;
-    font-weight: normal;
-}
+    .finalbutton {
+        margin-right: 8px;
+    }
 
-    Button {
-        margin-left: 8px;
+    .contact-button {
+        margin-top: 16px;
+        margin-bottom: 16px;
+        .buttonicon {
+            width: 20px;
+            height: 20px;
+            font-size: 16px;
+            padding-right: 4px;
+        }
+    }
+
+    .section {
+        max-width: 600px;
+
+        .section-header {
+            margin-top: 24px;
+            font-weight: 300;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+
+        .section-entry {
+            padding-top: 8px;
+            font-size: 20px;
+            display: flex;
+            justify-content: space-between;
+            .key {
+            }
+
+            .value {
+                font-weight: 300;
+            }
+
+            .error {
+                color: var(--indi-error);
+            }
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+    }
+
+    .backbutton {
+        margin-top: 16px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: flex-start;
+        a {
+            margin-right: 16px;
+        }
+
+        @media screen and (max-width: 898px) {
+            a {
+                margin-right: 0;
+                width: 100%;
+            }
+            flex-wrap: wrap;
+        }
+    }
+
+    .errorcontainer {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        color: var(--indi-warning);
+
+        .icon {
+            width: 32px;
+            height: 32px;
+            font-size: 32px;
+        }
+
+        .message {
+            padding-left: 8px;
+        }
+    }
+
+    .button {
+        margin-top: 16px;
+        .buttonicon {
+            font-size: 16px;
+            width: 24px;
+            height: 24px;
+            padding-right: 4px;
+        }
+
     }
 </style>
