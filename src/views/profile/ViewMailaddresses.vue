@@ -53,8 +53,12 @@
         }),
         methods: {
             async getMailAddresses() {
-                const { data } = await this.$api.get('/user/userinfo/mailaddresses');
-                this.mailaddresses = data;
+                try {
+                    const { data } = await this.$api.get('/user/userinfo/mailaddresses');
+                    this.mailaddresses = data;
+                } catch (e) {
+                    this.error = e;
+                }
             },
             getPrettyDateTime(dateString) {
                 const date = new Date(dateString);
