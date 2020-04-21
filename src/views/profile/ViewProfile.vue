@@ -81,7 +81,7 @@
             },
             async getUserFromService() {
                 try {
-                    const { data } = await this.$api.get('/user/3');
+                    const { data } = await this.$api.get('/user/userinfo');
                     this.user = { ...this.user, ...data };
                     await this.getStudyType();
                 } catch (e) {
