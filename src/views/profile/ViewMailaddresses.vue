@@ -62,31 +62,8 @@
                 }
             },
             getPrettyDateTime(dateString) {
-                const date = new Date(dateString);
-                return `${this.getPrettyDate(dateString)} ${date.getHours()}:${date.getSeconds()}`;
-            },
-            getPrettyDate(dateString) {
-                const date = new Date(dateString);
-                return `${date.getDate()} ${this.getMonthAsString(date.getMonth())} ${date.getFullYear()}`;
-            },
-            getMonthAsString(currentMonth) {
-                const monthList = [
-                    'januari',
-                    'februari',
-                    'maart',
-                    'april',
-                    'mei',
-                    'juni',
-                    'juli',
-                    'augustus',
-                    'september',
-                    'oktober',
-                    'november',
-                    'december',
-                ];
-
-                return monthList[currentMonth];
-            },
+                return this.$utils.getPrettyDateTime(dateString);
+            }
         },
         async created() {
             await this.getMailAddresses();

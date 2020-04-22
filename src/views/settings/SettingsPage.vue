@@ -80,33 +80,7 @@
             },
             getUpdatedMessage(setting) {
                 if (setting.updatedAt === null || setting.updatedBy === null) return 'Deze instelling is nooit aangepast.';
-                return `Voor het laatst aangepast op ${this.getPrettyDateTime(setting.updatedAt)} door ${setting.updatedBy}`;
-            },
-            getMonthAsString(currentMonth) {
-                const monthList = [
-                    'januari',
-                    'februari',
-                    'maart',
-                    'april',
-                    'mei',
-                    'juni',
-                    'juli',
-                    'augustus',
-                    'september',
-                    'oktober',
-                    'november',
-                    'december',
-                ];
-
-                return monthList[currentMonth];
-            },
-            getPrettyDateTime(dateString) {
-                const date = new Date(dateString);
-                return `${this.getPrettyDate(dateString)} ${date.getHours()}:${date.getSeconds()}`;
-            },
-            getPrettyDate(dateString) {
-                const date = new Date(dateString);
-                return `${date.getDate()} ${this.getMonthAsString(date.getMonth())} ${date.getFullYear()}`;
+                return `Voor het laatst aangepast op ${this.$utils.getPrettyDateTime(setting.updatedAt)} door ${setting.updatedBy}`;
             },
             async saveSetting(setting) {
                 this.loading = true;

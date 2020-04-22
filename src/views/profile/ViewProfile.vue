@@ -17,7 +17,7 @@
                 </div>
                 <div class="section-entry">
                     <p class="key">Geboortedatum</p>
-                    <p class="value">{{this.getPrettyDate(this.user.dateOfBirth)}}</p>
+                    <p class="value">{{this.$utils.getPrettyDate(this.user.dateOfBirth)}}</p>
                 </div>
             </div>
             <div class="section">
@@ -31,7 +31,7 @@
                 <h3 class="section-header">Contact informatie</h3>
                 <div class="section-entry">
                     <p class="key">Telefoonnummer</p>
-                    <p class="value">{{prettyPhoneNumber}}</p>
+                    <p class="value">{{this.$utils.getPrettyPhoneNumber(this.user.phoneNumber)}}</p>
                 </div>
                 <div class="section-entry">
                     <p class="key">Primaire e-mailadres</p>
@@ -42,7 +42,7 @@
                 <h3 class="section-header">Profiel informatie</h3>
                 <div class="section-entry">
                     <p class="key">Laatst bewerkt op</p>
-                    <p class="value">{{this.getPrettyDateTime(this.user.updated_at)}}</p>
+                    <p class="value">{{this.$utils.getPrettyDateTime(this.user.updated_at)}}</p>
                 </div>
             </div>
         </div>
@@ -93,32 +93,6 @@
                 const { data } = await this.$api.get(`/studytype/${this.user.studyTypeId}`);
                 this.user.studyType = data;
             },
-            getMonthAsString(currentMonth) {
-                const monthList = [
-                    'januari',
-                    'februari',
-                    'maart',
-                    'april',
-                    'mei',
-                    'juni',
-                    'juli',
-                    'augustus',
-                    'september',
-                    'oktober',
-                    'november',
-                    'december',
-                ];
-
-                return monthList[currentMonth];
-            },
-            getPrettyDateTime(dateString) {
-                const date = new Date(dateString);
-                return `${this.getPrettyDate(dateString)} ${date.getUTCHours()}:${date.getUTCSeconds()}`;
-            },
-            getPrettyDate(dateString) {
-                const date = new Date(dateString);
-                return `${date.getUTCDate()} ${this.getMonthAsString(date.getUTCMonth())} ${date.getFullYear()}`;
-            },
         },
         async mounted() {
             this.loading = true;
@@ -127,11 +101,6 @@
             this.loading = false;
         },
         computed: {
-            prettyPhoneNumber() {
-                if (this.user.phoneNumber === undefined) return "";
-                const phoneNumber = this.user.phoneNumber;
-                return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(3, 4)} ${phoneNumber.slice(4, 6)} ${phoneNumber.slice(6, 8)} ${phoneNumber.slice(8, 10)} ${phoneNumber.slice(10, 12)}`;
-            },
             errorMessage() {
                 // if (this.error.message === 'Network Error') {
                 //     return 'Netwerk fout';

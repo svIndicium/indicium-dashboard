@@ -17,7 +17,7 @@
                 <h3 class="section-header">Contact informatie</h3>
                 <div class="section-entry">
                     <p class="key">Telefoonnummer</p>
-                    <p class="value">{{this.prettyPhoneNumber}}</p>
+                    <p class="value">{{this.$utils.getPrettyPhoneNumber(this.registration.phoneNumber)}}</p>
                 </div>
                 <div class="section-entry">
                     <p class="key">Emailadres</p>
@@ -43,7 +43,7 @@
                 <h3 class="section-header">Aanmeldings informatie</h3>
                 <div class="section-entry">
                     <p class="key">Datum van aamelding</p>
-                    <p class="value">{{this.getPrettyDateTime(this.registration.created)}}</p>
+                    <p class="value">{{this.$utils.getPrettyDateTime(this.registration.created)}}</p>
                 </div>
                 <div class="section-entry" v-if="!this.registration.verifiedAt">
                     <p class="key error">Mailadres bevestigd op</p>
@@ -51,11 +51,11 @@
                 </div>
                 <div class="section-entry" v-else>
                     <p class="key">Mailadres bevestigd op</p>
-                    <p class="value">{{this.getPrettyDateTime(this.registration.verifiedAt)}}</p>
+                    <p class="value">{{this.$utils.getPrettyDateTime(this.registration.verifiedAt)}}</p>
                 </div>
                 <div class="section-entry" v-if="finalized">
                     <p class="key">Beoordeeld op</p>
-                    <p class="value">{{this.getPrettyDateTime(this.registration.finalizedAt)}}</p>
+                    <p class="value">{{this.$utils.getPrettyDateTime(this.registration.finalizedAt)}}</p>
                 </div>
                 <div class="section-entry" v-if="finalized">
                     <p class="key">Resultaat</p>
@@ -115,32 +115,6 @@
                 const { data } = await this.$api.get(`/studytype/${this.registration.studyTypeId}`);
                 this.registration.studyType = data;
             },
-            getMonthAsString(currentMonth) {
-                const monthList = [
-                    'januari',
-                    'februari',
-                    'maart',
-                    'april',
-                    'mei',
-                    'juni',
-                    'juli',
-                    'augustus',
-                    'september',
-                    'oktober',
-                    'november',
-                    'december',
-                ];
-
-                return monthList[currentMonth];
-            },
-            getPrettyDateTime(dateString) {
-                const date = new Date(dateString);
-                return `${this.getPrettyDate(dateString)} ${date.getUTCHours()}:${date.getUTCMinutes()}`;
-            },
-            getPrettyDate(dateString) {
-                const date = new Date(dateString);
-                return `${date.getUTCDate()} ${this.getMonthAsString(date.getUTCMonth())} ${date.getUTCFullYear()}`;
-            },
             async approveRegistration() {
                 this.loading = true;
                 try {
@@ -174,12 +148,7 @@
                 return `mailto:${this.registration.mailAddress}`;
             },
             dateOfBirth() {
-                return this.getPrettyDate(this.registration.dateOfBirth)
-            },
-            prettyPhoneNumber() {
-                if (this.registration.phoneNumber === undefined) return "";
-                const phoneNumber = this.registration.phoneNumber;
-                return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(3, 4)} ${phoneNumber.slice(4, 6)} ${phoneNumber.slice(6, 8)} ${phoneNumber.slice(8, 10)} ${phoneNumber.slice(10, 12)}`;
+                return this.$utils.getPrettyDate(this.registration.dateOfBirth)
             },
             whatsAppLink() {
                 if (this.registration.phoneNumber === undefined) return "";

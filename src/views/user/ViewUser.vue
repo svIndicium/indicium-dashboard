@@ -13,7 +13,7 @@
                 <h3 class="section-header">Contact informatie</h3>
                 <div class="section-entry">
                     <p class="key">Telefoonnummer</p>
-                    <p class="value">{{this.prettyPhoneNumber}}</p>
+                    <p class="value">{{this.$utils.getPrettyPhoneNumber(this.user.phoneNumber)}}</p>
                 </div>
                 <div v-for="(mailAddress, index) in this.mailAddresses" :key="index">
                     <div class="section-entry">
@@ -22,7 +22,7 @@
                     </div>
                     <div class="section-entry" v-if="mailAddress.verifiedAt === null">
                         <p class="key">Verificatie aangevraagd op</p>
-                        <p class="value">{{getPrettyDateTime(mailAddress.verificationRequestedAt)}}</p>
+                        <p class="value">{{this.$utils.getPrettyDateTime(mailAddress.verificationRequestedAt)}}</p>
                     </div>
                     <div class="action-buttons">
                         <Button size="l" v-if="mailAddress.verifiedAt === null">Request new verification</Button>
@@ -46,7 +46,7 @@
                 <h3 class="section-header">Persoonlijke informatie</h3>
                 <div class="section-entry">
                     <p class="key">Geboortedatum</p>
-                    <p class="value">{{this.getPrettyDate(this.user.dateOfBirth)}}</p>
+                    <p class="value">{{this.$utils.getPrettyDate(this.user.dateOfBirth)}}</p>
                 </div>
                 <div class="section-entry" v-if="!!user.studyType">
                     <p class="key">Studierichting</p>
@@ -97,32 +97,6 @@
                 const { data } = await this.$api.get(`/user/${userId.toString().indexOf('|') !== -1 ? 'a/' : ''}${userId}/mailaddresses`);
                 this.mailAddresses = data;
             },
-            getMonthAsString(currentMonth) {
-                const monthList = [
-                    'januari',
-                    'februari',
-                    'maart',
-                    'april',
-                    'mei',
-                    'juni',
-                    'juli',
-                    'augustus',
-                    'september',
-                    'oktober',
-                    'november',
-                    'december',
-                ];
-
-                return monthList[currentMonth];
-            },
-            getPrettyDateTime(dateString) {
-                const date = new Date(dateString);
-                return `${this.getPrettyDate(dateString)} ${date.getHours()}:${date.getSeconds()}`;
-            },
-            getPrettyDate(dateString) {
-                const date = new Date(dateString);
-                return `${date.getDate()} ${this.getMonthAsString(date.getMonth())} ${date.getFullYear()}`;
-            },
         },
         async created() {
             this.loading = true;
@@ -147,18 +121,9 @@
                 }
                 return "";
             },
-            dateOfBirth() {
-                const date = new Date(this.user.dateOfBirth);
-                return `${date.getDate()} ${this.getMonthAsString(date.getMonth())} ${date.getFullYear()}`;
-            },
             whatsAppLink() {
                 if (this.user.phoneNumber === undefined) return "";
                 return `https://wa.me/${this.user.phoneNumber.replace("+", "")}`;
-            },
-            prettyPhoneNumber() {
-                if (this.user.phoneNumber === undefined) return "";
-                const phoneNumber = this.user.phoneNumber;
-                return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(3, 4)} ${phoneNumber.slice(4, 6)} ${phoneNumber.slice(6, 8)} ${phoneNumber.slice(8, 10)} ${phoneNumber.slice(10, 12)}`;
             },
             receivesNewsletter() {
                 if (this.mailAddresses.length === 0) return false;
