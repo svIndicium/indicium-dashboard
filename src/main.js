@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import './plugins/axios';
+import api from './plugins/axios';
 import './plugins/busje';
 import App from './App.vue';
 import router from './router';
@@ -24,6 +24,8 @@ Vue.use(Auth0Plugin, {
     );
   },
 });
+
+Vue.use(api);
 
 new Vue({
   router,
