@@ -57,20 +57,16 @@
                     <p class="key">Beoordeeld op</p>
                     <p class="value">{{this.getPrettyDateTime(this.registration.finalizedAt)}}</p>
                 </div>
-                <div class="section-entry" v-if="finalized && !this.registration.approved">
-                    <p class="key">Reden van wegstemming</p>
-                    <p class="value">{{this.registration.reason}}</p>
-                </div>
                 <div class="section-entry" v-if="finalized">
                     <p class="key">Resultaat</p>
                     <p class="value">{{this.registration.approved ? 'Ingestemd' : 'Weggestemd'}}</p>
                 </div>
-                <div class="section-entry" v-if="!!this.registration.reason">
+                <div class="section-entry" v-if="!!this.registration.comment">
                     <p class="key">Reden</p>
-                    <p class="value">{{this.registration.reason}}</p>
+                    <p class="value">{{this.registration.comment}}</p>
                 </div>
             </div>
-            <TextInput placeholder="Reden" v-model="reason" v-if="!finalized" class="reason"></TextInput>
+            <TextInput placeholder="Reden" v-model="reason" v-if="!finalized" class="reason" :error="fieldError.message"></TextInput>
             <Button size="m" :callback="approveRegistration" v-if="!finalized" class="finalbutton button"><Icon type="user-check" class="buttonicon" />Stem in</Button>
             <Button size="m" :callback="denyRegistration" v-if="!finalized" class="finalbutton button"><Icon type="user-x" class="buttonicon" />Stem weg</Button>
         </div>
@@ -101,6 +97,7 @@
             reason: '',
             loading: false,
             error: null,
+            fieldError: {},
         }),
         methods: {
             async getRegistration() {
@@ -146,14 +143,24 @@
             },
             async approveRegistration() {
                 this.loading = true;
-                const { data } = await this.$api.post(`/registration/${this.registrationId}/finalize`, {approved: true});
-                this.registration = data;
+                try {
+                    const registrationId = this.$route.params.registrationId;
+                    const { data } = await this.$api.post(`/registration/${registrationId}/finalize`, {approved: true});
+                    this.registration = data;
+                } catch (e) {
+                    this.fieldError = e.response.data;
+                }
                 this.loading = false;
             },
             async denyRegistration() {
                 this.loading = true;
-                const { data } = await this.$api.post(`/registration/${this.registrationId}/finalize`, {approved: false, comment: this.reason});
-                this.registration = data;
+                try {
+                    const registrationId = this.$route.params.registrationId;
+                    const { data } = await this.$api.post(`/registration/${registrationId}/finalize`, {approved: false, comment: this.reason});
+                    this.registration = data;
+                } catch (e) {
+                    this.fieldError = e.response.data;
+                }
                 this.loading = false;
             }
         },
