@@ -81,43 +81,10 @@
 </script>
 
 <style lang="scss" scoped>
+    @import "src/assets/scss/table";
+    @import "src/assets/scss/error";
     .table-container {
-        max-width: 700px;
-        display: grid;
+        @extend .table-container;
         grid-template-columns: 1fr 1fr 1fr 32px;
-        grid-template-rows: repeat(5, 32px);
-        align-items: stretch;
-
-        .header {
-            font-weight: bold;
-            font-size: 12px;
-            text-transform: uppercase;
-        }
-
-        div, span {
-            line-height: 32px;
-        }
-
-        span {
-            font-size: 24px;
-            height: 32px;
-        }
-    }
-
-    .errorcontainer {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        color: #FAC052;
-
-        .icon {
-            width: 32px;
-            height: 32px;
-            font-size: 32px;
-        }
-
-        .message {
-            padding-left: 8px;
-        }
     }
 </style>

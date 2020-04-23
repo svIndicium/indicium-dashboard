@@ -168,6 +168,8 @@
 </script>
 
 <style lang="scss" scoped>
+    @import "src/assets/scss/profile";
+    @import "src/assets/scss/error";
     .reason {
         margin-top: 16px;
         margin-bottom: 8px;
@@ -186,89 +188,5 @@
             font-size: 16px;
             padding-right: 4px;
         }
-    }
-
-    .section {
-        max-width: 600px;
-
-        .section-header {
-            margin-top: 24px;
-            font-weight: 300;
-            font-size: 16px;
-            text-transform: uppercase;
-        }
-
-        .section-entry {
-            padding-top: 8px;
-            font-size: 20px;
-            display: flex;
-            justify-content: space-between;
-            .key {
-            }
-
-            .value {
-                font-weight: 300;
-            }
-
-            .error {
-                color: var(--indi-error);
-            }
-        }
-
-        .action-buttons {
-            display: flex;
-            justify-content: flex-end;
-        }
-
-    }
-
-    .backbutton {
-        margin-top: 16px;
-        font-size: 20px;
-        cursor: pointer;
-    }
-
-    .action-buttons {
-        display: flex;
-        justify-content: flex-start;
-        a {
-            margin-right: 16px;
-        }
-
-        @media screen and (max-width: 898px) {
-            a {
-                margin-right: 0;
-                width: 100%;
-            }
-            flex-wrap: wrap;
-        }
-    }
-
-    .errorcontainer {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        color: var(--indi-warning);
-
-        .icon {
-            width: 32px;
-            height: 32px;
-            font-size: 32px;
-        }
-
-        .message {
-            padding-left: 8px;
-        }
-    }
-
-    .button {
-        margin-top: 16px;
-        .buttonicon {
-            font-size: 16px;
-            width: 24px;
-            height: 24px;
-            padding-right: 4px;
-        }
-
     }
 </style>

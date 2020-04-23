@@ -79,57 +79,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    @import "src/assets/scss/table";
+    @import "src/assets/scss/error";
     .table-container {
-        max-width: 500px;
-        display: grid;
+        @extend .table-container;
         grid-template-columns: 1fr 1fr 64px 32px;
-        grid-template-rows: repeat(5, 32px);
-        align-items: stretch;
-
-        .header {
-            font-weight: bold;
-            font-size: 12px;
-            text-transform: uppercase;
-        }
-
-        div, span {
-            line-height: 32px;
-        }
-
-        a {
-            font-size: 24px;
-            height: 28px;
-            width: 28px;
-        }
     }
-
-.errorcontainer {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    color: #FAC052;
-
-    .icon {
-        width: 32px;
-        height: 32px;
-        font-size: 32px;
-    }
-
-    .message {
-        padding-left: 8px;
-    }
-}
-
-.button {
-    margin-top: 16px;
-    .buttonicon {
-        font-size: 16px;
-        width: 20px;
-        height: 20px;
-        padding-right: 4px;
-    }
-
-}
-
-
 </style>

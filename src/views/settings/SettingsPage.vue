@@ -112,6 +112,7 @@
 </script>
 
 <style lang="scss" scoped>
+    @import "src/assets/scss/error";
 
     h4 {
         font-size: 18px;
@@ -126,35 +127,6 @@
         .savebutton {
             margin-left: 16px;
         }
-    }
-
-
-    .errorcontainer {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        color: #FAC052;
-
-        .icon {
-            width: 32px;
-            height: 32px;
-            font-size: 32px;
-        }
-
-        .message {
-            padding-left: 8px;
-        }
-    }
-
-    .button {
-        margin-top: 16px;
-        .buttonicon {
-            width: 20px;
-            height: 20px;
-            font-size: 16px;
-            padding-right: 4px;
-        }
-
     }
 
 </style>

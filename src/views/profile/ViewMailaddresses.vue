@@ -72,55 +72,10 @@
 </script>
 
 <style lang="scss" scoped>
-
+    @import "src/assets/scss/table";
+    @import "src/assets/scss/error";
     .table-container {
-        max-width: 700px;
-        display: grid;
+        @extend .table-container;
         grid-template-columns: 2fr 1fr 2fr;
-        grid-template-rows: repeat(5, 32px);
-        align-items: stretch;
-
-        .header {
-            font-weight: bold;
-            font-size: 12px;
-            text-transform: uppercase;
-        }
-
-        .cell, .header, &>span {
-            line-height: 32px;
-        }
-
-        span {
-            font-size: 24px;
-            height: 32px;
-        }
-    }
-
-    .errorcontainer {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        color: var(--indi-warning);
-
-        .icon {
-            width: 32px;
-            height: 32px;
-            font-size: 32px;
-        }
-
-        .message {
-            padding-left: 8px;
-        }
-    }
-
-    .button {
-        margin-top: 16px;
-        .buttonicon {
-            width: 20px;
-            height: 20px;
-            font-size: 16px;
-            padding-right: 4px;
-        }
-
     }
 </style>
