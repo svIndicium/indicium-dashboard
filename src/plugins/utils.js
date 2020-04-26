@@ -1,9 +1,6 @@
 const utils = {}
 utils.install = function (Vue) {
     Vue.prototype.$utils = {
-        routeMatch(currentRoute, tomatch) {
-            console.log('route match util jonge');
-        },
         getMonthAsString(currentMonth) {
             const monthList = [
                 'januari',

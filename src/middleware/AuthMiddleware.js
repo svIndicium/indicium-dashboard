@@ -27,7 +27,6 @@ export default class AuthMiddleware {
                     }
                 )
                 .catch((error) => {
-                    console.error(`Authorization error ${error}`)
                     throw error;
                 });
         }
