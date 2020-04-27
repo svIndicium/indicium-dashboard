@@ -41,7 +41,6 @@
         border-radius: 8px;
         vertical-align: center;
         transition: 0.3s;
-        text-transform: capitalize;
 
 
 

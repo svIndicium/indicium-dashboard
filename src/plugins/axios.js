@@ -10,7 +10,7 @@ api.install = function (Vue) {
         ? 'http://localhost:8080/api/v1'
         : process.env.NODE_ENV === 'production' && process.env.VUE_APP_BRANCH === 'master'
             ? 'https://lit.indicium.hu/api/v1'
-            : 'https://lit.dev.indicium.hu/api/v1';
+            : 'https://api.dev.indicium.hu/api/v1';
 
     const apiInstance = axios.create({ baseURL: baseURL });
 

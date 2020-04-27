@@ -15,6 +15,8 @@ import SettingsDashboard from './views/settings/SettingsDashboard';
 import SettingsPage from './views/settings/SettingsPage';
 import ViewUser from './views/user/ViewUser';
 import ViewRegistration from './views/user/registration/ViewRegistration';
+import Events from './views/events/Events';
+import AgendaConnection from './views/events/AgendaConnection';
 
 Vue.use(Router);
 
@@ -178,6 +180,45 @@ export default new Router({
                         }
                     },
                 ]
+            },
+            {
+                path: '/activiteiten',
+                name: 'EventDashboard',
+                component: Events,
+                meta: {
+                    breadcrumb: [
+                        {
+                            name: 'Dashboard',
+                            routeName: 'dashboard'
+                        },
+                        {
+                            name: 'Activiteiten'
+                        }
+                    ]
+                },
+                children: [
+                    {
+                        path: 'agendakoppeling',
+                        name: 'AgendaConnection',
+                        component: AgendaConnection,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    name: 'Dashboard',
+                                    routeName: 'dashboard'
+                                },
+                                {
+                                    name: 'Activiteiten',
+                                    routeName: 'EventDashboard'
+                                },
+                                {
+                                    name: 'Koppelen met agenda'
+                                }
+                            ]
+                        }
+                    }
+                ]
+
             },
             {
                 path: '/profiel',
