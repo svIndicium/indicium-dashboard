@@ -55,17 +55,12 @@
             },
             copyFeedLinkToClipboard() {
                 this.copyToClipboard(this.iCalLink)
-                    .then(() => {
-                        console.log('Copied to clipboard')
-                    }).catch(err => {
-                    console.error(err)
-                })
+                    .then(() => {});
             },
             async copyToClipboard(text) {
                 try {
                     await navigator.clipboard.writeText(text)
                 } catch (e) {
-                    console.error(e)
                 }
             }
         },
