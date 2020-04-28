@@ -82,7 +82,7 @@
             async getUserFromService() {
                 this.error = null;
                 try {
-                    const { data } = await this.$api.get('/user/userinfo');
+                    const { data } = await this.$api.get('/users/userinfo');
                     this.user = { ...this.user, ...data };
                     await this.getStudyType();
                 } catch (e) {
@@ -90,7 +90,7 @@
                 }
             },
             async getStudyType() {
-                const { data } = await this.$api.get(`/studytype/${this.user.studyTypeId}`);
+                const { data } = await this.$api.get(`/studytypes/${this.user.studyTypeId}`);
                 this.user.studyType = data;
             },
         },

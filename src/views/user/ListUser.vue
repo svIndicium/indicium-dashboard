@@ -47,7 +47,7 @@ export default {
             this.error = null;
             this.loading = true;
             try {
-                const { data } = await this.$api.get("/user");
+                const { data } = await this.$api.get("/users");
                 this.users = data;
             } catch (e) {
                 this.error = e;

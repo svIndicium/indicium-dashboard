@@ -49,7 +49,7 @@
                 this.error = null;
                 this.loading = true;
                 try {
-                    const { data } = await this.$api.get('/studytype');
+                    const { data } = await this.$api.get('/studytypes');
                     this.studyTypes = data;
                 } catch (e) {
                     this.error = e;

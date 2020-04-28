@@ -84,17 +84,17 @@
             async getUser() {
                 this.error = null;
                 const userId = this.$route.params.userId;
-                const { data } = await this.$api.get(`/user/${userId.toString().indexOf('|') !== -1 ? 'a/' : ''}${userId}`);
+                const { data } = await this.$api.get(`/users/${userId.toString().indexOf('|') !== -1 ? 'a/' : ''}${userId}`);
                 this.user = data;
                 await this.getStudyType();
             },
             async getStudyType() {
-                const { data } = await this.$api.get(`/studytype/${this.user.studyTypeId}`);
+                const { data } = await this.$api.get(`/studytypes/${this.user.studyTypeId}`);
                 this.user.studyType = data;
             },
             async getMailAddresses() {
                 const userId = this.$route.params.userId;
-                const { data } = await this.$api.get(`/user/${userId.toString().indexOf('|') !== -1 ? 'a/' : ''}${userId}/mailaddresses`);
+                const { data } = await this.$api.get(`/users/${userId.toString().indexOf('|') !== -1 ? 'a/' : ''}${userId}/mailaddresses`);
                 this.mailAddresses = data;
             },
         },

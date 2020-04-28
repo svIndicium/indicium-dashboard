@@ -104,7 +104,7 @@
                 this.error = null;
                 try {
                     const registrationId = this.$route.params.registrationId;
-                    const { data } = await this.$api.get(`/registration/${registrationId}`);
+                    const { data } = await this.$api.get(`/registrations/${registrationId}`);
                     this.registration = data;
                     await this.getStudyType();
                 } catch (e) {
@@ -112,14 +112,14 @@
                 }
             },
             async getStudyType() {
-                const { data } = await this.$api.get(`/studytype/${this.registration.studyTypeId}`);
+                const { data } = await this.$api.get(`/studytypes/${this.registration.studyTypeId}`);
                 this.registration.studyType = data;
             },
             async approveRegistration() {
                 this.loading = true;
                 try {
                     const registrationId = this.$route.params.registrationId;
-                    const { data } = await this.$api.post(`/registration/${registrationId}/finalize`, {approved: true});
+                    const { data } = await this.$api.post(`/registrations/${registrationId}/finalize`, {approved: true});
                     this.registration = data;
                 } catch (e) {
                     this.fieldError = e.response.data;
@@ -130,7 +130,7 @@
                 this.loading = true;
                 try {
                     const registrationId = this.$route.params.registrationId;
-                    const { data } = await this.$api.post(`/registration/${registrationId}/finalize`, {approved: false, comment: this.reason});
+                    const { data } = await this.$api.post(`/registrations/${registrationId}/finalize`, {approved: false, comment: this.reason});
                     this.registration = data;
                 } catch (e) {
                     this.fieldError = e.response.data;

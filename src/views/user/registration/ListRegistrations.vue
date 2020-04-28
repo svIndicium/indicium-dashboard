@@ -58,7 +58,7 @@
             async getRegistrations() {
                 this.error = null;
                 try {
-                    const { data } = await this.$api.get("/registration");
+                    const { data } = await this.$api.get("/registrations");
                     this.registrations = data;
                 } catch (e) {
                     this.error = e;

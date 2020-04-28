@@ -34,7 +34,7 @@
             async createStudyType() {
                 this.loading = true;
                 try {
-                    await this.$api.post('/studytype', this.studyType);
+                    await this.$api.post('/studytypes', this.studyType);
                     await this.$router.push({ name: 'studierichtingenoverzicht' });
                 } catch (err) {
                     this.error = err.response.data.message;

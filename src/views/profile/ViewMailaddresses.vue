@@ -55,7 +55,7 @@
             async getMailAddresses() {
                 this.error = null;
                 try {
-                    const { data } = await this.$api.get('/user/userinfo/mailaddresses');
+                    const { data } = await this.$api.get('/users/userinfo/mailaddresses');
                     this.mailaddresses = data;
                 } catch (e) {
                     this.error = e;
