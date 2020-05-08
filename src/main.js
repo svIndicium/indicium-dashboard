@@ -13,6 +13,27 @@ import { Auth0Plugin } from './auth';
 Vue.config.productionTip = false;
 const devEnv = !(process.env.VUE_APP_LIVE === 'true' || (process.env.VUE_APP_BRANCH === 'master' && process.env.NODE_ENV === 'production'));
 
+
+const requiredScopes = {
+    ledenadministratie: [
+        "create:user",
+        "admin:user",
+        "read:user",
+        "create:studyType",
+        "read:mailchimp_settings",
+        "write:mailchimp_settings",
+        "read:sendgrid_settings",
+        "write:sendgrid_settings",
+        "read:auth0_settings",
+        "write:auth0_settings",
+        "read:settings"
+    ],
+    eventmanager: [
+        "write:event",
+        "read:event",
+        "delete:event"
+    ]
+}
 Vue.use(Auth0Plugin, {
     domain: devEnv ? devDomain : domain,
     clientId: devEnv ? devClientId : clientId,
