@@ -14,22 +14,23 @@ Vue.config.productionTip = false;
 const devEnv = !(process.env.VUE_APP_LIVE === 'true' || (process.env.VUE_APP_BRANCH === 'master' && process.env.NODE_ENV === 'production'));
 
 Vue.use(Auth0Plugin, {
-  domain: devEnv ? devDomain : domain,
-  clientId: devEnv ? devClientId : clientId,
-  audience: devEnv ? devAudience : audience,
-  onRedirectCallback: (appState) => {
-    router.push(
-      appState && appState.targetUrl
-        ? appState.targetUrl
-        : window.location.pathname,
-    );
-  },
+    domain: devEnv ? devDomain : domain,
+    clientId: devEnv ? devClientId : clientId,
+    audience: devEnv ? devAudience : audience,
+    scopes: requiredScopes,
+    onRedirectCallback: (appState) => {
+        router.push(
+            appState && appState.targetUrl
+                ? appState.targetUrl
+                : window.location.pathname,
+        );
+    },
 });
 
 Vue.use(api);
 Vue.use(utils);
 
 new Vue({
-  router,
-  render: h => h(App),
+    router,
+    render: h => h(App),
 }).$mount('#app');

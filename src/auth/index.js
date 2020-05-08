@@ -90,6 +90,17 @@ export const useAuth0 = ({
                 return this.scopes.indexOf(requestedScope) >= 0;
             },
         },
+        computed: {
+            requiredScopes() {
+                const scopes = [];
+                for (let app in options.scopes) {
+                    if (Object.prototype.hasOwnProperty.call(options.scopes, app)) {
+                        options.scopes[app].forEach((scope) => scopes.push(`${app}/${scope}`))
+                    }
+                }
+                return scopes;
+            }
+        },
         /** Use this lifecycle method to instantiate the SDK client */
         async created() {
             // CreateUser a new instance of the SDK client using members of the given options object
@@ -98,7 +109,7 @@ export const useAuth0 = ({
                 client_id: options.clientId,
                 audience: options.audience,
                 redirect_uri: redirectUri,
-                scope: 'create:user,admin:user,read:user,create:studyType,read:mailchimp_settings,write:mailchimp_settings,read:sendgrid_settings,write:sendgrid_settings,read:auth0_settings,write:auth0_settings,read:settings',
+                scope: this.requiredScopes.join(","),
             });
 
             try {

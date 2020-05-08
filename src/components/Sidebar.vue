@@ -7,7 +7,7 @@
         <div class="menu-items" v-if="!$auth.loading">
             <template v-if="$auth.isAuthenticated">
                 <SidebarItem :title="$auth.user.name" route-name="profielDashboard" :img-url="$auth.user.picture" :collapsed="collapsed"></SidebarItem>
-                <SidebarItem title="Leden" route-name="userDashboard" icon="user" v-if="hasPermission('admin:user')" :collapsed="collapsed"></SidebarItem>
+                <SidebarItem title="Leden" route-name="userDashboard" icon="user" v-if="hasPermission('ledenadministratie/admin:user')" :collapsed="collapsed"></SidebarItem>
                 <SidebarItem title="Activiteiten" route-name="EventDashboard" icon="calendar" :collapsed="collapsed"></SidebarItem>
             </template>
             <template v-else>
@@ -17,7 +17,7 @@
 
         <div class="bottom-bar">
             <SidebarItem title="Uitloggen" icon="logout" :callback="logout" :collapsed="collapsed" v-if="$auth.isAuthenticated"></SidebarItem>
-            <SidebarItem title="Instellingen" icon="settings" route-name="instellingenDashboard" :collapsed="collapsed" v-if="$auth.isAuthenticated && hasPermission('read:settings')"></SidebarItem>
+            <SidebarItem title="Instellingen" icon="settings" route-name="instellingenDashboard" :collapsed="collapsed" v-if="$auth.isAuthenticated && hasPermission('ledenadministratie/read:settings')"></SidebarItem>
             <SidebarItem :title="collapsed ? 'Uitvouwen' : 'Invouwen'" :icon="collapsed ? 'chevron-right' : 'chevron-left'" :callback="toggleCollapse" :collapsed="collapsed"></SidebarItem>
         </div>
     </div>
