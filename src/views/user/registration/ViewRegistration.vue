@@ -85,7 +85,7 @@
 <script>
     import Button from '../../../components/button.vue';
     import TextInput from '../../../components/TextInput';
-    import Loading from '../../../components/Loading';
+    import Loading from '@svindicium/indicium-components';
     import Icon from '../../../components/Icon';
     import StatusLabel from '../../../components/StatusLabel';
 

@@ -35,7 +35,7 @@
 <script>
     import Icon from '../../components/Icon';
     import Button from '../../components/button';
-    import Loading from '../../components/Loading';
+    import Loading from '@svindicium/indicium-components';
     import StatusLabel from '../../components/StatusLabel';
 
     export default {

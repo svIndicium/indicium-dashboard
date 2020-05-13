@@ -26,7 +26,7 @@
     import EventCardGrid from './EventCardGrid';
     import EventList from './EventList';
     import ButtonGroup from '../../components/ButtonGroup';
-    import Loading from '../../components/Loading';
+    import Loading from '@svindicium/indicium-components';
     export default {
         name: 'EventDashboard',
         components: { ButtonGroup, EventList, EventCardGrid, EventCalendar, Button, Loading },

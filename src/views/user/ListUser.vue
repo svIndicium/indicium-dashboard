@@ -29,53 +29,53 @@
 </template>
 
 <script>
-import Loading from '../../components/Loading';
-import Icon from '../../components/Icon';
-import Button from '../../components/button';
-import StatusLabel from '../../components/StatusLabel';
+    import Loading from '@svindicium/indicium-components';
+    import Icon from '../../components/Icon';
+    import Button from '../../components/button';
+    import StatusLabel from '../../components/StatusLabel';
 
-export default {
-    name: "List",
-    components: { StatusLabel, Button, Icon, Loading },
-    data: () => ({
-        users: [],
-        error: null,
-        loading: false,
-    }),
-    methods: {
-        async getUsers() {
-            this.error = null;
-            this.loading = true;
-            try {
-                const { data } = await this.$api.get("/users");
-                this.users = data;
-            } catch (e) {
-                this.error = e;
+    export default {
+        name: "List",
+        components: { StatusLabel, Button, Icon, Loading },
+        data: () => ({
+            users: [],
+            error: null,
+            loading: false,
+        }),
+        methods: {
+            async getUsers() {
+                this.error = null;
+                this.loading = true;
+                try {
+                    const { data } = await this.$api.get("/users");
+                    this.users = data;
+                } catch (e) {
+                    this.error = e;
+                }
+                this.loading = false;
+            },
+            viewUser(userId) {
+                this.$router.push({ name: "viewUser", params: { userId } });
+            },
+            getFullLastName(user) {
+                if (user.middleName) {
+                    return `${user.middleName} ${user.lastName}`;
+                }
+                return `${user.lastName}`;
             }
-            this.loading = false;
         },
-        viewUser(userId) {
-            this.$router.push({ name: "viewUser", params: { userId } });
+        async created() {
+            await this.getUsers();
         },
-        getFullLastName(user) {
-            if (user.middleName) {
-                return `${user.middleName} ${user.lastName}`;
+        computed: {
+            errorMessage() {
+                if (this.error.message === 'Network Error') {
+                    return 'Netwerk fout';
+                }
+                return this.error.message;
             }
-            return `${user.lastName}`;
         }
-    },
-    async created() {
-        await this.getUsers();
-    },
-    computed: {
-        errorMessage() {
-            if (this.error.message === 'Network Error') {
-                return 'Netwerk fout';
-            }
-            return this.error.message;
-        }
-    }
-};
+    };
 </script>
 
 <style lang="scss" scoped>

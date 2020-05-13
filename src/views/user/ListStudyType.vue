@@ -29,7 +29,7 @@
 
 <script>
     import Button from '../../components/button';
-    import Loading from '../../components/Loading';
+    import Loading from '@svindicium/indicium-components';
     import Icon from '../../components/Icon';
 
     export default {

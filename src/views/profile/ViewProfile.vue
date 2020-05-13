@@ -59,7 +59,7 @@
 </template>
 
 <script>
-    import Loading from '../../components/Loading';
+    import Loading from '@svindicium/indicium-components';
     import Button from '../../components/button';
     import Icon from '../../components/Icon';
 

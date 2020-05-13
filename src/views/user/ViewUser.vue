@@ -69,7 +69,7 @@
 <script>
     import Button from '../../components/button.vue';
     import Icon from '../../components/Icon.vue';
-    import Loading from '../../components/Loading.vue';
+    import Loading from '@svindicium/indicium-components';
 
     export default {
         name: 'ViewUser',
