@@ -19,12 +19,8 @@
         data: () => ({
             sidebar: [
                 {
-                    title: 'Kalender',
-                    routeName: 'EventDashboard'
-                },
-                {
                     title: 'Overzicht',
-                    routeName: 'userDashboard'
+                    routeName: 'EventDashboard'
                 },
                 {
                     title: 'Koppelen met agenda',

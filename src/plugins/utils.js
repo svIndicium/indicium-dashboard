@@ -19,6 +19,19 @@ utils.install = function (Vue) {
 
             return monthList[currentMonth];
         },
+        getDayAsString(currentDay = new Date().getDay()) {
+            const week = [
+                'Maandag',
+                'Dinsdag',
+                'Woensdag',
+                'Donderdag',
+                'Vrijdag',
+                'Zaterdag',
+                'Zondag'
+            ]
+
+            return week[currentDay - 1]
+        },
         getPrettyDateTime(dateString) {
             const date = new Date(dateString);
             return `${this.getPrettyDate(dateString)} ${date.getUTCHours()}:${date.getUTCSeconds()}`;

@@ -18,6 +18,7 @@ import ViewRegistration from './views/user/registration/ViewRegistration';
 import Events from './views/events/Events';
 import AgendaConnection from './views/events/AgendaConnection';
 import CreateEvent from './views/events/CreateEvent';
+import EventDashboard from './views/events/EventDashboard';
 
 Vue.use(Router);
 
@@ -184,7 +185,6 @@ export default new Router({
             },
             {
                 path: '/activiteiten',
-                name: 'EventDashboard',
                 component: Events,
                 meta: {
                     breadcrumb: [
@@ -198,6 +198,22 @@ export default new Router({
                     ]
                 },
                 children: [
+                    {
+                        path: '',
+                        name: 'EventDashboard',
+                        component: EventDashboard,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    name: 'Dashboard',
+                                    routeName: 'dashboard'
+                                },
+                                {
+                                    name: 'Activiteiten'
+                                }
+                            ]
+                        }
+                    },
                     {
                         path: 'agendakoppeling',
                         name: 'AgendaConnection',

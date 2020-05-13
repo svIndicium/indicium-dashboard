@@ -57,7 +57,7 @@
         color: #fff;
         background: #72c9e0;
         box-shadow: 0 0 32px rgba(181, 187, 201, 0.4);
-        border-radius: 4px;
+        border-radius: 8px;
         border: 0;
         transition: 200ms;
         display: inline-flex;
