@@ -15,7 +15,9 @@
     "core-js": "^2.6.5",
     "tabler-icons": "^1.5.0",
     "vue": "^2.6.10",
-    "vue-router": "^3.1.6"
+    "vue-ctk-date-time-picker": "^2.4.0",
+    "vue-router": "^3.1.6",
+    "vuejs-datepicker": "^1.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",

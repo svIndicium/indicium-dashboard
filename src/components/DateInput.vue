@@ -2,16 +2,19 @@
     <div class="text-input">
         <label>{{ label }}<span class="required">{{ required ? ' *' : '' }}</span></label>
         <br />
-        <input
-            v-model="internalValue"
-            type="text"
-            :name="name"
-            :placeholder="placeholder"
-            :class="[!!error ? 'error' : '']"
-            @input="update"
-            @focusin="focusin"
-            @focusout="focusout"
-        />
+        <div>
+            <datepicker
+                v-model="internalValue"
+                format="d-M-yyyy"
+                :inputClass="['box', error ? 'error' : '']"
+                class="box"
+                :name="name"
+                :placeholder="placeholder"
+                :useUtc="true"
+                :openDate="new Date(2000, 1, 1)"
+                @input="update"
+            />
+        </div>
         <div class="error-message">
             {{ error }}
         </div>
@@ -19,12 +22,17 @@
 </template>
 
 <script>
+    import Datepicker from 'vuejs-datepicker'
+
     export default {
-        name: 'TextInput',
+        name: 'DateInput',
+        components: {
+            Datepicker,
+        },
         props: {
             value: {
-                type: String,
-                default: '',
+                type: Date,
+                default: () => {},
             },
             placeholder: {
                 type: String,
@@ -56,19 +64,11 @@
             update() {
                 this.$emit('input', this.internalValue)
             },
-            focusin(e) {
-                console.log('kek')
-                this.$emit('focusin', e)
-            },
-            focusout(e) {
-                console.log('kek')
-                this.$emit('focusout', e)
-            },
-        },
+        }
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
     .text-input {
         margin-bottom: 8px;
@@ -78,12 +78,16 @@
         color: red;
     }
 
-    input {
+    .box input {
         border: 2px var(--indi-grey) solid;
         padding: 8px 16px;
         border-radius: 8px;
         color: var(--text-color);
         transition: .3s;
+        width: 218px;
+        height: auto;
+        font-size: initial;
+        font-family: var(--header-font);
         &::placeholder {
             color: #8d8f9199;
         }
@@ -107,4 +111,5 @@
         color: var(--indi-error);
         font-size: 12px;
     }
+
 </style>

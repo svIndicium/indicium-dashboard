@@ -17,6 +17,7 @@ import ViewUser from './views/user/ViewUser';
 import ViewRegistration from './views/user/registration/ViewRegistration';
 import Events from './views/events/Events';
 import AgendaConnection from './views/events/AgendaConnection';
+import CreateEvent from './views/events/CreateEvent';
 
 Vue.use(Router);
 
@@ -213,6 +214,26 @@ export default new Router({
                                 },
                                 {
                                     name: 'Koppelen met agenda'
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        path: 'nieuw',
+                        name: 'CreateEvent',
+                        component: CreateEvent,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    name: 'Dashboard',
+                                    routeName: 'dashboard'
+                                },
+                                {
+                                    name: 'Activiteiten',
+                                    routeName: 'EventDashboard'
+                                },
+                                {
+                                    name: 'Nieuwe activiteit'
                                 }
                             ]
                         }

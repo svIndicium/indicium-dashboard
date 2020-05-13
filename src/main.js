@@ -4,6 +4,7 @@ import utils from './plugins/utils';
 import './plugins/busje';
 import App from './App.vue';
 import router from './router';
+import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 
 import { domain, clientId, audience } from '../auth_config';
 import { domain as devDomain, clientId as devClientId, audience as devAudience } from '../auth_config_dev';
@@ -50,6 +51,8 @@ Vue.use(Auth0Plugin, {
 
 Vue.use(api);
 Vue.use(utils);
+
+Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 
 new Vue({
     router,
