@@ -57,11 +57,9 @@
                 this.$emit('input', this.internalValue)
             },
             focusin(e) {
-                console.log('kek')
                 this.$emit('focusin', e)
             },
             focusout(e) {
-                console.log('kek')
                 this.$emit('focusout', e)
             },
         },
