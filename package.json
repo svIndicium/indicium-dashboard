@@ -15,7 +15,7 @@
     "@fullcalendar/vue": "^4.4.0",
     "axios": "^0.19.2",
     "axios-middleware": "^0.3.1",
-    "core-js": "^2.6.5",
+    "core-js": "^3.6.5",
     "tabler-icons": "^1.5.0",
     "vue": "^2.6.10",
     "vue-ctk-date-time-picker": "^2.4.0",
