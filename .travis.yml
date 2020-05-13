@@ -28,6 +28,9 @@ addons:
 cache:
   npm: true
 
+before_install:
+  - sed -i 's/@svindicium:registry=https:\/\/npm.pkg.github.com/@svindicium:registry=https:\/\/npm.pkg.github.com\/:_authToken=\${$DOCKER_PASS}/' .npmrc
+
 install:
   - npm install
 
