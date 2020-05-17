@@ -1,8 +1,10 @@
 <template>
     <div class="btn-group">
         <div v-for="(button, idx) in buttons" @click="button.callback" class="btn l" :key="idx">
-            <icon v-if="button.icon" :type="button.icon" class="icon" />
-            {{button.label}}
+            <div class="icon">
+                <icon v-if="button.icon" :type="button.icon" />
+            </div>
+            <span>{{button.label}}</span>
         </div>
     </div>
 </template>
@@ -33,6 +35,7 @@
             transition: 200ms;
             cursor: pointer;
             border-right: 1px solid var(--indi-grey);
+            display: flex;
 
             &:first-child {
                 border-radius: 8px 0 0 8px;
@@ -41,6 +44,19 @@
             &:last-child {
                 border-radius: 0 8px 8px 0;
                 border-right: none;
+            }
+
+            &:first-child:last-child {
+                border-radius: 8px;
+            }
+
+            span {
+                align-self: center;
+            }
+
+            .icon {
+                display: inline-block;
+                margin-right: 4px;
             }
 
             &.s {
@@ -58,10 +74,12 @@
             }
 
             &.l {
-                padding: 8px 18px;
-                font-size: 1.6rem;
-                height: 3rem;
-                width: calc(3rem + 18px);
+                padding: 12px 24px;
+                font-size: 1rem;
+                .icon {
+                    height: 1.6rem;
+                    width: 1.6rem;
+                }
             }
 
             &.center {

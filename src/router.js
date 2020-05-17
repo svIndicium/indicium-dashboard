@@ -259,6 +259,21 @@ export default new Router({
                         path: ':eventId-:eventName',
                         name: 'ViewEvent',
                         component: ViewEvent,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    name: 'Dashboard',
+                                    routeName: 'dashboard'
+                                },
+                                {
+                                    name: 'Activiteiten',
+                                    routeName: 'EventDashboard'
+                                },
+                                {
+                                    name: 'Activiteit'
+                                }
+                            ]
+                        }
                     }
                 ]
 
