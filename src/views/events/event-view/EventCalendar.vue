@@ -1,5 +1,5 @@
 <template>
-    <Calendar :items="items" />
+    <Calendar :items="items" @eventClick="onClick" />
 </template>
 
 <script>
@@ -16,6 +16,11 @@
                 default: () => ([])
             }
         },
+        methods: {
+            onClick(args) {
+                this.$emit('eventSelected', {id: args.event.id, title: args.event.title});
+            }
+        },
         computed: {
             items() {
                 return this.events.map(event => ({
@@ -23,7 +28,6 @@
                     title: event.title,
                     start: event.startDate,
                     end: event.endDate,
-                    url: event.url,
                     allday: true
                 }))
             }

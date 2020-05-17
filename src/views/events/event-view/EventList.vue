@@ -5,9 +5,9 @@
             <div class="header">Datum</div>
             <div class="header">Tijd</div>
             <template v-for="(event, idx) in events">
-                <div v-bind:key="'name' + idx" class="cell">{{event.title}}</div>
-                <div v-bind:key="'date' + idx" class="cell">{{$utils.getDayAsString(new Date(event.startDate).getUTCDay())}} {{$utils.getPrettyDate(event.startDate)}}</div>
-                <div v-bind:key="'time' + idx" class="cell">{{new Date(event.startDate).getUTCHours()}}:{{new Date(event.startDate).getUTCMinutes()}}</div>
+                <div v-bind:key="'name' + idx" class="cell clickable" @click="() => onClick(event)">{{event.title}}</div>
+                <div v-bind:key="'date' + idx" class="cell clickable" @click="() => onClick(event)">{{$utils.getDayAsString(new Date(event.startDate).getUTCDay())}} {{$utils.getPrettyDate(event.startDate)}}</div>
+                <div v-bind:key="'time' + idx" class="cell clickable" @click="() => onClick(event)">{{new Date(event.startDate).getUTCHours()}}:{{new Date(event.startDate).getUTCMinutes()}}</div>
             </template>
         </div>
 
@@ -21,6 +21,11 @@
             events: {
                 type: Array,
                 default: () => ([]),
+            }
+        },
+        methods: {
+            onClick(event) {
+                this.$emit('eventSelected', event);
             }
         }
     };

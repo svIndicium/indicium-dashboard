@@ -9,13 +9,13 @@
             <Loading />
         </div>
         <div class="calendar" v-else-if="view === 'calendar'">
-            <EventCalendar :events="events" />
+            <EventCalendar :events="events" @eventSelected="getOnEventClick" />
         </div>
         <div v-else-if="view === 'cards'">
-            <EventCardGrid :events="events" />
+            <EventCardGrid :events="events" @eventSelected="getOnEventClick" />
         </div>
         <div v-else>
-            <EventList :events="events" />
+            <EventList :events="events" @eventSelected="getOnEventClick" />
         </div>
     </div>
 </template>
@@ -47,6 +47,9 @@
             toggleView(viewName) {
                 this.view = viewName;
                 localStorage.setItem('defaultEventView', viewName);
+            },
+            getOnEventClick(event) {
+                this.$router.push({name: 'ViewEvent', params: {eventId: event.id, eventName: event.title.toLowerCase()}})
             }
         },
         computed: {

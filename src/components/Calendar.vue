@@ -6,6 +6,7 @@
         :firstDay="1"
         :eventTimeFormat="{hour: 'numeric', minute: '2-digit', hour12: false}"
         height="parent"
+        @eventClick="onEventClick"
     />
 </template>
 
@@ -21,6 +22,11 @@
             items: {
                 type: Array,
                 default: () => ([])
+            }
+        },
+        methods: {
+            onEventClick(args) {
+                this.$emit('eventClick', args);
             }
         },
         data: () => ({

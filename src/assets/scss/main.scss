@@ -2,6 +2,10 @@
 @import "variables";
 @import "typography";
 
+.clickable {
+  cursor: pointer;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   color: var(--text-color);

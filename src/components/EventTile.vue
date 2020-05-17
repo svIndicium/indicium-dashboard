@@ -1,9 +1,9 @@
 <template>
-    <a :class="['event-tile', 'container', eventState]" :href="event.url">
+    <div :class="['event-tile', 'container', eventState]" @click="this.onClick">
         <h5>{{ toDateString }}</h5>
         <h4>{{ event.title }}</h4>
         <p class="small">{{ getDescription }}</p>
-    </a>
+    </div>
 </template>
 
 <script>
@@ -14,6 +14,11 @@
                 type: Object,
                 required: true,
             },
+        },
+        methods: {
+            onClick(event) {
+                this.$emit('click', event);
+            }
         },
         computed: {
             toDateString() {

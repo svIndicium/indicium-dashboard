@@ -1,6 +1,6 @@
 <template>
     <div>
-        <EventTile :event="event" v-for="(event, idx) in events" :key="idx"></EventTile>
+        <EventTile :event="event" v-for="(event, idx) in events" :key="idx" @click="() => onClick(event)" class="clickable"></EventTile>
     </div>
 </template>
 
@@ -17,6 +17,11 @@
         },
         components: {
             EventTile,
+        },
+        methods: {
+            onClick(event) {
+                this.$emit('eventSelected', event);
+            }
         }
     };
 </script>

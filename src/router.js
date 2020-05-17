@@ -19,6 +19,7 @@ import Events from './views/events/Events';
 import AgendaConnection from './views/events/AgendaConnection';
 import CreateEvent from './views/events/CreateEvent';
 import EventDashboard from './views/events/EventDashboard';
+import ViewEvent from './views/events/ViewEvent';
 
 Vue.use(Router);
 
@@ -253,6 +254,11 @@ export default new Router({
                                 }
                             ]
                         }
+                    },
+                    {
+                        path: ':eventId-:eventName',
+                        name: 'ViewEvent',
+                        component: ViewEvent,
                     }
                 ]
 
