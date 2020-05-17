@@ -27,8 +27,8 @@
 </script>
 
 <style lang="scss" scoped>
-    @import "src/assets/scss/table";
-    @import "src/assets/scss/error";
+    @import "../../../assets/scss/table";
+    @import "../../../assets/scss/error";
     .table-container {
         @extend .table-container;
         margin-top: 16px;

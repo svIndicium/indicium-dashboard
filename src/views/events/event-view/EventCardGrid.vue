@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import EventTile from '../../components/EventTile';
+    import EventTile from '../../../components/EventTile';
 
     export default {
         name: 'EventCardGrid',

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-    import Calendar from '../../components/Calendar';
+    import Calendar from '../../../components/Calendar';
 
     export default {
         name: 'EventCalendar',

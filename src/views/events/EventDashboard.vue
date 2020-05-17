@@ -22,9 +22,9 @@
 
 <script>
     import Button from '../../components/button';
-    import EventCalendar from './EventCalendar';
-    import EventCardGrid from './EventCardGrid';
-    import EventList from './EventList';
+    import EventCalendar from './event-view/EventCalendar';
+    import EventCardGrid from './event-view/EventCardGrid';
+    import EventList from './event-view/EventList';
     import ButtonGroup from '../../components/ButtonGroup';
     import Loading from '@svindicium/indicium-components';
     export default {
