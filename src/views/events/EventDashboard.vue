@@ -38,7 +38,11 @@
         methods: {
             async getEvents() {
                 const { data } = await this.$api.get('/events');
-                this.events = data;
+                this.events = data.map(event => ({
+                        ...event,
+                        url: `/activiteiten/${event.id}-${event.slug}`
+                    })
+                );
             },
             toggleView(viewName) {
                 this.view = viewName;

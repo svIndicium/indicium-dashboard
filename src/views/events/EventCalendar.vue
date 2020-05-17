@@ -23,7 +23,7 @@
                     title: event.title,
                     start: event.startDate,
                     end: event.endDate,
-                    url: `/activiteiten/${event.id}-${event.slug}`,
+                    url: event.url,
                     allday: true
                 }))
             }
