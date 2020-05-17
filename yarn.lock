@@ -809,10 +809,10 @@
     error-stack-parser "^2.0.0"
     string-width "^2.0.0"
 
-"@svindicium/indicium-components@^0.1.0":
-  version "0.1.0"
-  resolved "https://npm.pkg.github.com/download/@svindicium/indicium-components/0.1.0/fb399d9dcf2b5f3c6081c625625e2869776aa3e3ad593593a86c9230311a92c3#1e6c56b17211b7e64187e3ffc3b3f7891f93a3db"
-  integrity sha512-3hldqHjFqteJH/5og9ZaHhPamtu2dGHlxQLNEdf+mouO5wS1niDQG/M8fcx9dejufiWEKJJpFj+n7/7GBTSknQ==
+"@svindicium/indicium-components@^0.1.2":
+  version "0.1.2"
+  resolved "https://npm.pkg.github.com/download/@svindicium/indicium-components/0.1.2/ea303894531ff8dbb42987f3e762935f42d3386e062b57c9013c886afc910425#aa38bf42e35c633b363acca763094657ba77f2e2"
+  integrity sha512-5btuY636PmgqPGUbXX+NmlXc2I14pRpF0sNfHYroGoa6xZTwfxTajOgAZkqUq1or5VInoJVKZKKS2NZOEAkCwQ==
   dependencies:
     "@fullcalendar/core" "^4.4.0"
     "@fullcalendar/daygrid" "^4.4.0"
