@@ -1,7 +1,7 @@
 <template>
     <div class="btn-group">
         <div v-for="(button, idx) in buttons" @click="button.callback" class="btn l" :key="idx">
-            <icon v-if="button.icon" :type="button.icon" />
+            <icon v-if="button.icon" :type="button.icon" class="icon" />
             {{button.label}}
         </div>
     </div>
@@ -23,7 +23,7 @@
 
 <style lang="scss" scoped>
     .btn-group {
-        display: inline-flex;
+        display: flex;
 
         .btn {
             color: #fff;
@@ -31,7 +31,6 @@
             box-shadow: 0 0 32px rgba(181, 187, 201, 0.4);
             border: 0;
             transition: 200ms;
-            display: inline-flex;
             cursor: pointer;
             border-right: 1px solid var(--indi-grey);
 
@@ -47,28 +46,22 @@
             &.s {
                 padding: 8px;
                 font-size: .6rem;
-                .ti {
-                    height: .6rem;
-                    width: .6rem;
-                }
+                height: 1rem;
+                width: calc(3rem + 8px);
             }
 
             &.m {
                 padding: 8px 12px;
                 font-size: .8rem;
-                .ti {
-                    height: .8rem;
-                    width: .8rem;
-                }
+                height: 2rem;
+                width: calc(3rem + 12px);
             }
 
             &.l {
                 padding: 8px 18px;
                 font-size: 1.6rem;
-                .ti {
-                    height: 1.6rem;
-                    width: 1.6rem;
-                }
+                height: 3rem;
+                width: calc(3rem + 18px);
             }
 
             &.center {
