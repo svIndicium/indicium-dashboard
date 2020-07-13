@@ -12,7 +12,7 @@
     "@auth0/auth0-spa-js": "^1.6.5",
     "@fullcalendar/core": "^4.4.0",
     "@fullcalendar/daygrid": "^4.4.0",
-    "@fullcalendar/vue": "^4.4.0",
+    "@fullcalendar/vue": "^5.1.0",
     "@svindicium/indicium-components": "^0.1.2",
     "axios": "^0.19.2",
     "axios-middleware": "^0.3.1",
