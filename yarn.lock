@@ -9242,10 +9242,10 @@ vue-cli-plugin-vuetify@^2.0.5:
     semver "^7.1.2"
     shelljs "^0.8.3"
 
-vue-ctk-date-time-picker@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/vue-ctk-date-time-picker/-/vue-ctk-date-time-picker-2.4.0.tgz#dde39958ba964027db1e3a78667061e7580ea5a4"
-  integrity sha512-E4s0kacbL+oqURB+b6o1RNUEdsX8B5WSt6YoQKVZ019ytCv351Bs4FfZajEzo8oc9TVoI3BfcR0hLOYtaGyhEw==
+vue-ctk-date-time-picker@^2.4.0, vue-ctk-date-time-picker@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/vue-ctk-date-time-picker/-/vue-ctk-date-time-picker-2.5.0.tgz#22d6e4b4199326bfb0bf0b869e7450f4c16a6239"
+  integrity sha512-s4AO+5xnPlX+LD5UPQcjLBnv8MwcEJKlKUnkTLQeXRV0xqpH9pWRe6aJ8N2+506mEN6b7iwhlFox6uKKdtK+gw==
   dependencies:
     moment "^2.24.0"
     moment-range "^4.0.1"
@@ -9318,12 +9318,7 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue@^2.6.10:
-  version "2.6.10"
-  resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
-  integrity sha512-ImThpeNU9HbdZL3utgMCq0oiMzAkt1mcgy3/E6zWC/G6AaQoeuFdsl9nDhTDU3X1R6FK7nsIUuRACVcjI+A2GQ==
-
-vue@^2.6.9:
+vue@^2.6.10, vue@^2.6.9:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
