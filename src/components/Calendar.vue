@@ -1,13 +1,5 @@
 <template>
-    <FullCalendar
-        defaultView="dayGridMonth"
-        :plugins="calendarPlugins"
-        :events="items"
-        :firstDay="1"
-        :eventTimeFormat="{hour: 'numeric', minute: '2-digit', hour12: false}"
-        height="parent"
-        @eventClick="onEventClick"
-    />
+    <FullCalendar :options="calendarOptions" />
 </template>
 
 <script>
@@ -29,9 +21,23 @@
                 this.$emit('eventClick', args);
             }
         },
-        data: () => ({
-            calendarPlugins: [dayGridPlugin],
-        }),
+        data() {
+            return {
+                calendarOptions: {
+                    plugins: [dayGridPlugin],
+                    initialView: 'dayGridMonth',
+                    eventClick: this.onEventClick,
+                    height: 'parent',
+                    eventTimeFormat: {
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        hour12: false
+                    },
+                    firstDay: 1,
+                    events: this.items
+                },
+            }
+        },
     }
 </script>
 
