@@ -36,8 +36,6 @@
 </script>
 
 <style lang="scss">
-    @import "~@fullcalendar/core/main.css";
-    @import "~@fullcalendar/daygrid/main.css";
 
     .fc-toolbar h2 {
         font-size: 1.2rem !important;
