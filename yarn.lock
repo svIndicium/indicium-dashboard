@@ -835,13 +835,6 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@fullcalendar/common@~5.1.0":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@fullcalendar/common/-/common-5.1.0.tgz#a45e01ebdcf00654f4d45f0457926cf2f5909820"
-  integrity sha512-ubwf9T0BDocGLh0AK8achrmc0siQdrp3Wn6Rmg/Ht4/WnwBtjc5gumzJ0ezG/xHE0GWG+Pz6Tm0IJF/jE7NJHw==
-  dependencies:
-    tslib "^2.0.0"
-
 "@fullcalendar/common@~5.2.0":
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/@fullcalendar/common/-/common-5.2.0.tgz#49dff00f5104daaa00a8a556be394cacec3fadb7"
@@ -854,21 +847,12 @@
   resolved "https://registry.yarnpkg.com/@fullcalendar/core/-/core-4.4.2.tgz#864abe98cce4497a163c01a8fc30389f15d3d4e1"
   integrity sha512-vq7KQGuAJ1ieFG5tUqwxwUwmXYtblFOTjHaLAVHo6iEPB52mS7DS45VJfkhaQmX4+5/+BHRpg82G1qkuAINwtg==
 
-"@fullcalendar/core@^5.2.1":
+"@fullcalendar/core@^5.2.1", "@fullcalendar/core@~5.2.0":
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/@fullcalendar/core/-/core-5.2.1.tgz#655eb371c74e41715d7fa273079c61cd4c028e17"
   integrity sha512-5NHy5c9a2NokZkPiSk1+zRh4to/reE2ytu2NA/a/deJG7Ai/nM9oUaJj4TO25R5p9U9I+T9x7D3vM+X8Yu5izw==
   dependencies:
     "@fullcalendar/common" "~5.2.0"
-    preact "^10.0.5"
-    tslib "^2.0.0"
-
-"@fullcalendar/core@~5.1.0":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@fullcalendar/core/-/core-5.1.0.tgz#0d9813b0564f24fe6285e31f8313d9366c6db411"
-  integrity sha512-C9OA9LHD1zgfcMABQ17TaxvAO/iubYFLDrgTIRCe77LatC0G36UBafthevUlMRqCR6rt5SBcw0oBt23HqSJO3A==
-  dependencies:
-    "@fullcalendar/common" "~5.1.0"
     preact "^10.0.5"
     tslib "^2.0.0"
 
@@ -893,12 +877,12 @@
     "@fullcalendar/core" "~4.4.0"
     fast-deep-equal "^2.0.1"
 
-"@fullcalendar/vue@^5.1.0":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@fullcalendar/vue/-/vue-5.1.0.tgz#7b7a304c11aa9d16790e6de8967b8b0b2376ae64"
-  integrity sha512-n8tTL7geqA9JizmizB6/c1qtxiR3v18a94mltl6/naN+D9kxw9mkZqgzA4u+mcSFlSdqw/V85qPwqw2FMpr0mQ==
+"@fullcalendar/vue@^5.2.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/vue/-/vue-5.2.0.tgz#fc4746f6fb914b3b857bdc811c03cdd35452a637"
+  integrity sha512-tZm/VF79XfLOqlvzwsRJV6g9ciIsoqtqFB7VN47i8m/NahFh1X6gpqxxnFqSRRYmgFCvLm18nMH87lT07BenpQ==
   dependencies:
-    "@fullcalendar/core" "~5.1.0"
+    "@fullcalendar/core" "~5.2.0"
     tslib "^2.0.0"
 
 "@hapi/address@2.x.x":
