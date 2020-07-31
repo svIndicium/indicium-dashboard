@@ -842,12 +842,28 @@
   dependencies:
     tslib "^2.0.0"
 
+"@fullcalendar/common@~5.2.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/common/-/common-5.2.0.tgz#49dff00f5104daaa00a8a556be394cacec3fadb7"
+  integrity sha512-fh2Mp09lzIwlh3AJT5xw1r4jFKMOGRmdpmzJX+qvv3BJrg7P6ze4FLhoIpDRe13wmUpQuQEznk9pY99eFGxVXQ==
+  dependencies:
+    tslib "^2.0.0"
+
 "@fullcalendar/core@^4.4.0", "@fullcalendar/core@~4.4.0":
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/@fullcalendar/core/-/core-4.4.2.tgz#864abe98cce4497a163c01a8fc30389f15d3d4e1"
   integrity sha512-vq7KQGuAJ1ieFG5tUqwxwUwmXYtblFOTjHaLAVHo6iEPB52mS7DS45VJfkhaQmX4+5/+BHRpg82G1qkuAINwtg==
 
-"@fullcalendar/core@^5.1.0", "@fullcalendar/core@~5.1.0":
+"@fullcalendar/core@^5.2.1":
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/core/-/core-5.2.1.tgz#655eb371c74e41715d7fa273079c61cd4c028e17"
+  integrity sha512-5NHy5c9a2NokZkPiSk1+zRh4to/reE2ytu2NA/a/deJG7Ai/nM9oUaJj4TO25R5p9U9I+T9x7D3vM+X8Yu5izw==
+  dependencies:
+    "@fullcalendar/common" "~5.2.0"
+    preact "^10.0.5"
+    tslib "^2.0.0"
+
+"@fullcalendar/core@~5.1.0":
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/@fullcalendar/core/-/core-5.1.0.tgz#0d9813b0564f24fe6285e31f8313d9366c6db411"
   integrity sha512-C9OA9LHD1zgfcMABQ17TaxvAO/iubYFLDrgTIRCe77LatC0G36UBafthevUlMRqCR6rt5SBcw0oBt23HqSJO3A==
