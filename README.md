@@ -1,5 +1,4 @@
-![Logo](indicium%20dashboard.svg)
-# Indicium Dashboard
+![Indicium Dashboard](indicium%20dashboard.svg)
 Dashboard for managing all Indicium services, created with Vue. Live version available at [app.indicium.hu](https://app.indicium.hu/).
 
 ## 🚀 setup
