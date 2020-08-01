@@ -1,29 +1,10 @@
-# indicium-dashboard
+![Logo](indicium%20dashboard.svg)
+#Indicium Dashboard
+Dashboard for managing all Indicium services, created with Vue. Live version available at [app.indicium.hu](https://app.indicium.hu/).
 
-## Project setup
-```
-yarn install
-```
+## 🚀 setup
+1. Clone the repository with `git clone https://github.com/svIndicium/indicium-dashboard`.
+2. Install dependencies using `npm install`.
+3. Run the application using `npm run dev` to run the application in the development Auth0 environment or with `npm run live` to run it in the production environment.
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
-
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+You can also build the docker image! Build it using `docker build --build-arg VUE_APP_BRANCH=[dev/master] -t docker.pkg.github.com/svindicium/indicium-dashboard/dashboard:latest .`. Or pull it from our [Github Package Repository](https://github.com/svIndicium/indicium-dashboard/packages).

@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "cross-env NODE_ENV=development vue-cli-service serve --port 8083",
     "dev": "cross-env NODE_ENV=development VUE_APP_BRANCH=dev vue-cli-service serve --port 8083",
+    "live": "cross-env NODE_ENV=production VUE_APP_BRANCH=master vue-cli-service serve --port 8083",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
