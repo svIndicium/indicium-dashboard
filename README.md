@@ -2,7 +2,7 @@
 
 Dashboard for managing all Indicium services, created with Vue. Live version available at [app.indicium.hu](https://app.indicium.hu/).
 
-## 🚀 setup
+## 🚀 Setup
 1. Clone the repository with `git clone https://github.com/svIndicium/indicium-dashboard`.
 2. Install dependencies using `npm install`.
 3. Run the application using `npm run dev` to run the application in the development Auth0 environment or with `npm run live` to run it in the production environment.
