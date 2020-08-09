@@ -109,7 +109,7 @@ export const useAuth0 = ({
                 client_id: options.clientId,
                 audience: options.audience,
                 redirect_uri: redirectUri,
-                scope: this.requiredScopes.join(","),
+                scope: this.requiredScopes.join(" "),
             });
 
             try {
