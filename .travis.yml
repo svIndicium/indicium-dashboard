@@ -26,7 +26,7 @@ addons:
 
 
 cache:
-  yarn: true
+  npm: true
   directories:
     - node_modules
 
