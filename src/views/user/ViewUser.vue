@@ -13,7 +13,7 @@
                 <h3 class="section-header">Contact informatie</h3>
                 <div class="section-entry">
                     <p class="key">Telefoonnummer</p>
-                    <p class="value">{{this.$utils.getPrettyPhoneNumber(this.user.phoneNumber)}}</p>
+                    <p class="value">{{$utils.getPrettyPhoneNumber(this.user.phoneNumber)}}</p>
                 </div>
                 <div v-for="(mailAddress, index) in this.mailAddresses" :key="index">
                     <div class="section-entry">
@@ -22,7 +22,7 @@
                     </div>
                     <div class="section-entry" v-if="mailAddress.verifiedAt === null">
                         <p class="key">Verificatie aangevraagd op</p>
-                        <p class="value">{{this.$utils.getPrettyDateTime(mailAddress.verificationRequestedAt)}}</p>
+                        <p class="value">{{$utils.getPrettyDateTime(mailAddress.verificationRequestedAt)}}</p>
                     </div>
                     <div class="action-buttons">
                         <Button size="l" v-if="mailAddress.verifiedAt === null">Request new verification</Button>
@@ -46,7 +46,7 @@
                 <h3 class="section-header">Persoonlijke informatie</h3>
                 <div class="section-entry">
                     <p class="key">Geboortedatum</p>
-                    <p class="value">{{this.$utils.getPrettyDate(this.user.dateOfBirth)}}</p>
+                    <p class="value">{{$utils.getPrettyDate(this.user.dateOfBirth)}}</p>
                 </div>
                 <div class="section-entry" v-if="!!user.studyType">
                     <p class="key">Studierichting</p>
