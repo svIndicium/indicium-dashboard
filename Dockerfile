@@ -4,7 +4,6 @@ FROM node:alpine AS base
 COPY . .
 # Build project
 ARG MODE=live
-ENV MODE=$MODE
 RUN yarn build-$MODE
 
 # ---- Prod ----
