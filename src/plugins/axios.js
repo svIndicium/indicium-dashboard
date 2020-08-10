@@ -6,11 +6,11 @@ import AuthMiddleware from '../middleware/AuthMiddleware';
 
 const api = {}
 api.install = function (Vue) {
-    const baseURL = process.env.VUE_APP_BRANCH === 'dev'
-        ? 'http://localhost:8080/api/v1'
-        : process.env.NODE_ENV === 'production' && process.env.VUE_APP_BRANCH === 'master'
-            ? 'https://api.indicium.hu/api/v1'
-            : 'https://api.dev.indicium.hu/api/v1';
+    const baseURL = process.env.VUE_APP_MODE === 'live'
+        ? 'https://api.indicium.hu/api/v1'
+        : process.env.VUE_APP_MODE === 'dev'
+            ? 'https://dev.api.indicium.hu/api/v1'
+            : 'https://localhost:8080/api/v1';
 
     const apiInstance = axios.create({ baseURL: baseURL });
 

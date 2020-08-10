@@ -12,7 +12,7 @@ import { domain as devDomain, clientId as devClientId, audience as devAudience }
 import { Auth0Plugin } from './auth';
 
 Vue.config.productionTip = false;
-const devEnv = !(process.env.VUE_APP_LIVE === 'true' || (process.env.VUE_APP_BRANCH === 'master' && process.env.NODE_ENV === 'production'));
+const devEnv = process.env.VUE_APP_MODE !== 'live';
 
 
 const requiredScopes = {
