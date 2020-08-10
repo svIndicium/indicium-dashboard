@@ -4,7 +4,7 @@ FROM node:alpine AS base
 COPY . .
 # Build project
 ARG MODE=live
-RUN yarn build-$MODE
+RUN npm run build-$MODE
 
 # ---- Prod ----
 FROM nginx
