@@ -3,9 +3,8 @@ FROM node:alpine AS base
 # Copy project file
 COPY . .
 # Build project
-ARG VUE_APP_BRANCH
-ENV VUE_APP_BRANCH=$VUE_APP_BRANCH
-RUN VUE_APP_BRANCH=$VUE_APP_BRANCH npm run build
+ARG MODE=live
+RUN yarn build-$MODE
 
 # ---- Prod ----
 FROM nginx
