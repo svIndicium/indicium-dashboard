@@ -90,6 +90,17 @@ export const useAuth0 = ({
                 return this.scopes.indexOf(requestedScope) >= 0;
             },
         },
+        computed: {
+            requiredScopes() {
+                const scopes = [];
+                for (let app in options.scopes) {
+                    if (Object.prototype.hasOwnProperty.call(options.scopes, app)) {
+                        options.scopes[app].forEach((scope) => scopes.push(`${app}/${scope}`))
+                    }
+                }
+                return scopes;
+            }
+        },
         /** Use this lifecycle method to instantiate the SDK client */
         async created() {
             // CreateUser a new instance of the SDK client using members of the given options object
@@ -98,7 +109,7 @@ export const useAuth0 = ({
                 client_id: options.clientId,
                 audience: options.audience,
                 redirect_uri: redirectUri,
-                scope: 'create:user,admin:user,create:studyType',
+                scope: this.requiredScopes.join(" "),
             });
 
             try {
@@ -112,7 +123,7 @@ export const useAuth0 = ({
                     const token = await this.getTokenSilently();
                     this.scopes = JSON.parse(atob(token.split('.')[1])).scope.split(' ');
                     localStorage.setItem('scopes', JSON.stringify(this.scopes));
-                    localStorage.setItem('token', JSON.stringify(token));
+                    localStorage.setItem('token', token);
                     this.$api.defaults.headers.common.Authorization = `Bearer ${token}`;
                     // Notify subscribers that the redirect callback has happened, passing the appState
                     // (useful for retrieving any pre-authentication state)

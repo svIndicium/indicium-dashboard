@@ -9,7 +9,7 @@
             <tr v-for="(registration, idx) in registrations" :key="idx" @click="viewRegistration(registration.id)">
                 <td>{{registration.id}}</td>
                 <td>{{ getFullName(registration) }}</td>
-                <td>{{registration.email}}</td>
+                <td>{{registration.mailAddress}}</td>
             </tr>
         </table>
     </div>

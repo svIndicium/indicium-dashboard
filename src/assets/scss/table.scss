@@ -1,0 +1,23 @@
+.table-container {
+  max-width: 600px;
+  display: grid;
+  grid-template-rows: 32px;
+  align-items: stretch;
+
+  .header {
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+
+  div, span {
+    line-height: 32px;
+    height: 32px;
+  }
+
+  a {
+    font-size: 24px;
+    height: 28px;
+    width: 28px;
+  }
+}

@@ -2,9 +2,7 @@
     <div class="layout">
         <Sidebar />
 
-        <div class="view">
-            <BreadCrumbs />
-            <h1>{{ this.$route.meta.title }}</h1>
+        <div :class="['view', collapsed ? 'collapsed': '']">
             <div class="panel">
                 <RouterView></RouterView>
             </div>
@@ -13,28 +11,40 @@
 </template>
 
 <script>
-import Sidebar from "../components/Sidebar";
-import BreadCrumbs from '../components/Breadcrumbs';
+    import Sidebar from "../components/Sidebar";
 
-export default {
-    name: "Layout",
-    components: {
-        Sidebar,
-        BreadCrumbs
-    }
-};
+    export default {
+        name: "Layout",
+        components: {
+            Sidebar
+        },
+        data: () => ({
+            collapsed: JSON.parse(sessionStorage.getItem('sidebar-collapsed')) || false
+        }),
+        mounted() {
+            this.$eventBus.$on('nav-toggle', payload => {
+                this.$set(this, 'collapsed', payload)
+            })
+        },
+
+    };
 </script>
 
 <style lang="scss">
-.view {
-    margin-left: var(--sidebar-width);
-    padding: 24px;
+    .view {
+        height: 100vh;
+        margin-left: var(--sidebar-width);
+        background: var(--inner-sidebar-background);
+        transition: 0.5s;
 
-    .panel {
-        background: var(--panel-background);
-        width: 100%;
-        height: 100%;
-        padding: 24px;
+        .panel {
+            width: 100%;
+            height: 100%;
+        }
+
+        &.collapsed {
+            margin-left: 100px;
+            transition: 0.5s;
+        }
     }
-}
 </style>

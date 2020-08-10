@@ -5,7 +5,7 @@
                 v-for="(breadcrumb, idx) in breadcrumbList"
                 :key="idx"
                 @click="routeTo(idx)"
-                :class="{'linked': !!breadcrumb.link}"
+                :class="{'linked': !!breadcrumb.routeName}"
             >{{breadcrumb.name}}</li>
         </ul>
     </div>
@@ -27,8 +27,8 @@ export default {
     },
     methods: {
         routeTo(pRouteTo) {
-            if (this.breadcrumbList[pRouteTo].link) {
-                this.$router.push(this.breadcrumbList[pRouteTo].link);
+            if (this.breadcrumbList[pRouteTo].routeName) {
+                this.$router.push({name: this.breadcrumbList[pRouteTo].routeName});
             }
         },
         updateList() {

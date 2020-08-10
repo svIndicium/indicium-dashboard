@@ -5,9 +5,12 @@
     <button v-else-if="callback" @click="callback" :class="['btn', size, center ? 'center' : '']">
         <slot></slot>
     </button>
-    <a v-else-if="url.startsWith('http')" :href="url" :class="['btn', size, center ? 'center' : '']">
+    <a v-else-if="url.startsWith('http') || url.startsWith('mailto:')" :href="url" :class="['btn', size, center ? 'center' : '']">
         <slot></slot>
     </a>
+    <router-link v-else-if="routeName" :to="{name: routeName}" :class="['btn', size, center ? 'center' : '']">
+        <slot></slot>
+    </router-link>
     <router-link v-else :to="url" :class="['btn', size, center ? 'center' : '']">
         <slot></slot>
     </router-link>
@@ -30,6 +33,9 @@
                 type: String,
                 default: '#',
             },
+            routeName: {
+                type: String,
+            },
             callback: {
                 type: Function,
             },
@@ -51,7 +57,7 @@
         color: #fff;
         background: #72c9e0;
         box-shadow: 0 0 32px rgba(181, 187, 201, 0.4);
-        border-radius: 4px;
+        border-radius: 8px;
         border: 0;
         transition: 200ms;
         display: inline-flex;

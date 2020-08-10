@@ -1,92 +1,88 @@
 <template>
     <div>
-        <Button url="/leden/create">Voeg toe</Button>
-        <table v-if="!error">
-            <tr>
-                <th>id</th>
-                <th>Naam</th>
-                <th>Email</th>
-            </tr>
-            <tr v-for="(user, idx) in users" :key="idx" @click="viewUser(user.id)">
-                <td>{{user.id}}</td>
-                <td>{{ getFullName(user) }}</td>
-                <td>{{user.email}}</td>
-            </tr>
-        </table>
+        <h2>Ledenoverzicht</h2>
+        <div v-if="loading">
+            <Loading />
+        </div>
+        <div v-else-if="!error" class="table-container">
+            <div class="header">Voornaam</div>
+            <div class="header">Achternaam</div>
+            <div class="header">Status</div>
+            <div class="header">Acties</div>
+            <template v-for="(user, idx) in users">
+                <div v-bind:key="'firstName' + idx">{{user.firstName}}</div>
+                <div v-bind:key="'lastName' + idx">{{getFullLastName(user)}}</div>
+                <div v-bind:key="'status' + idx"><StatusLabel status="success">Actief</StatusLabel></div>
+                <router-link v-bind:key="'actions' + idx" :to="{name: 'lid-bekijken', params: {userId: user.userId || user.id}}"><Icon type="pencil" /></router-link>
+            </template>
+        </div>
         <div v-else>
-            {{ error.message }}
+            <div class="errorcontainer">
+                <Icon type="alert-circle" class="icon" />
+                <span class="message">
+                    {{ errorMessage }}
+                </span>
+            </div>
+            <Button :callback="getUsers" size="l" class="button"><Icon type="refresh" class="buttonicon" />Probeer opnieuw</Button>
         </div>
     </div>
 </template>
 
 <script>
-import Button from '../../components/button';
-export default {
-    name: "List",
-    components: { Button },
-    data: () => ({
-        users: [],
-        error: null
-    }),
-    methods: {
-        async getUsers() {
-            try {
-                const { data } = await this.$api.get("/user");
-                this.users = data;
-            } catch (e) {
-                this.error = e;
+    import Loading from '@svindicium/indicium-components';
+    import Icon from '../../components/Icon';
+    import Button from '../../components/button';
+    import StatusLabel from '../../components/StatusLabel';
+
+    export default {
+        name: "List",
+        components: { StatusLabel, Button, Icon, Loading },
+        data: () => ({
+            users: [],
+            error: null,
+            loading: false,
+        }),
+        methods: {
+            async getUsers() {
+                this.error = null;
+                this.loading = true;
+                try {
+                    const { data } = await this.$api.get("/users");
+                    this.users = data;
+                } catch (e) {
+                    this.error = e;
+                }
+                this.loading = false;
+            },
+            viewUser(userId) {
+                this.$router.push({ name: "viewUser", params: { userId } });
+            },
+            getFullLastName(user) {
+                if (user.middleName) {
+                    return `${user.middleName} ${user.lastName}`;
+                }
+                return `${user.lastName}`;
             }
         },
-        viewUser(userId) {
-            this.$router.push({ name: "viewUser", params: { userId } });
+        async created() {
+            await this.getUsers();
         },
-        getFullName(user) {
-            if (user.middleName) {
-                return `${user.firstName} ${user.middleName} ${user.lastName}`;
+        computed: {
+            errorMessage() {
+                if (this.error.message === 'Network Error') {
+                    return 'Netwerk fout';
+                }
+                return this.error.message;
             }
-            return `${user.firstName} ${user.lastName}`;
         }
-    },
-    async created() {
-        await this.getUsers();
-    }
-};
+    };
 </script>
 
 <style lang="scss" scoped>
-table {
-    box-shadow: 0 0 20px 0 rgba(124, 124, 124, 0.1);
-    width: 50%;
-    border-collapse: collapse;
-
-    th {
-        font-weight: inherit;
-        text-transform: capitalize;
-        width: fit-content;
-        border-bottom: 1px solid rgba(141, 143, 145, 0.7);
+    @import "src/assets/scss/table";
+    @import "src/assets/scss/error";
+    .table-container {
+        @extend .table-container;
+        grid-template-columns: 1fr 1fr 64px 32px;
     }
-
-    td,
-    th {
-        padding: 4px;
-    }
-
-    td {
-        border-bottom: 1px solid rgba(141, 143, 145, 0.44);
-    }
-
-    tr:not(:first-child) {
-        cursor: pointer;
-
-        &:hover {
-            background-color: #eee;
-        }
-    }
-
-    tr:last-child {
-        td {
-            border-bottom: none;
-        }
-    }
-}
 </style>
