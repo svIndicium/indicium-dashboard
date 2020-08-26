@@ -20,6 +20,7 @@ import AgendaConnection from './views/events/AgendaConnection';
 import CreateEvent from './views/events/CreateEvent';
 import EventDashboard from './views/events/EventDashboard';
 import ViewEvent from './views/events/ViewEvent';
+import CreateUser from "@/views/user/CreateUser";
 
 Vue.use(Router);
 
@@ -70,6 +71,26 @@ export default new Router({
                                 },
                                 {
                                     name: 'Overzicht'
+                                }
+                            ],
+                        },
+                    },
+                    {
+                        path: 'nieuw',
+                        name: 'createUser',
+                        component: CreateUser,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    name: 'Dashboard',
+                                    routeName: 'dashboard',
+                                },
+                                {
+                                    name: 'Leden',
+                                    routeName: 'userDashboard',
+                                },
+                                {
+                                    name: 'Nieuw'
                                 }
                             ],
                         },
