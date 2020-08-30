@@ -1,6 +1,7 @@
 <template>
     <div>
         <h2>Ledenoverzicht</h2>
+        <Button route-name="createUser">Nieuwe gebruiker</Button>
         <div v-if="loading">
             <Loading />
         </div>
