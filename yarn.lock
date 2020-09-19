@@ -8301,10 +8301,10 @@ table@^5.2.3:
     slice-ansi "^2.1.0"
     string-width "^3.0.0"
 
-tabler-icons@^1.11.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/tabler-icons/-/tabler-icons-1.11.0.tgz#f221b8df296278e533fe6578e873c0008b77425d"
-  integrity sha512-iZPgWnenGX3fSWj66m9CV6lWLdzaNfZMhIJ33MQ0LNvChvcN6n4LuSel3i3U98H0S/+o/5BdwWb8dzSjwOwIyg==
+tabler-icons@^1.21.0:
+  version "1.21.0"
+  resolved "https://registry.yarnpkg.com/tabler-icons/-/tabler-icons-1.21.0.tgz#e9cb50eab1849015617f4b43df8bf0b138d6a4b1"
+  integrity sha512-fmVbZwkx3IuI5pIxkORJB+YqqP22rr1ZnIjE2HtdUy2Y9vPf14ETaEabQmxldHTub5uQ2AKIu2E/43iGcXn2fw==
 
 tapable@^0.1.8:
   version "0.1.10"
