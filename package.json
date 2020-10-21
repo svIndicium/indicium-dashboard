@@ -29,7 +29,7 @@
     "vuejs-datepicker": "^1.6.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.4.6",
+    "@vue/cli-plugin-babel": "^4.5.8",
     "@vue/cli-plugin-eslint": "^4.4.6",
     "@vue/cli-service": "^4.4.6",
     "@vue/eslint-config-airbnb": "^5.1.0",
