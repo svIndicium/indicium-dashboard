@@ -25,7 +25,7 @@
     "tabler-icons": "^1.11.0",
     "vue": "^2.6.11",
     "vue-ctk-date-time-picker": "^2.5.0",
-    "vue-router": "^3.4.1",
+    "vue-router": "^3.4.9",
     "vuejs-datepicker": "^1.6.2"
   },
   "devDependencies": {
