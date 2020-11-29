@@ -11,10 +11,10 @@
             <div class="header">Status</div>
             <div class="header">Acties</div>
             <template v-for="(user, idx) in users">
-                <div v-bind:key="'firstName' + idx">{{user.firstName}}</div>
-                <div v-bind:key="'lastName' + idx">{{getFullLastName(user)}}</div>
+                <div v-bind:key="'firstName' + idx">{{user.memberDetails.name.firstName}}</div>
+                <div v-bind:key="'lastName' + idx">{{getFullLastName(user.memberDetails.name)}}</div>
                 <div v-bind:key="'status' + idx"><StatusLabel status="success">Actief</StatusLabel></div>
-                <router-link v-bind:key="'actions' + idx" :to="{name: 'lid-bekijken', params: {userId: user.userId || user.id}}"><Icon type="pencil" /></router-link>
+                <router-link v-bind:key="'actions' + idx" :to="{name: 'lid-bekijken', params: {userId: user.memberId }}"><Icon type="pencil" /></router-link>
             </template>
         </div>
         <div v-else>
@@ -48,7 +48,7 @@
                 this.error = null;
                 this.loading = true;
                 try {
-                    const { data } = await this.$api.get("/users");
+                    const { data } = await this.$api.get("/members");
                     this.users = data;
                 } catch (e) {
                     this.error = e;
@@ -58,11 +58,11 @@
             viewUser(userId) {
                 this.$router.push({ name: "viewUser", params: { userId } });
             },
-            getFullLastName(user) {
-                if (user.middleName) {
-                    return `${user.middleName} ${user.lastName}`;
+            getFullLastName(name) {
+                if (name.middleName) {
+                    return `${name.middleName} ${name.lastName}`;
                 }
-                return `${user.lastName}`;
+                return `${name.lastName}`;
             }
         },
         async created() {

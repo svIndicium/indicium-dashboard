@@ -5,12 +5,12 @@
             <Loading />
         </div>
         <div v-else-if="!error">
-            <Button route-name="nieuwestudierichting" size="m" class="button" v-if="$auth.hasPermission('create:studyType')"><Icon type="plus" class="buttonicon"></Icon>Voeg toe</Button>
+            <Button route-name="nieuwestudierichting" size="m" class="button" v-if="$auth.hasPermission('ledenadministratie/write:study_type')"><Icon type="plus" class="buttonicon"></Icon>Voeg toe</Button>
             <div class="table-container">
                 <div class="header">ID #</div>
                 <div class="header">Naam</div>
                 <template v-for="(studyType, idx) in studyTypes">
-                    <div v-bind:key="'id' + idx">{{studyType.id}}</div>
+                    <div v-bind:key="'id' + idx">{{studyType.shortName}}</div>
                     <div v-bind:key="'name' + idx">{{studyType.name}}</div>
                 </template>
             </div>

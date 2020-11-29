@@ -17,10 +17,12 @@ const devEnv = process.env.VUE_APP_MODE !== 'live';
 
 const requiredScopes = {
     ledenadministratie: [
-        "create:user",
-        "admin:user",
-        "read:user",
-        "create:studyType",
+        "admin:member",
+        "read:member",
+        "create:member",
+        "admin:registration",
+        "read:registration",
+        "write:study_type",
         "read:mailchimp_settings",
         "write:mailchimp_settings",
         "read:sendgrid_settings",

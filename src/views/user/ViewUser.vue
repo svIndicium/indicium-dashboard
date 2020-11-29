@@ -8,7 +8,6 @@
             <div class="action-buttons">
                 <Button size="l" :url="whatsAppLink" class="contact-button"><Icon type="message" class="buttonicon" />Stuur Whatsapp bericht</Button>
                 <Button size="l" :url="mailtoLink" class="contact-button"><Icon type="mail" class="buttonicon" />Stuur email</Button>
-                <Button size="l" @click.native="createAuth0Account" class="contact-button" v-if="!hasAuth0Account && this.$auth.hasPermission('ledenadministratie/admin:user')"><Icon type="shield" class="buttonicon" />Maak Auth0 account</Button>
             </div>
             <div class="section">
                 <h3 class="section-header">Contact informatie</h3>
@@ -85,32 +84,25 @@
             async getUser() {
                 this.error = null;
                 const userId = this.$route.params.userId;
-                const { data } = await this.$api.get(`/users/${this.hasAuth0Account ? 'a/' : ''}${userId}`);
+                const { data } = await this.$api.get(`/members/${userId}`);
                 this.user = data;
                 await this.getStudyType();
             },
             async getStudyType() {
-                const { data } = await this.$api.get(`/studytypes/${this.user.studyTypeId}`);
+                const { data } = await this.$api.get(`/studytypes/${this.user.memberDetails.studyTypeId}`);
                 this.user.studyType = data;
             },
             async getMailAddresses() {
                 const userId = this.$route.params.userId;
-                const { data } = await this.$api.get(`/users/${this.hasAuth0Account ? 'a/' : ''}${userId}/mailaddresses`);
+                const { data } = await this.$api.get(`/members/${userId}/mailaddresses`);
                 this.mailAddresses = data;
             },
-            async createAuth0Account() {
-                if (!this.hasAuth0Account) {
-                    const userId = this.$route.params.userId;
-                    const { data } = await this.$api.get(`/users/${userId}/createauthaccount`);
-                    this.user = data;
-                }
-            }
         },
         async created() {
             this.loading = true;
             try {
                 await this.getUser();
-                await this.getMailAddresses();
+                // await this.getMailAddresses();
             } catch (e) {
                 this.error = e;
             }
@@ -118,10 +110,10 @@
         },
         computed: {
             fullName() {
-                if (this.user.middleName) {
-                    return `${this.user.firstName} ${this.user.middleName} ${this.user.lastName}`;
+                if (this.user.memberDetails.name.middleName) {
+                    return `${this.user.memberDetails.name.firstName} ${this.user.memberDetails.name.middleName} ${this.user.memberDetails.name.lastName}`;
                 }
-                return `${this.user.firstName} ${this.user.lastName}`;
+                return `${this.user.memberDetails.name.firstName} ${this.user.memberDetails.name.lastName}`;
             },
             mailtoLink() {
                 if (this.mailAddresses.length !== 0) {

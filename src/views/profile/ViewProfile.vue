@@ -9,15 +9,15 @@
                 <h3 class="section-header">Algemene informatie</h3>
                 <div class="section-entry">
                     <p class="key">Voornaam</p>
-                    <p class="value">{{this.user.firstName}}</p>
+                    <p class="value">{{this.user.memberDetails.name.firstName}}</p>
                 </div>
                 <div class="section-entry">
                     <p class="key">Achternaam</p>
-                    <p class="value">{{this.user.lastName}}</p>
+                    <p class="value">{{this.user.memberDetails.name.lastName}}</p>
                 </div>
                 <div class="section-entry">
                     <p class="key">Geboortedatum</p>
-                    <p class="value">{{this.$utils.getPrettyDate(this.user.dateOfBirth)}}</p>
+                    <p class="value">{{this.$utils.getPrettyDate(this.user.memberDetails.dateOfBirth)}}</p>
                 </div>
             </div>
             <div class="section">
@@ -31,7 +31,7 @@
                 <h3 class="section-header">Contact informatie</h3>
                 <div class="section-entry">
                     <p class="key">Telefoonnummer</p>
-                    <p class="value">{{this.$utils.getPrettyPhoneNumber(this.user.phoneNumber)}}</p>
+                    <p class="value">{{this.$utils.getPrettyPhoneNumber(this.user.memberDetails.phoneNumber)}}</p>
                 </div>
                 <div class="section-entry">
                     <p class="key">Primaire e-mailadres</p>
@@ -82,7 +82,7 @@
             async getUserFromService() {
                 this.error = null;
                 try {
-                    const { data } = await this.$api.get('/users/userinfo');
+                    const { data } = await this.$api.get(`/members/${this.user.sub}`);
                     this.user = { ...this.user, ...data };
                     await this.getStudyType();
                 } catch (e) {
@@ -90,7 +90,7 @@
                 }
             },
             async getStudyType() {
-                const { data } = await this.$api.get(`/studytypes/${this.user.studyTypeId}`);
+                const { data } = await this.$api.get(`/studytypes/${this.user.memberDetails.studyTypeId}`);
                 this.user.studyType = data;
             },
         },
