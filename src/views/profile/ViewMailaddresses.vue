@@ -8,14 +8,14 @@
             <div class="header">Mailadres</div>
             <div class="header">Status</div>
             <div class="header">Nieuwsbrief status</div>
-            <template v-for="(mailaddress, idx) in mailaddresses">
-                <div v-bind:key="'adres' + idx" class="cell">{{mailaddress.address}}</div>
+            <template v-for="(mailAddress, idx) in mailAddresses">
+                <div v-bind:key="'adres' + idx" class="cell">{{mailAddress.address}}</div>
                 <div v-bind:key="'verified' + idx" class="cell">
-                    <StatusLabel v-if="mailaddress.verified" status="success" :title="`Bevestigd op ${getPrettyDateTime(mailaddress.verifiedAt)}`">Bevestigd</StatusLabel>
-                    <StatusLabel v-else status="warning" :title="`Bevestiging verstuurd op ${getPrettyDateTime(mailaddress.verificationRequestedAt)}`">Nog niet bevestigd</StatusLabel>
+                    <StatusLabel v-if="mailAddress.verifiedAt !== null" status="success" :title="`Bevestigd op ${getPrettyDateTime(mailAddress.verifiedAt)}`">Bevestigd</StatusLabel>
+                    <StatusLabel v-else status="warning" :title="`Bevestiging verstuurd op ${getPrettyDateTime(mailAddress.verificationRequestedAt)}`">Nog niet bevestigd</StatusLabel>
                 </div>
                 <div v-bind:key="'newsletter' + idx" class="cell">
-                    <StatusLabel v-if="!mailaddress.receivesNewsletter" status="success">Ontvangt nieuwsbrief</StatusLabel>
+                    <StatusLabel v-if="!!mailAddress.receivesNewsletter" status="success">Ontvangt nieuwsbrief</StatusLabel>
                     <StatusLabel v-else status="warning">Ontvangt geen nieuwsbrief</StatusLabel>
                 </div>
             </template>
@@ -39,7 +39,7 @@
     import StatusLabel from '../../components/StatusLabel';
 
     export default {
-        name: 'ViewMailaddresses',
+        name: 'ViewMailAddresses',
         components: {
             StatusLabel,
             Icon,
@@ -47,7 +47,7 @@
             Loading,
         },
         data: () => ({
-            mailaddresses: [],
+            mailAddresses: [],
             error: null,
             loading: false,
         }),
@@ -55,8 +55,8 @@
             async getMailAddresses() {
                 this.error = null;
                 try {
-                    const { data } = await this.$api.get('/users/userinfo/mailaddresses');
-                    this.mailaddresses = data;
+                    const { data } = await this.$api.get(`/members/${this.$auth.user.sub}/mailaddresses`);
+                    this.mailAddresses = data;
                 } catch (e) {
                     this.error = e;
                 }

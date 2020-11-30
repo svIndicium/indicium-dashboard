@@ -26,8 +26,8 @@
                     routeName: 'profielDashboard',
                     children: [
                         {
-                            title: 'mailadressen',
-                            routeName: 'gebruikersmailadresoverzicht'
+                            title: 'Mailadressen',
+                            routeName: 'profileMailAddresses'
                         },
                     ]
                 },

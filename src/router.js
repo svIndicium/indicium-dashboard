@@ -321,8 +321,8 @@ export default new Router({
                         },
                     },
                     {
-                        path: 'mailaddressen',
-                        name: 'gebruikersmailadresoverzicht',
+                        path: 'mailadressen',
+                        name: 'profileMailAddresses',
                         component: ViewMailaddresses,
                         meta: {
                             breadcrumb: [
