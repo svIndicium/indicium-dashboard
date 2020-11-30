@@ -27,6 +27,8 @@ const requiredScopes = {
         "write:mailchimp_settings",
         "read:sendgrid_settings",
         "write:sendgrid_settings",
+        "read:discord_settings",
+        "write:discord_settings",
         "read:auth0_settings",
         "write:auth0_settings",
         "read:settings"
