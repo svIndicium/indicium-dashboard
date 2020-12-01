@@ -35,7 +35,7 @@ export const useAuth0 = ({
             };
         },
         methods: {
-            /** Authenticates the user using a popup window */
+            /** Authenticates the member using a popup window */
             async loginWithPopup(o) {
                 this.popupOpen = true;
 
@@ -64,7 +64,7 @@ export const useAuth0 = ({
                     this.loading = false;
                 }
             },
-            /** Authenticates the user using the redirect method */
+            /** Authenticates the member using the redirect method */
             loginWithRedirect(o) {
                 return this.auth0Client.loginWithRedirect(o);
             },
@@ -80,7 +80,7 @@ export const useAuth0 = ({
             getTokenWithPopup(o) {
                 return this.auth0Client.getTokenWithPopup(o);
             },
-            /** Logs the user out and removes their session on the authorization server */
+            /** Logs the member out and removes their session on the authorization server */
             logout(o) {
                 localStorage.removeItem('scopes');
                 localStorage.removeItem('token');
@@ -113,7 +113,7 @@ export const useAuth0 = ({
             });
 
             try {
-                // If the user is returning to the app after authentication..
+                // If the member is returning to the app after authentication..
                 if (
                     window.location.search.includes('code=')
                     && window.location.search.includes('state=')

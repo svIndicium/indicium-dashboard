@@ -23,7 +23,7 @@
             sidebar: [
                 {
                     title: 'Profiel',
-                    routeName: 'profielDashboard',
+                    routeName: 'profile',
                     children: [
                         {
                             title: 'Mailadressen',
