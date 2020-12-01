@@ -5,7 +5,7 @@ function authGuard(to, from, next) {
     const authService = getInstance();
 
     function fn() {
-        // If the user is authenticated, continue with the route
+        // If the member is authenticated, continue with the route
         if (authService.isAuthenticated) {
             return next();
         }

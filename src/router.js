@@ -2,25 +2,25 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import { authGuard } from './auth/authGuard';
-import ListStudyType from './views/user/ListStudyType';
-import CreateStudyType from './views/user/CreateStudyType';
-import User from './views/user/User';
-import ListUser from './views/user/ListUser';
+import ListStudyType from './views/member/ListStudyType';
+import CreateStudyType from './views/member/CreateStudyType';
+import ListMember from './views/member/ListMember';
 import Profile from './views/profile/Profile';
 import ViewProfile from './views/profile/ViewProfile';
 import ViewMailaddresses from './views/profile/ViewMailaddresses';
-import ListRegistrations from './views/user/registration/ListRegistrations';
+import ListRegistrations from './views/member/registration/ListRegistrations';
 import Settings from './views/settings/Settings';
 import SettingsDashboard from './views/settings/SettingsDashboard';
 import SettingsPage from './views/settings/SettingsPage';
-import ViewUser from './views/user/ViewUser';
-import ViewRegistration from './views/user/registration/ViewRegistration';
+import ViewMember from './views/member/ViewMember';
+import ViewRegistration from './views/member/registration/ViewRegistration';
 import Events from './views/events/Events';
 import AgendaConnection from './views/events/AgendaConnection';
 import CreateEvent from './views/events/CreateEvent';
 import EventDashboard from './views/events/EventDashboard';
 import ViewEvent from './views/events/ViewEvent';
-import CreateUser from "@/views/user/CreateUser";
+import CreateUser from "@/views/member/CreateUser";
+import Member from "@/views/member/Member";
 
 Vue.use(Router);
 
@@ -41,7 +41,7 @@ export default new Router({
             },
             {
                 path: '/leden',
-                component: User,
+                component: Member,
                 beforeEnter: authGuard,
                 meta: {
                     breadcrumb: [
@@ -57,8 +57,8 @@ export default new Router({
                 children: [
                     {
                         path: '',
-                        name: 'userDashboard',
-                        component: ListUser,
+                        name: 'memberDashboard',
+                        component: ListMember,
                         meta: {
                             breadcrumb: [
                                 {
@@ -67,7 +67,7 @@ export default new Router({
                                 },
                                 {
                                     name: 'Leden',
-                                    routeName: 'userDashboard',
+                                    routeName: 'memberDashboard',
                                 },
                                 {
                                     name: 'Overzicht'
@@ -77,7 +77,7 @@ export default new Router({
                     },
                     {
                         path: 'nieuw',
-                        name: 'createUser',
+                        name: 'memberImport',
                         component: CreateUser,
                         meta: {
                             breadcrumb: [
@@ -87,7 +87,7 @@ export default new Router({
                                 },
                                 {
                                     name: 'Leden',
-                                    routeName: 'userDashboard',
+                                    routeName: 'memberDashboard',
                                 },
                                 {
                                     name: 'Nieuw'
@@ -97,7 +97,7 @@ export default new Router({
                     },
                     {
                         path: 'aanmeldingen',
-                        name: 'aanmeldingenoverzicht',
+                        name: 'registrationOverview',
                         component: ListRegistrations,
                         meta: {
                             breadcrumb: [
@@ -107,7 +107,7 @@ export default new Router({
                                 },
                                 {
                                     name: 'Leden',
-                                    routeName: 'userDashboard',
+                                    routeName: 'memberDashboard',
                                 },
                                 {
                                     name: 'Aanmeldingen',
@@ -117,7 +117,7 @@ export default new Router({
                     },
                     {
                         path: 'aanmeldingen/:registrationId',
-                        name: 'aanmelding-bekijken',
+                        name: 'registrationView',
                         component: ViewRegistration,
                         meta: {
                             breadcrumb: [
@@ -127,11 +127,11 @@ export default new Router({
                                 },
                                 {
                                     name: 'Leden',
-                                    routeName: 'userDashboard',
+                                    routeName: 'memberDashboard',
                                 },
                                 {
                                     name: 'Aanmeldingen',
-                                    routeName: 'aanmeldingenoverzicht'
+                                    routeName: 'registrationOverview'
                                 },
                                 {
                                     name: 'Aanmelding'
@@ -141,7 +141,7 @@ export default new Router({
                     },
                     {
                         path: 'studierichtingen',
-                        name: 'studierichtingenoverzicht',
+                        name: 'studyTypeOverview',
                         component: ListStudyType,
                         meta: {
                             breadcrumb: [
@@ -151,7 +151,7 @@ export default new Router({
                                 },
                                 {
                                     name: 'Leden',
-                                    routeName: 'userDashboard',
+                                    routeName: 'memberDashboard',
                                 },
                                 {
                                     name: 'Studierichtingen',
@@ -161,7 +161,7 @@ export default new Router({
                     },
                     {
                         path: 'studierichtingen/nieuw',
-                        name: 'nieuwestudierichting',
+                        name: 'studyTypeCreate',
                         component: CreateStudyType,
                         meta: {
                             breadcrumb: [
@@ -171,11 +171,11 @@ export default new Router({
                                 },
                                 {
                                     name: 'Leden',
-                                    routeName: 'userDashboard',
+                                    routeName: 'memberDashboard',
                                 },
                                 {
                                     name: 'Studierichtingen',
-                                    routeName: 'studierichtingenoverzicht',
+                                    routeName: 'studyTypeOverview',
                                 },
                                 {
                                     name: 'Nieuw'
@@ -184,9 +184,9 @@ export default new Router({
                         }
                     },
                     {
-                        path: ':userId',
-                        name: 'lid-bekijken',
-                        component: ViewUser,
+                        path: ':memberId',
+                        name: 'memberView',
+                        component: ViewMember,
                         meta: {
                             breadcrumb: [
                                 {
@@ -195,7 +195,7 @@ export default new Router({
                                 },
                                 {
                                     name: 'Leden',
-                                    routeName: 'userDashboard',
+                                    routeName: 'memberDashboard',
                                 },
                                 {
                                     name: 'Lid'
@@ -222,7 +222,7 @@ export default new Router({
                 children: [
                     {
                         path: '',
-                        name: 'EventDashboard',
+                        name: 'eventDashboard',
                         component: EventDashboard,
                         meta: {
                             breadcrumb: [
@@ -238,7 +238,7 @@ export default new Router({
                     },
                     {
                         path: 'agendakoppeling',
-                        name: 'AgendaConnection',
+                        name: 'agendaConnection',
                         component: AgendaConnection,
                         meta: {
                             breadcrumb: [
@@ -248,7 +248,7 @@ export default new Router({
                                 },
                                 {
                                     name: 'Activiteiten',
-                                    routeName: 'EventDashboard'
+                                    routeName: 'eventDashboard'
                                 },
                                 {
                                     name: 'Koppelen met agenda'
@@ -258,7 +258,7 @@ export default new Router({
                     },
                     {
                         path: 'nieuw',
-                        name: 'CreateEvent',
+                        name: 'eventCreate',
                         component: CreateEvent,
                         meta: {
                             breadcrumb: [
@@ -268,7 +268,7 @@ export default new Router({
                                 },
                                 {
                                     name: 'Activiteiten',
-                                    routeName: 'EventDashboard'
+                                    routeName: 'eventDashboard'
                                 },
                                 {
                                     name: 'Nieuwe activiteit'
@@ -288,7 +288,7 @@ export default new Router({
                                 },
                                 {
                                     name: 'Activiteiten',
-                                    routeName: 'EventDashboard'
+                                    routeName: 'eventDashboard'
                                 },
                                 {
                                     name: 'Activiteit'
@@ -306,7 +306,7 @@ export default new Router({
                 children: [
                     {
                         path: '',
-                        name: 'profielDashboard',
+                        name: 'profile',
                         component: ViewProfile,
                         meta: {
                             breadcrumb: [
@@ -332,7 +332,7 @@ export default new Router({
                                 },
                                 {
                                     name: 'Profiel',
-                                    routeName: 'profielDashboard'
+                                    routeName: 'profile'
                                 },
                                 {
                                     name: 'Mailadressen',

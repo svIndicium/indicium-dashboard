@@ -13,7 +13,7 @@
                 <h3 class="section-header">Contact informatie</h3>
                 <div class="section-entry">
                     <p class="key">Telefoonnummer</p>
-                    <p class="value">{{$utils.getPrettyPhoneNumber(this.user.phoneNumber)}}</p>
+                    <p class="value">{{$utils.getPrettyPhoneNumber(this.member.memberDetails.phoneNumber)}}</p>
                 </div>
                 <div v-for="(mailAddress, index) in this.mailAddresses" :key="index">
                     <div class="section-entry">
@@ -46,11 +46,11 @@
                 <h3 class="section-header">Persoonlijke informatie</h3>
                 <div class="section-entry">
                     <p class="key">Geboortedatum</p>
-                    <p class="value">{{$utils.getPrettyDate(this.user.dateOfBirth)}}</p>
+                    <p class="value">{{$utils.getPrettyDate(this.member.dateOfBirth)}}</p>
                 </div>
                 <div class="section-entry" v-if="!!user.studyType">
                     <p class="key">Studierichting</p>
-                    <p class="value">{{this.user.studyType.name}}</p>
+                    <p class="value">{{this.member.studyType.name}}</p>
                 </div>
             </div>
         </div>
@@ -61,7 +61,7 @@
                     {{ errorMessage }}
                 </span>
             </div>
-            <Button :callback="getUser" size="l" class="button"><Icon type="refresh" class="buttonicon" />Probeer opnieuw</Button>
+            <Button :callback="getMember" size="l" class="button"><Icon type="refresh" class="buttonicon" />Probeer opnieuw</Button>
         </div>
     </div>
 </template>
@@ -77,15 +77,15 @@
         data: () => ({
             loading: false,
             error: null,
-            user: {},
+            member: {},
             mailAddresses: []
         }),
         methods: {
-            async getUser() {
+            async getMember() {
                 this.error = null;
-                const userId = this.$route.params.userId;
-                const { data } = await this.$api.get(`/members/${userId}`);
-                this.user = data;
+                const memberId = this.$route.params.memberId;
+                const { data } = await this.$api.get(`/members/${memberId}`);
+                this.member = data;
                 await this.getStudyType();
             },
             async getStudyType() {
@@ -93,16 +93,16 @@
                 this.user.studyType = data;
             },
             async getMailAddresses() {
-                const userId = this.$route.params.userId;
-                const { data } = await this.$api.get(`/members/${userId}/mailaddresses`);
+                const memberId = this.$route.params.memberId;
+                const { data } = await this.$api.get(`/members/${memberId}/mailaddresses`);
                 this.mailAddresses = data;
             },
         },
         async created() {
             this.loading = true;
             try {
-                await this.getUser();
-                // await this.getMailAddresses();
+                await this.getMember();
+                await this.getMailAddresses();
             } catch (e) {
                 this.error = e;
             }

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <InnerSidebar title="leden" :content="sidebar"></InnerSidebar>
+        <InnerSidebar title="Leden" :content="sidebar"></InnerSidebar>
         <div class="user">
             <div class="view-container">
                 <Breadcrumbs />
@@ -14,21 +14,21 @@
     import InnerSidebar from '../../components/InnerSidebar';
     import Breadcrumbs from '../../components/Breadcrumbs';
     export default {
-        name: 'User',
+        name: 'Member',
         components: { Breadcrumbs, InnerSidebar },
         data: () => ({
             sidebar: [
                 {
-                    title: 'leden',
-                    routeName: 'userDashboard'
+                    title: 'Leden',
+                    routeName: 'memberDashboard'
                 },
                 {
-                    title: 'aanmeldingen',
-                    routeName: 'aanmeldingenoverzicht'
+                    title: 'Aanmeldingen',
+                    routeName: 'registrationOverview'
                 },
                 {
                     title: 'Studierichtingen',
-                    routeName: 'studierichtingenoverzicht'
+                    routeName: 'studyTypeOverview'
                 },
             ]
         })

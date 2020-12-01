@@ -5,21 +5,19 @@
             <Loading />
         </div>
         <div v-else-if="!error" class="table-container">
-            <div class="header">Voornaam</div>
-            <div class="header">Achternaam</div>
+            <div class="header">Naam</div>
             <div class="header">Status</div>
             <div class="header">Acties</div>
             <template v-for="(registration, idx) in registrations">
-                <div v-bind:key="'firstName' + idx">{{registration.firstName}}</div>
-                <div v-bind:key="'lastName' + idx">{{getFullLastName(registration)}}</div>
+                <div v-bind:key="'firstName' + idx">{{getFullName(registration.memberDetails.name)}}</div>
                 <div v-bind:key="'status' + idx">
-                    <StatusLabel status="warning" v-if="registration.finalizedAt === undefined && registration.verifiedAt === undefined">Wachtend op mailverificatie</StatusLabel>
-                    <StatusLabel status="error" v-else-if="registration.finalizedAt === undefined">Wachtend op instemming</StatusLabel>
-                    <StatusLabel status="success" v-else-if="registration.approved">Ingestemd</StatusLabel>
-                    <StatusLabel status="error" v-else>Weggestemd</StatusLabel>
+                    <StatusLabel status="error" v-if="registration.reviewStatus === 'PENDING'">Wachtend op mailverificatie</StatusLabel>
+                    <StatusLabel status="success" v-else-if="registration.reviewStatus === 'APPROVED'">Ingestemd</StatusLabel>
+                    <StatusLabel status="error" v-else-if="registration.reviewStatus === 'DENIED'">Weggestemd</StatusLabel>
+                    <StatusLabel status="error" v-else>Onbekend</StatusLabel>
                 </div>
                 <div v-bind:key="'acties' + idx">
-                    <router-link v-bind:key="'actions' + idx" :to="{name: 'aanmelding-bekijken', params: {registrationId: registration.id}}"><Icon type="pencil" /></router-link>
+                    <router-link v-bind:key="'actions' + idx" :to="{name: 'registrationView', params: {registrationId: registration.id}}"><Icon type="pencil" /></router-link>
                 </div>
             </template>
         </div>
@@ -67,11 +65,14 @@
             viewRegistration(registrationId) {
                 this.$router.push({ name: "viewRegistration", params: { registrationId } });
             },
-            getFullLastName(user) {
-                if (user.middleName) {
-                    return `${user.middleName} ${user.lastName}`;
+            getFullName(name) {
+                return `${name.firstName} ${this.getFullLastName(name)}`;
+            },
+            getFullLastName(name) {
+                if (name.middleName) {
+                    return `${name.middleName} ${name.lastName}`;
                 }
-                return `${user.lastName}`;
+                return `${name.lastName}`;
             }
         },
         async created() {
@@ -85,6 +86,6 @@
     @import "src/assets/scss/error";
     .table-container {
         @extend .table-container;
-        grid-template-columns: 1fr 1fr 1fr 32px;
+        grid-template-columns: 1fr 1fr 32px;
     }
 </style>
