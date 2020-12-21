@@ -63,7 +63,6 @@
                         categories: evt.attributes.categories
                     }))
                 this.events = featureEvents;
-                console.log(featureEvents)
                 this.loading = false;
             },
             stripHTMLFromString(str = '') {
