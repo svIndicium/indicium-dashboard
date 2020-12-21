@@ -345,7 +345,7 @@ export default new Router({
             {
                 path: '/instellingen',
                 component: Settings,
-                beforeEnter: authGuard,
+                // beforeEnter: authGuard,
                 children: [
                     {
                         path: '',
