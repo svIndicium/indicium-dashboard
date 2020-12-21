@@ -53,7 +53,7 @@
                     <p class="key">Beoordeeld door</p>
                     <p class="value">{{this.registration.reviewDetails.reviewedBy}}</p>
                 </div>
-                <div class="section-entry" v-if="!!this.registration.reviewDetails.comment">
+                <div class="section-entry" v-if="!!this.registration.reviewDetails && !!this.registration.reviewDetails.comment">
                     <p class="key">Reden</p>
                     <p class="value">{{this.registration.reviewDetails.comment}}</p>
                 </div>
