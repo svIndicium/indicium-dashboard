@@ -1,5 +1,5 @@
 <template>
-    <FullCalendar :options="calendarOptions" />
+    <FullCalendar :options="calendarOptions" v-if="items.length > 0" />
 </template>
 
 <script>
@@ -27,7 +27,6 @@
                     plugins: [dayGridPlugin],
                     initialView: 'dayGridMonth',
                     eventClick: this.onEventClick,
-                    height: 'parent',
                     eventTimeFormat: {
                         hour: 'numeric',
                         minute: '2-digit',

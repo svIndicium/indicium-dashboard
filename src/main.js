@@ -5,54 +5,24 @@ import './plugins/busje';
 import App from './App.vue';
 import router from './router';
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
-
-import { domain, clientId, audience } from '../auth_config';
-import { domain as devDomain, clientId as devClientId, audience as devAudience } from '../auth_config_dev';
-
-import { Auth0Plugin } from './auth';
+import VueKeyCloak from '@dsb-norge/vue-keycloak-js';
 
 Vue.config.productionTip = false;
 const devEnv = process.env.VUE_APP_MODE !== 'live';
 
-
-const requiredScopes = {
-    ledenadministratie: [
-        "admin:member",
-        "read:member",
-        "create:member",
-        "admin:registration",
-        "read:registration",
-        "write:study_type",
-        "read:mailchimp_settings",
-        "write:mailchimp_settings",
-        "read:sendgrid_settings",
-        "write:sendgrid_settings",
-        "read:discord_settings",
-        "write:discord_settings",
-        "read:auth0_settings",
-        "write:auth0_settings",
-        "read:settings"
-    ],
-    eventmanager: [
-        "write:event",
-        "read:event",
-        "delete:event"
-    ]
-}
-Vue.use(Auth0Plugin, {
-    domain: devEnv ? devDomain : domain,
-    clientId: devEnv ? devClientId : clientId,
-    audience: devEnv ? devAudience : audience,
-    scopes: requiredScopes,
-    onRedirectCallback: (appState) => {
-        router.push(
-            appState && appState.targetUrl
-                ? appState.targetUrl
-                : window.location.pathname,
-        );
+Vue.use(VueKeyCloak, {
+    config: {
+        realm: 'devindicium',
+        url: 'https://auth.indicium.hu/auth',
+        clientId: 'dashboard'
     },
+    init: {
+        onLoad: ''
+    },
+    onReady: kc => {
+        localStorage.setItem('token', kc.token);
+    }
 });
-
 Vue.use(api);
 Vue.use(utils);
 

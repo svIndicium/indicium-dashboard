@@ -20,11 +20,11 @@
             sidebar: [
                 {
                     title: 'Overzicht',
-                    routeName: 'EventDashboard'
+                    routeName: 'eventDashboard'
                 },
                 {
                     title: 'Koppelen met agenda',
-                    routeName: 'AgendaConnection'
+                    routeName: 'agendaConnection'
                 },
             ]
         })

@@ -18,7 +18,7 @@ api.install = function (Vue) {
 
     service.register([
         new DataMiddleware(),
-        new AuthMiddleware(Vue.prototype.$auth, apiInstance),
+        new AuthMiddleware(Vue.prototype.$keycloak, apiInstance),
     ]);
     Vue.prototype.$api = apiInstance;
 };

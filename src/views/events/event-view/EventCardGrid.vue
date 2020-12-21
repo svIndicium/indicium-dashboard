@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <EventTile :event="event" v-for="(event, idx) in events" :key="idx" @click="() => onClick(event)" class="clickable"></EventTile>
+    <div class="card-container">
+        <EventTile :event="event" v-for="(event, idx) in lastTenEvents" :key="idx" @click="() => onClick(event)" class="clickable"></EventTile>
     </div>
 </template>
 
@@ -22,10 +22,23 @@
             onClick(event) {
                 this.$emit('eventSelected', event);
             }
+        },
+        computed: {
+            lastTenEvents() {
+                return this.events.slice().reverse().slice(0, 10);
+            }
         }
     };
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.card-container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
+    * {
+        width: 50%;
+    }
+}
 </style>

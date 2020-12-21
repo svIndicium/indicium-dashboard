@@ -54,7 +54,7 @@
         min-width: 300px;
         flex: 1;
         flex-direction: column;
-        margin: 32px 16px 16px;
+        margin: 16px 16px 16px;
         background: var(--inner-sidebar-background);
         padding: 16px;
         box-shadow: 0 0 20px 0 rgba(124, 124, 124, 0.2);

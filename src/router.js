@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
-import { authGuard } from './auth/authGuard';
 import ListStudyType from './views/member/ListStudyType';
 import CreateStudyType from './views/member/CreateStudyType';
 import ListMember from './views/member/ListMember';
@@ -42,7 +41,7 @@ export default new Router({
             {
                 path: '/leden',
                 component: Member,
-                beforeEnter: authGuard,
+                // beforeEnter: guardRoute,
                 meta: {
                     breadcrumb: [
                         {
@@ -59,6 +58,7 @@ export default new Router({
                         path: '',
                         name: 'memberDashboard',
                         component: ListMember,
+                        // beforeEnter: guardRoute,
                         meta: {
                             breadcrumb: [
                                 {
@@ -302,7 +302,7 @@ export default new Router({
             {
                 path: '/profiel',
                 component: Profile,
-                beforeEnter: authGuard,
+                // beforeEnter: authGuard,
                 children: [
                     {
                         path: '',

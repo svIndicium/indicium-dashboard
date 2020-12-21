@@ -11,45 +11,57 @@
 </template>
 
 <script>
-    import InnerSidebar from '../../components/InnerSidebar';
-    import Breadcrumbs from '../../components/Breadcrumbs';
-    export default {
-        name: 'Member',
-        components: { Breadcrumbs, InnerSidebar },
-        data: () => ({
-            sidebar: [
-                {
-                    title: 'Leden',
-                    routeName: 'memberDashboard'
-                },
-                {
-                    title: 'Aanmeldingen',
-                    routeName: 'registrationOverview'
-                },
-                {
-                    title: 'Studierichtingen',
-                    routeName: 'studyTypeOverview'
-                },
-            ]
-        })
-    };
+import InnerSidebar from '../../components/InnerSidebar';
+import Breadcrumbs from '../../components/Breadcrumbs';
+export default {
+    name: 'Member',
+    components: { Breadcrumbs, InnerSidebar },
+    data: () => ({
+        sidebar: []
+    }),
+    mounted() {
+        if (this.hasPermission('ledenadministratie-api', 'manage-members')) {
+            this.sidebar.push({
+                title: 'Leden',
+                routeName: 'memberDashboard'
+            })
+        }
+        if (this.hasPermission('ledenadministratie-api', 'review-registrations')) {
+            this.sidebar.push({
+                title: 'Aanmeldingen',
+                routeName: 'registrationOverview'
+            })
+        }
+        if (this.hasPermission('ledenadministratie-api', 'manage-studytypes')) {
+            this.sidebar.push({
+                title: 'Studierichtingen',
+                routeName: 'studyTypeOverview'
+            })
+        }
+    },
+    methods: {
+        hasPermission(resource, role) {
+            return this.$keycloak.ready && this.$keycloak.hasResourceRole(role, resource);
+        },
+    }
+};
 </script>
 
 <style lang="scss" scoped>
 
-    .user {
-        margin-left: var(--sidebar-width);
-        background: var(--indi-blue-light);
-        height: 100vh;
-        padding: 24px;
-    }
+.user {
+    margin-left: var(--sidebar-width);
+    background: var(--indi-blue-light);
+    height: 100vh;
+    padding: 24px;
+}
 
-    .view-container {
-        background-color: var(--panel-background);
-        height: 100%;
-        width: 100%;
-        border-radius: 8px;
-        padding: 24px;
-        overflow-y: auto;
-    }
+.view-container {
+    background-color: var(--panel-background);
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
+    padding: 24px;
+    overflow-y: auto;
+}
 </style>

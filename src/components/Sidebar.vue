@@ -4,10 +4,10 @@
             <Logo fill-color="white" :subname="false" :name="!collapsed"/>
         </div>
 
-        <div class="menu-items" v-if="!$auth.loading">
-            <template v-if="$auth.isAuthenticated">
-                <SidebarItem :title="$auth.user.name" route-name="profile" :img-url="$auth.user.picture" :collapsed="collapsed"></SidebarItem>
-                <SidebarItem title="Leden" route-name="memberDashboard" icon="user" v-if="hasPermission('ledenadministratie/admin:member')" :collapsed="collapsed"></SidebarItem>
+        <div class="menu-items" v-if="$keycloak.ready">
+            <template v-if="$keycloak.authenticated">
+                <SidebarItem :title="$keycloak.fullName" route-name="profile" :collapsed="collapsed"></SidebarItem>
+                <SidebarItem title="Leden" route-name="memberDashboard" icon="user" v-if="hasPermission('ledenadministratie-api', 'manage-members')" :collapsed="collapsed"></SidebarItem>
                 <SidebarItem title="Activiteiten" route-name="eventDashboard" icon="calendar" :collapsed="collapsed"></SidebarItem>
             </template>
             <template v-else>
@@ -16,8 +16,8 @@
         </div>
 
         <div class="bottom-bar">
-            <SidebarItem title="Uitloggen" icon="logout" :callback="logout" :collapsed="collapsed" v-if="$auth.isAuthenticated"></SidebarItem>
-            <SidebarItem title="Instellingen" icon="settings" route-name="instellingenDashboard" :collapsed="collapsed" v-if="$auth.isAuthenticated && hasPermission('ledenadministratie/read:settings')"></SidebarItem>
+            <SidebarItem title="Uitloggen" icon="logout" :callback="logout" :collapsed="collapsed" v-if="$keycloak.authenticated"></SidebarItem>
+            <SidebarItem title="Instellingen" icon="settings" route-name="instellingenDashboard" :collapsed="collapsed" v-if="$keycloak.authenticated"></SidebarItem>
             <SidebarItem :title="collapsed ? 'Uitvouwen' : 'Invouwen'" :icon="collapsed ? 'chevron-right' : 'chevron-left'" :callback="toggleCollapse" :collapsed="collapsed"></SidebarItem>
         </div>
     </div>
@@ -42,8 +42,8 @@ export default {
     mounted() {
     },
     methods: {
-        hasPermission(permission) {
-            return this.$auth.hasPermission(permission);
+        hasPermission(resource, role) {
+            return this.$keycloak.hasResourceRole(role, resource);
         },
         toggleCollapse() {
             this.$set(this, 'collapsed', !this.collapsed);
@@ -51,10 +51,10 @@ export default {
             this.$eventBus.$emit('nav-toggle', this.collapsed);
         },
         logout() {
-            this.$auth.logout();
+            this.$keycloak.logoutFn();
         },
         login() {
-            this.$auth.loginWithRedirect();
+            this.$keycloak.login();
         },
     }
 }

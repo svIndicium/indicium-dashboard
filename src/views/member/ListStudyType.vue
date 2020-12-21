@@ -5,7 +5,7 @@
             <Loading />
         </div>
         <div v-else-if="!error">
-            <Button route-name="studyTypeCreate" size="m" class="button" v-if="$auth.hasPermission('ledenadministratie/write:study_type')"><Icon type="plus" class="buttonicon"></Icon>Voeg toe</Button>
+            <Button route-name="studyTypeCreate" size="m" class="button" v-if="hasPermission('ledenadministratie-api', 'manage-studytypes')"><Icon type="plus" class="buttonicon"></Icon>Voeg toe</Button>
             <div class="table-container">
                 <div class="header">ID #</div>
                 <div class="header">Naam</div>
@@ -55,6 +55,9 @@
                     this.error = e;
                 }
                 this.loading = false;
+            },
+            hasPermission(resource, role) {
+                return this.$keycloak.hasResourceRole(role, resource);
             },
         },
         async created() {

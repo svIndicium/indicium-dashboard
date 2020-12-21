@@ -8,7 +8,7 @@
             <div class="header">Mailadres</div>
             <div class="header">Status</div>
             <div class="header">Nieuwsbrief status</div>
-            <template v-for="(mailAddress, idx) in mailAddresses">
+            <template v-for="(mailAddress, idx) in mailAddresses" >
                 <div v-bind:key="'adres' + idx" class="cell">{{mailAddress.address}}</div>
                 <div v-bind:key="'verified' + idx" class="cell">
                     <StatusLabel v-if="mailAddress.verifiedAt !== null" status="success" :title="`Bevestigd op ${getPrettyDateTime(mailAddress.verifiedAt)}`">Bevestigd</StatusLabel>
@@ -53,13 +53,15 @@
         }),
         methods: {
             async getMailAddresses() {
+                this.loading = true;
                 this.error = null;
                 try {
-                    const { data } = await this.$api.get(`/members/${this.$auth.user.sub}/mailaddresses`);
+                    const { data } = await this.$api.get(`/members/${this.$keycloak.subject}/mailaddresses`);
                     this.mailAddresses = data;
                 } catch (e) {
                     this.error = e;
                 }
+                this.loading = false;
             },
             getPrettyDateTime(dateString) {
                 return this.$utils.getPrettyDateTime(dateString);
@@ -67,6 +69,16 @@
         },
         async created() {
             await this.getMailAddresses();
+        },
+        computed: {
+            errorMessage() {
+                if (this.error.status === 404) {
+                    return "Profiel niet gevonden.";
+                } else if (this.error.status === 403) {
+                    return "Verboden toegang.";
+                }
+                return this.error.message;
+            },
         },
     };
 </script>

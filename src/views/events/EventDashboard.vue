@@ -3,7 +3,7 @@
         <h2>Activiteiten</h2>
         <div class="buttons">
             <ButtonGroup :buttons="getButtons"></ButtonGroup>
-            <Button v-if="$auth.hasPermission('eventmanager/write:event')" :callback="() => $router.push({name: 'CreateEvent'})" size="l">Nieuwe activiteit</Button>
+            <Button v-if="hasPermission('events-api', 'manage-events')" :callback="() => $router.push({name: 'CreateEvent'})" size="l">Nieuwe activiteit</Button>
         </div>
         <div v-if="loading">
             <Loading />
@@ -26,7 +26,8 @@
     import EventCardGrid from './event-view/EventCardGrid';
     import EventList from './event-view/EventList';
     import ButtonGroup from '../../components/ButtonGroup';
-    import Loading from '@svindicium/indicium-components';
+    import Loading from '../../components/Loading';
+    import axios from 'axios';
     export default {
         name: 'EventDashboard',
         components: { ButtonGroup, EventList, EventCardGrid, EventCalendar, Button, Loading },
@@ -36,13 +37,37 @@
             view: localStorage.getItem('defaultEventView') || 'calendar',
         }),
         methods: {
+            // async getEvents() {
+            //     const { data } = await this.$api.get('/events');
+            //     this.events = data.map(event => ({
+            //             ...event,
+            //             url: `/activiteiten/${event.id}-${event.slug}`
+            //         })
+            //     );
+            // },
             async getEvents() {
-                const { data } = await this.$api.get('/events');
-                this.events = data.map(event => ({
-                        ...event,
-                        url: `/activiteiten/${event.id}-${event.slug}`
-                    })
-                );
+                this.loading = true;
+                const { data } = await axios.get('https://old.indicium.hu/json/events?filter[status]=published&page%5Bsize%5D=1000')
+                const events = data.data
+                // const today = new Date().getTime()
+                const featureEvents = events
+                    // .filter(evt => new Date(evt.attributes.start).getTime() > today)
+                    .sort((eventA, eventB) => new Date(eventA.attributes.start) - new Date(eventB.attributes.start))
+                    .map(evt => ({
+                        id: evt.id,
+                        title: evt.attributes.title,
+                        description: this.stripHTMLFromString(evt.attributes.contentblocks[0].content),
+                        startDate: new Date(evt.attributes.start).getTime(),
+                        endDate: new Date(evt.attributes.end).getTime(),
+                        url: `/activiteiten/${evt.id}-${evt.attributes.slug}`,
+                        categories: evt.attributes.categories
+                    }))
+                this.events = featureEvents;
+                console.log(featureEvents)
+                this.loading = false;
+            },
+            stripHTMLFromString(str = '') {
+                return str.replace(/(<([^>]+)>)/ig, '').replace(/\n|\r/g, ' ').replace('&nbsp;', ' ')
             },
             toggleView(viewName) {
                 this.view = viewName;
@@ -50,7 +75,10 @@
             },
             getOnEventClick(event) {
                 this.$router.push({name: 'ViewEvent', params: {eventId: event.id, eventName: event.title.toLowerCase()}})
-            }
+            },
+            hasPermission(resource, role) {
+                return this.$keycloak.hasResourceRole(role, resource);
+            },
         },
         computed: {
             getButtons() {

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <InnerSidebar :title="$auth.user.name" :content="sidebar" v-if="!$auth.loading"></InnerSidebar>
+        <InnerSidebar :title="$keycloak.fullName" :content="sidebar" v-if="$keycloak.ready"></InnerSidebar>
         <div class="profile">
             <div class="view-container">
                 <Breadcrumbs />
