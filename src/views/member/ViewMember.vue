@@ -98,7 +98,7 @@
                 this.mailAddresses = data;
             },
         },
-        async created() {
+        async mounted() {
             this.loading = true;
             try {
                 await this.getMember();
