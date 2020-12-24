@@ -1,6 +1,6 @@
 <template>
     <div class="center">
-        <div v-if="$auth.loading">
+        <div v-if="!$keycloak.ready">
             <Loading></Loading>
         </div>
 
@@ -19,12 +19,10 @@
         },
         methods: {
             login() {
-                this.$auth.loginWithRedirect();
+                this.$keycloak.login();
             },
             logout() {
-                this.$auth.logout({
-                    returnTo: window.location.origin,
-                });
+                this.$keycloak.logoutFn();
             },
         },
     };

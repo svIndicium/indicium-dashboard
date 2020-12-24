@@ -16,6 +16,7 @@
     import { Loading } from '@svindicium/indicium-components';
     import Button from '../../components/button';
     import ButtonGroup from '../../components/ButtonGroup';
+    import axios from 'axios';
 
     export default {
         name: 'ViewEvent',
@@ -33,8 +34,18 @@
             async getEvent() {
                 this.error = null;
                 const eventId = this.$route.params.eventId;
-                const { data } = await this.$api.get(`/events/${eventId}`);
-                this.event = data;
+                const { data } = await axios.get(`https://old.indicium.hu/json/events/${eventId}`);
+                const res = data.data;
+                this.event = {
+                    id: res.id,
+                    title: res.attributes.title,
+                    url: res.attributes.inschrijflink,
+                    description: this.stripHTMLFromString(res.attributes.contentblocks[0].content),
+                    image: res.attributes.contentblocks.length > 1 ? res.attributes.contentblocks[1].image.url : null,
+                    categories: res.attributes.categories,
+                    start: new Date(res.attributes.start),
+                    end: new Date(res.attributes.end)
+                };
             },
             async shareEvent() {
                 try {
@@ -47,12 +58,18 @@
                     this.error = e;
                 }
             },
+            stripHTMLFromString(str = '') {
+                return str.replace(/(<([^>]+)>)/ig, '').replace(/\n|\r/g, ' ').replace('&nbsp;', ' ')
+            },
             async copyToClipboard() {
                 try {
                     await navigator.clipboard.writeText(this.currentPageUrl);
                 } catch (e) {
                     this.error = e;
                 }
+            },
+            hasPermission(resource, role) {
+                return this.$keycloak.ready && this.$keycloak.hasResourceRole(role, resource);
             },
         },
         computed: {
@@ -75,7 +92,7 @@
                         }
                     );
                 }
-                if (this.$auth.hasPermission("eventmanager/write:event")) {
+                if (this.hasPermission("event-api", "manage-events")) {
                     buttons.push({
                         icon: 'urgent',
                         label: 'Promoot',
@@ -86,7 +103,7 @@
             },
             currentPageUrl() {
                 return window.location.href;
-            }
+            },
         },
         async created() {
             this.loading = true;
@@ -99,4 +116,3 @@
 <style lang="scss" scoped>
 
 </style>
-`

@@ -21,16 +21,16 @@ utils.install = function (Vue) {
         },
         getDayAsString(currentDay = new Date().getDay()) {
             const week = [
+                'Zondag',
                 'Maandag',
                 'Dinsdag',
                 'Woensdag',
                 'Donderdag',
                 'Vrijdag',
-                'Zaterdag',
-                'Zondag'
+                'Zaterdag'
             ]
 
-            return week[currentDay - 1]
+            return week[currentDay]
         },
         getPrettyDateTime(dateString) {
             const date = new Date(dateString);

@@ -3,6 +3,7 @@
         <h2>Nieuwe studierichting</h2>
         <div class="form">
             <TextInput v-model="studyType.name" placeholder="Naam" />
+            <TextInput v-model="studyType.shortName" placeholder="Afkorting" />
         </div>
         <Button size="m" :callback="createStudyType" class="button"><Icon type="plus" class="buttonicon" /> Voeg toe</Button>
         <Loading v-if="loading" />
@@ -26,6 +27,7 @@
         data: () => ({
             studyType: {
                 name: '',
+                shortName: '',
             },
             error: '',
             loading: false,

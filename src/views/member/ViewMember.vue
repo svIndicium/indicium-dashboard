@@ -8,13 +8,12 @@
             <div class="action-buttons">
                 <Button size="l" :url="whatsAppLink" class="contact-button"><Icon type="message" class="buttonicon" />Stuur Whatsapp bericht</Button>
                 <Button size="l" :url="mailtoLink" class="contact-button"><Icon type="mail" class="buttonicon" />Stuur email</Button>
-                <Button size="l" @click.native="createAuth0Account" class="contact-button" v-if="!hasAuth0Account && this.$auth.hasPermission('ledenadministratie/admin:user')"><Icon type="shield" class="buttonicon" />Maak Auth0 account</Button>
             </div>
             <div class="section">
                 <h3 class="section-header">Contact informatie</h3>
                 <div class="section-entry">
                     <p class="key">Telefoonnummer</p>
-                    <p class="value">{{$utils.getPrettyPhoneNumber(this.user.phoneNumber)}}</p>
+                    <p class="value">{{$utils.getPrettyPhoneNumber(this.member.memberDetails.phoneNumber)}}</p>
                 </div>
                 <div v-for="(mailAddress, index) in this.mailAddresses" :key="index">
                     <div class="section-entry">
@@ -47,11 +46,11 @@
                 <h3 class="section-header">Persoonlijke informatie</h3>
                 <div class="section-entry">
                     <p class="key">Geboortedatum</p>
-                    <p class="value">{{$utils.getPrettyDate(this.user.dateOfBirth)}}</p>
+                    <p class="value">{{$utils.getPrettyDate(this.member.dateOfBirth)}}</p>
                 </div>
                 <div class="section-entry" v-if="!!user.studyType">
                     <p class="key">Studierichting</p>
-                    <p class="value">{{this.user.studyType.name}}</p>
+                    <p class="value">{{this.member.studyType.name}}</p>
                 </div>
             </div>
         </div>
@@ -62,7 +61,7 @@
                     {{ errorMessage }}
                 </span>
             </div>
-            <Button :callback="getUser" size="l" class="button"><Icon type="refresh" class="buttonicon" />Probeer opnieuw</Button>
+            <Button :callback="getMember" size="l" class="button"><Icon type="refresh" class="buttonicon" />Probeer opnieuw</Button>
         </div>
     </div>
 </template>
@@ -78,38 +77,31 @@
         data: () => ({
             loading: false,
             error: null,
-            user: {},
+            member: {},
             mailAddresses: []
         }),
         methods: {
-            async getUser() {
+            async getMember() {
                 this.error = null;
-                const userId = this.$route.params.userId;
-                const { data } = await this.$api.get(`/users/${this.hasAuth0Account ? 'a/' : ''}${userId}`);
-                this.user = data;
+                const memberId = this.$route.params.memberId;
+                const { data } = await this.$api.get(`/members/${memberId}`);
+                this.member = data;
                 await this.getStudyType();
             },
             async getStudyType() {
-                const { data } = await this.$api.get(`/studytypes/${this.user.studyTypeId}`);
+                const { data } = await this.$api.get(`/studytypes/${this.user.memberDetails.studyTypeId}`);
                 this.user.studyType = data;
             },
             async getMailAddresses() {
-                const userId = this.$route.params.userId;
-                const { data } = await this.$api.get(`/users/${this.hasAuth0Account ? 'a/' : ''}${userId}/mailaddresses`);
+                const memberId = this.$route.params.memberId;
+                const { data } = await this.$api.get(`/members/${memberId}/mailaddresses`);
                 this.mailAddresses = data;
             },
-            async createAuth0Account() {
-                if (!this.hasAuth0Account) {
-                    const userId = this.$route.params.userId;
-                    const { data } = await this.$api.get(`/users/${userId}/createauthaccount`);
-                    this.user = data;
-                }
-            }
         },
         async created() {
             this.loading = true;
             try {
-                await this.getUser();
+                await this.getMember();
                 await this.getMailAddresses();
             } catch (e) {
                 this.error = e;
@@ -118,10 +110,10 @@
         },
         computed: {
             fullName() {
-                if (this.user.middleName) {
-                    return `${this.user.firstName} ${this.user.middleName} ${this.user.lastName}`;
+                if (this.user.memberDetails.name.middleName) {
+                    return `${this.user.memberDetails.name.firstName} ${this.user.memberDetails.name.middleName} ${this.user.memberDetails.name.lastName}`;
                 }
-                return `${this.user.firstName} ${this.user.lastName}`;
+                return `${this.user.memberDetails.name.firstName} ${this.user.memberDetails.name.lastName}`;
             },
             mailtoLink() {
                 if (this.mailAddresses.length !== 0) {

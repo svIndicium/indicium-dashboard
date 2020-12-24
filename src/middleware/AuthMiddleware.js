@@ -13,22 +13,16 @@ export default class AuthMiddleware {
 
     onResponseError(err) {
         if (err.response.status === 401 && err.config && !err.config.hasRetriedRequest) {
-            return this.auth.getTokenSilently()
-                .then((token) => {
-                    this.http({
-                            ...err.config,
-                            hasRetriedRequest: true,
-                            headers: {
-                                ...err.config.headers,
-                                Authorization: `Bearer ${token}`
-                            }
-                        })
-                    localStorage.setItem('token', token);
-                    }
-                )
-                .catch((error) => {
-                    throw error;
-                });
+            let token = this.auth.token;
+            localStorage.setItem('token', token);
+            return this.http({
+                ...err.config,
+                hasRetriedRequest: true,
+                headers: {
+                    ...err.config.headers,
+                    Authorization: `Bearer ${token}`
+                }
+            })
         }
         throw err;
     }

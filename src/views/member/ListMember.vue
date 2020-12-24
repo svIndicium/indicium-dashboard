@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2>Ledenoverzicht</h2>
-        <Button route-name="createUser">Nieuwe gebruiker</Button>
+        <Button route-name="memberImport">Importeer gebruiker</Button>
         <div v-if="loading">
             <Loading />
         </div>
@@ -10,11 +10,11 @@
             <div class="header">Achternaam</div>
             <div class="header">Status</div>
             <div class="header">Acties</div>
-            <template v-for="(user, idx) in users">
-                <div v-bind:key="'firstName' + idx">{{user.firstName}}</div>
-                <div v-bind:key="'lastName' + idx">{{getFullLastName(user)}}</div>
+            <template v-for="(member, idx) in members">
+                <div v-bind:key="'firstName' + idx">{{member.memberDetails.name.firstName}}</div>
+                <div v-bind:key="'lastName' + idx">{{getFullLastName(member.memberDetails.name)}}</div>
                 <div v-bind:key="'status' + idx"><StatusLabel status="success">Actief</StatusLabel></div>
-                <router-link v-bind:key="'actions' + idx" :to="{name: 'lid-bekijken', params: {userId: user.userId || user.id}}"><Icon type="pencil" /></router-link>
+                <router-link v-bind:key="'actions' + idx" :to="{name: 'memberView', params: {memberId: member.id }}"><Icon type="pencil" /></router-link>
             </template>
         </div>
         <div v-else>
@@ -24,7 +24,7 @@
                     {{ errorMessage }}
                 </span>
             </div>
-            <Button :callback="getUsers" size="l" class="button"><Icon type="refresh" class="buttonicon" />Probeer opnieuw</Button>
+            <Button :callback="getMembers" size="l" class="button"><Icon type="refresh" class="buttonicon" /> Probeer opnieuw</Button>
         </div>
     </div>
 </template>
@@ -36,37 +36,34 @@
     import StatusLabel from '../../components/StatusLabel';
 
     export default {
-        name: "List",
+        name: "memberOverview",
         components: { StatusLabel, Button, Icon, Loading },
         data: () => ({
-            users: [],
+            members: [],
             error: null,
             loading: false,
         }),
         methods: {
-            async getUsers() {
+            async getMembers() {
                 this.error = null;
                 this.loading = true;
                 try {
-                    const { data } = await this.$api.get("/users");
-                    this.users = data;
+                    const { data } = await this.$api.get("/members");
+                    this.members = data;
                 } catch (e) {
                     this.error = e;
                 }
                 this.loading = false;
             },
-            viewUser(userId) {
-                this.$router.push({ name: "viewUser", params: { userId } });
-            },
-            getFullLastName(user) {
-                if (user.middleName) {
-                    return `${user.middleName} ${user.lastName}`;
+            getFullLastName(name) {
+                if (name.middleName) {
+                    return `${name.middleName} ${name.lastName}`;
                 }
-                return `${user.lastName}`;
+                return `${name.lastName}`;
             }
         },
         async created() {
-            await this.getUsers();
+            await this.getMembers();
         },
         computed: {
             errorMessage() {

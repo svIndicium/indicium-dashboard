@@ -1,6 +1,6 @@
 <template>
     <div>
-        <InnerSidebar :title="$auth.user.name" :content="sidebar" v-if="!$auth.loading"></InnerSidebar>
+        <InnerSidebar :title="$keycloak.fullName" :content="sidebar" v-if="$keycloak.ready"></InnerSidebar>
         <div class="profile">
             <div class="view-container">
                 <Breadcrumbs />
@@ -23,11 +23,11 @@
             sidebar: [
                 {
                     title: 'Profiel',
-                    routeName: 'profielDashboard',
+                    routeName: 'profile',
                     children: [
                         {
-                            title: 'mailadressen',
-                            routeName: 'gebruikersmailadresoverzicht'
+                            title: 'Mailadressen',
+                            routeName: 'profileMailAddresses'
                         },
                     ]
                 },
