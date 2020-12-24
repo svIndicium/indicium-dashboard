@@ -89,8 +89,8 @@
                 await this.getStudyType();
             },
             async getStudyType() {
-                const { data } = await this.$api.get(`/studytypes/${this.user.memberDetails.studyTypeId}`);
-                this.user.studyType = data;
+                const { data } = await this.$api.get(`/studytypes/${this.member.memberDetails.studyTypeId}`);
+                this.member.studyType = data;
             },
             async getMailAddresses() {
                 const memberId = this.$route.params.memberId;
@@ -110,10 +110,10 @@
         },
         computed: {
             fullName() {
-                if (this.user.memberDetails.name.middleName) {
-                    return `${this.user.memberDetails.name.firstName} ${this.user.memberDetails.name.middleName} ${this.user.memberDetails.name.lastName}`;
+                if (this.member.memberDetails.name.middleName) {
+                    return `${this.member.memberDetails.name.firstName} ${this.member.memberDetails.name.middleName} ${this.member.memberDetails.name.lastName}`;
                 }
-                return `${this.user.memberDetails.name.firstName} ${this.user.memberDetails.name.lastName}`;
+                return `${this.member.memberDetails.name.firstName} ${this.member.memberDetails.name.lastName}`;
             },
             mailtoLink() {
                 if (this.mailAddresses.length !== 0) {
@@ -122,8 +122,8 @@
                 return "";
             },
             whatsAppLink() {
-                if (this.user.phoneNumber === undefined) return "";
-                return `https://wa.me/${this.user.phoneNumber.replace("+", "")}`;
+                if (this.member.phoneNumber === undefined) return "";
+                return `https://wa.me/${this.member.phoneNumber.replace("+", "")}`;
             },
             receivesNewsletter() {
                 if (this.mailAddresses.length === 0) return false;
@@ -141,10 +141,6 @@
                     return 'Netwerk fout';
                 }
                 return this.error.message;
-            },
-            hasAuth0Account() {
-                const userId = this.$route.params.userId;
-                return userId.toString().indexOf('|') !== -1;
             }
         },
     };
