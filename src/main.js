@@ -12,7 +12,7 @@ const devEnv = process.env.VUE_APP_MODE !== 'live';
 
 Vue.use(VueKeyCloak, {
     config: {
-        realm: 'devindicium',
+        realm: devEnv ? 'devindicium' : 'indicium',
         url: 'https://auth.indicium.hu/auth',
         clientId: 'dashboard'
     },
