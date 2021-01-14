@@ -48,7 +48,7 @@
                     <p class="key">Geboortedatum</p>
                     <p class="value">{{$utils.getPrettyDate(this.member.dateOfBirth)}}</p>
                 </div>
-                <div class="section-entry" v-if="!!user.studyType">
+                <div class="section-entry" v-if="!!member.studyType">
                     <p class="key">Studierichting</p>
                     <p class="value">{{this.member.studyType.name}}</p>
                 </div>
@@ -72,7 +72,7 @@
     import Loading from '@svindicium/indicium-components';
 
     export default {
-        name: 'ViewUser',
+        name: 'ViewMember',
         components: { Button, Icon, Loading },
         data: () => ({
             loading: false,
@@ -91,6 +91,7 @@
             async getStudyType() {
                 const { data } = await this.$api.get(`/studytypes/${this.member.memberDetails.studyTypeId}`);
                 this.member.studyType = data;
+                this.loading = false;
             },
             async getMailAddresses() {
                 const memberId = this.$route.params.memberId;
@@ -98,15 +99,16 @@
                 this.mailAddresses = data;
             },
         },
-        async mounted() {
+        created() {
             this.loading = true;
+        },
+        async mounted() {
             try {
                 await this.getMember();
                 await this.getMailAddresses();
             } catch (e) {
                 this.error = e;
             }
-            this.loading = false;
         },
         computed: {
             fullName() {
@@ -122,8 +124,8 @@
                 return "";
             },
             whatsAppLink() {
-                if (this.member.phoneNumber === undefined) return "";
-                return `https://wa.me/${this.member.phoneNumber.replace("+", "")}`;
+                if (this.member.memberDetails.phoneNumber === undefined) return "";
+                return `https://wa.me/${this.member.memberDetails.phoneNumber.replace("+", "")}`;
             },
             receivesNewsletter() {
                 if (this.mailAddresses.length === 0) return false;
