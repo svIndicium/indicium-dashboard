@@ -46,7 +46,7 @@
                 <h3 class="section-header">Persoonlijke informatie</h3>
                 <div class="section-entry">
                     <p class="key">Geboortedatum</p>
-                    <p class="value">{{$utils.getPrettyDate(this.member.dateOfBirth)}}</p>
+                    <p class="value">{{$utils.getPrettyDate(this.member.memberDetails.dateOfBirth)}}</p>
                 </div>
                 <div class="section-entry" v-if="!!member.studyType">
                     <p class="key">Studierichting</p>
