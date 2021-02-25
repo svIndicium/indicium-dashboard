@@ -71,6 +71,8 @@
     import Icon from '../../components/Icon.vue';
     import Loading from '@svindicium/indicium-components';
 
+    import * as MemberService from '../dat/pad/zo/hatso'
+
     export default {
         name: 'ViewUser',
         components: { Button, Icon, Loading },
@@ -82,20 +84,13 @@
         }),
         methods: {
             async getMember() {
-                this.error = null;
-                const memberId = this.$route.params.memberId;
-                const { data } = await this.$api.get(`/members/${memberId}`);
-                this.member = data;
-                await this.getStudyType();
-            },
-            async getStudyType() {
-                const { data } = await this.$api.get(`/studytypes/${this.user.memberDetails.studyTypeId}`);
-                this.user.studyType = data;
-            },
-            async getMailAddresses() {
-                const memberId = this.$route.params.memberId;
-                const { data } = await this.$api.get(`/members/${memberId}/mailaddresses`);
-                this.mailAddresses = data;
+                try {
+                    const memberId = this.$route.params.memberId;
+                    const member = await MemberService.getMember(memberId)
+                    this.$set(this, 'member', member)
+                } catch (error) {
+                    this.$set(this, 'error', error)
+                }
             },
         },
         async created() {
@@ -110,10 +105,9 @@
         },
         computed: {
             fullName() {
-                if (this.user.memberDetails.name.middleName) {
-                    return `${this.user.memberDetails.name.firstName} ${this.user.memberDetails.name.middleName} ${this.user.memberDetails.name.lastName}`;
-                }
-                return `${this.user.memberDetails.name.firstName} ${this.user.memberDetails.name.lastName}`;
+                const { firstName, middleName, lastName  } = this.user.memberDetails.name
+                const inital = middleName !== null ? middleName + ' ' : ''
+                return firstName + ' ' + inital + lastName
             },
             mailtoLink() {
                 if (this.mailAddresses.length !== 0) {

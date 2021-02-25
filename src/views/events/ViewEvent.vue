@@ -34,17 +34,19 @@
             async getEvent() {
                 this.error = null;
                 const eventId = this.$route.params.eventId;
-                const { data } = await axios.get(`https://old.indicium.hu/json/events/${eventId}`);
+                const {data} = await axios.get(`https://old.indicium.hu/json/events/${eventId}`);
                 const res = data.data;
+                const { id, attributes } = data.data
+
                 this.event = {
-                    id: res.id,
-                    title: res.attributes.title,
-                    url: res.attributes.inschrijflink,
-                    description: this.stripHTMLFromString(res.attributes.contentblocks[0].content),
-                    image: res.attributes.contentblocks.length > 1 ? res.attributes.contentblocks[1].image.url : null,
-                    categories: res.attributes.categories,
-                    start: new Date(res.attributes.start),
-                    end: new Date(res.attributes.end)
+                    id,
+                    title: attributes.title,
+                    url: attributes.inschrijflink,
+                    description: this.stripHTMLFromString(attributes.contentblocks[0].content),
+                    image: attributes.contentblocks.length > 1 ? attributes.contentblocks[1].image.url : null,
+                    categories: attributes.categories,
+                    start: new Date(attributes.start),
+                    end: new Date(attributes.end)
                 };
             },
             async shareEvent() {

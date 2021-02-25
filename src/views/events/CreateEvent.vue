@@ -68,7 +68,6 @@
 </script>
 
 <style lang="scss" scoped>
-
     .date-time-picker {
         padding: 0 16px;
     }
