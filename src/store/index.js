@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import MemberService from "@/services";
 
 Vue.use(Vuex);
 
@@ -13,7 +14,7 @@ const getters = {}
 //to handle actions
 const actions = {
     async getAllMembers({commit}) {
-        commit('getAllMembers', await Vue.prototype.$services.members.getMembers());
+        commit('getAllMembers', await MemberService.getMembers());
     }
 }
 

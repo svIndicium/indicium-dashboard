@@ -1,10 +1,8 @@
+import apiInstance from "@/assets/js/api";
+
 class MemberService {
-    /**
-     * @param {AxiosInstance} axios
-     */
-    constructor(axios) {
-        this.api = axios;
-    }
+
+    api = apiInstance;
 
     async getMembers() {
         return await this.api.get("/members");
@@ -14,4 +12,4 @@ class MemberService {
         return await this.api.get(`/members/${memberId}`);
     }
 }
-export default MemberService;
+export default new MemberService();
