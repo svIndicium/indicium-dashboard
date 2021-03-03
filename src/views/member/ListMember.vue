@@ -24,7 +24,7 @@
                     {{ errorMessage }}
                 </span>
             </div>
-            <Button :callback="getMembers" size="l" class="button"><Icon type="refresh" class="buttonicon" /> Probeer opnieuw</Button>
+            <Button :callback="requestData" size="l" class="button"><Icon type="refresh" class="buttonicon" /> Probeer opnieuw</Button>
         </div>
     </div>
 </template>
@@ -39,33 +39,29 @@
         name: "memberOverview",
         components: { StatusLabel, Button, Icon, Loading },
         data: () => ({
-            members: [],
             error: null,
             loading: false,
         }),
         methods: {
-            async getMembers() {
-                this.error = null;
-                this.loading = true;
-                try {
-                    const { data } = await this.$api.get("/members");
-                    this.members = data;
-                } catch (e) {
-                    this.error = e;
-                }
-                this.loading = false;
-            },
             getFullLastName(name) {
                 if (name.middleName) {
                     return `${name.middleName} ${name.lastName}`;
                 }
                 return `${name.lastName}`;
+            },
+            async requestData() {
+                this.loading = true;
+                await this.$store.dispatch("getAllMembers");
+                this.loading = false;
             }
         },
-        async created() {
-            await this.getMembers();
+        async mounted() {
+            await this.requestData();
         },
         computed: {
+            members() {
+                return this.$store.state.members;
+            },
             errorMessage() {
                 if (this.error.message === 'Network Error') {
                     return 'Netwerk fout';
