@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import api from './plugins/axios';
 import utils from './plugins/utils';
+import services from './plugins/services';
+import store from './store';
 import './plugins/busje';
 import App from './App.vue';
 import router from './router';
@@ -24,11 +26,13 @@ Vue.use(VueKeyCloak, {
     }
 });
 Vue.use(api);
+Vue.use(services);
 Vue.use(utils);
 
 Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 
 new Vue({
+    store,
     router,
     render: h => h(App),
 }).$mount('#app');
