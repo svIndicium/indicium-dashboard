@@ -25,6 +25,7 @@
     import Loading from '../../components/Loading';
     import CheckBox from '../../components/CheckBox';
     import Button from '../../components/button';
+    import {FETCH_STUDY_TYPES} from "@/store/actions";
     export default {
         name: 'AgendaConnection',
         components: {
@@ -35,24 +36,11 @@
         data: () => ({
             error: null,
             loading: false,
-            studyTypes: [],
         }),
-        async created() {
-            await this.getStudyTypes();
+        async mounted() {
+            await this.$store.dispatch(FETCH_STUDY_TYPES);
         },
         methods: {
-            async getStudyTypes() {
-                this.error = null;
-                this.loading = true;
-                try {
-                    const { data } = await this.$api.get('/studytypes');
-                    data.map((studyType) => studyType.selected = true)
-                    this.studyTypes = data;
-                } catch (e) {
-                    this.error = e;
-                }
-                this.loading = false;
-            },
             copyFeedLinkToClipboard() {
                 this.copyToClipboard(this.iCalLink)
                     .then(() => {});
@@ -65,6 +53,9 @@
             }
         },
         computed: {
+            studyTypes() {
+                return this.$store.state.studyTypes.studyTypes;
+            },
             iCalLink() {
                 const selected = this.studyTypes.filter((studyType) => studyType.selected).map((studyType) => studyType.name);
                 const url = 'https://ics.indicium.hu/v1/ics'
