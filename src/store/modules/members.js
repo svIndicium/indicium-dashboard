@@ -1,4 +1,4 @@
-import MemberService from "@/services";
+import {MemberService} from "@/services";
 import {STORE_MEMBERS} from "@/store/mutations";
 import {FETCH_MEMBERS} from "@/store/actions";
 

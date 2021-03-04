@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2>Studierichtingen</h2>
-        <div v-if="loading">
+        <div v-if="isLoading">
             <Loading />
         </div>
         <div v-else-if="!error">
@@ -22,7 +22,7 @@
                     {{ errorMessage }}
                 </span>
             </div>
-            <Button :callback="getStudyTypes" size="l" class="button"><Icon type="refresh" class="buttonicon" />Probeer opnieuw</Button>
+            <Button :callback="requestData" size="l" class="button"><Icon type="refresh" class="buttonicon" />Probeer opnieuw</Button>
         </div>
     </div>
 </template>
@@ -31,6 +31,7 @@
     import Button from '../../components/button';
     import Loading from '@svindicium/indicium-components';
     import Icon from '../../components/Icon';
+    import {FETCH_STUDY_TYPES} from "@/store/actions";
 
     export default {
         name: 'ListStudyType',
@@ -40,30 +41,33 @@
             Icon,
         },
         data: () => ({
-            loading: false,
             error: null,
-            studyTypes: [],
         }),
         methods: {
-            async getStudyTypes() {
-                this.error = null;
-                this.loading = true;
-                try {
-                    const { data } = await this.$api.get('/studytypes');
-                    this.studyTypes = data;
-                } catch (e) {
-                    this.error = e;
-                }
-                this.loading = false;
+            async requestData() {
+                await this.$store.dispatch(FETCH_STUDY_TYPES);
             },
             hasPermission(resource, role) {
-                return this.$keycloak.hasResourceRole(role, resource);
+                if (!this.resourceAccess[resource]) return false;
+                return this.resourceAccess[resource].roles.includes(role) ;
             },
         },
-        async created() {
-            await this.getStudyTypes();
+        async mounted() {
+            await this.requestData();
         },
         computed: {
+            resourceAccess() {
+                return this.$store.state.user.resourceAccess;
+            },
+            studyTypes() {
+                return this.$store.state.studyTypes.studyTypes;
+            },
+            studyTypesLength() {
+                return this.$store.state.studyTypes.studyTypesLength;
+            },
+            isLoading() {
+                return this.$store.state.studyTypes.isLoading;
+            },
             errorMessage() {
                 if (this.error.message === 'Network Error') {
                     return 'Netwerk fout';

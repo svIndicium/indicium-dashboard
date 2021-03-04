@@ -1,3 +1,8 @@
 import MemberService from './MemberService';
+import StudyTypeService from "./StudyTypeService";
 
-export default MemberService;
+export {
+    MemberService,
+    StudyTypeService
+};
+
