@@ -20,6 +20,7 @@ export default {
     }),
     methods: {
         hasPermission(resource, role) {
+            if (!this.resourceAccess[resource]) return false;
             return this.resourceAccess[resource].roles.includes(role) ;
         },
     },
