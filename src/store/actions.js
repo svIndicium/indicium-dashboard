@@ -8,3 +8,4 @@ export const FETCH_EVENTS = 'fetchEvents';
 
 export const LOGOUT = 'logout';
 export const REFRESH_TOKEN = 'refreshToken';
+export const FETCH_PROFILE = 'fetchProfile';

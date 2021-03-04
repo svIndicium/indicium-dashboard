@@ -1,6 +1,6 @@
 import MemberService from "@/services";
-import {FETCH_MEMBERS, LOGOUT, REFRESH_TOKEN} from "@/store/actions";
-import {INIT_KEYCLOAK, UPDATE_TOKEN, USER_LOGOUT} from "@/store/mutations";
+import {FETCH_MEMBERS, FETCH_PROFILE, LOGOUT, REFRESH_TOKEN} from "@/store/actions";
+import {INIT_KEYCLOAK, STORE_PROFILE, UPDATE_TOKEN, USER_LOGOUT} from "@/store/mutations";
 import Vue from 'vue';
 
 const state = {
@@ -11,7 +11,9 @@ const state = {
     idToken: '',
     accessToken: '',
     idTokenParsed: {},
-    resourceAccess: {}
+    resourceAccess: {},
+    member: {},
+    memberIsLoading: true,
 }
 
 const getters = {
@@ -26,10 +28,14 @@ const getters = {
 const actions = {
     async [LOGOUT]({commit}) {
         commit(USER_LOGOUT);
-        Vue.$keycloak.logout();
+        await Vue.$keycloak.logout();
     },
-    async [REFRESH_TOKEN]({commit}, keycloak) {
+    [REFRESH_TOKEN]({commit}, keycloak) {
         commit(UPDATE_TOKEN, keycloak);
+    },
+    async [FETCH_PROFILE]({commit}) {
+        const memberResponse = await MemberService.getMemberById(state.userId);
+        commit(STORE_PROFILE, memberResponse.data);
     }
 }
 
@@ -67,6 +73,10 @@ const mutations = {
         localStorage.removeItem('token');
         localStorage.removeItem('idToken');
         localStorage.removeItem('refreshToken');
+    },
+    [FETCH_PROFILE](state, member) {
+        state.member = member;
+        state.memberIsLoading = false;
     }
 }
 

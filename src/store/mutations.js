@@ -9,3 +9,4 @@ export const STORE_EVENTS = 'storeEvents';
 export const INIT_KEYCLOAK = 'initKeycloak';
 export const UPDATE_TOKEN = 'updateKeycloak';
 export const USER_LOGOUT = 'userLogout';
+export const STORE_PROFILE = 'storeProfile';
