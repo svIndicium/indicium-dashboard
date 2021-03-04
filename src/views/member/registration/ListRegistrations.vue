@@ -28,7 +28,7 @@
                     {{ errorMessage }}
                 </span>
             </div>
-            <Button :callback="getRegistrations" size="l" class="button"><Icon type="refresh" class="buttonicon" />Probeer opnieuw</Button>
+            <Button :callback="requestData" size="l" class="button"><Icon type="refresh" class="buttonicon" />Probeer opnieuw</Button>
         </div>
     </div>
 </template>
@@ -38,6 +38,7 @@
     import Icon from '../../../components/Icon';
     import StatusLabel from '../../../components/StatusLabel';
     import Button from '../../../components/button';
+    import {FETCH_REGISTRATIONS} from "@/store/actions";
 
     export default {
         name: 'ListRegistrations',
@@ -48,19 +49,12 @@
             Button,
         },
         data: () => ({
-            registrations: null,
             error: null,
             loading: false,
         }),
         methods: {
-            async getRegistrations() {
-                this.error = null;
-                try {
-                    const { data } = await this.$api.get("/registrations");
-                    this.registrations = data;
-                } catch (e) {
-                    this.error = e;
-                }
+            async requestData() {
+                await this.$store.dispatch(FETCH_REGISTRATIONS);
             },
             viewRegistration(registrationId) {
                 this.$router.push({ name: "viewRegistration", params: { registrationId } });
@@ -75,8 +69,13 @@
                 return `${name.lastName}`;
             }
         },
-        async created() {
-            await this.getRegistrations();
+        computed: {
+            registrations() {
+                return this.$store.state.registrations.registrations;
+            }
+        },
+        async mounted() {
+            await this.requestData();
         }
     };
 </script>
