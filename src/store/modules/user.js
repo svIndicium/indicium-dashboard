@@ -7,6 +7,7 @@ const state = {
     isAuthenticated: false,
     name: '',
     roles: [],
+    userId: '',
     idToken: '',
     accessToken: '',
     idTokenParsed: {},
@@ -37,6 +38,7 @@ const mutations = {
         state.isAuthenticated = keycloak.authenticated;
         state.idToken = keycloak.idToken;
         state.idTokenParsed = keycloak.idTokenParsed;
+        state.userId = keycloak.idTokenParsed.sub;
         state.accessToken = keycloak.token;
         state.name = keycloak.idTokenParsed.name;
         state.resourceAccess = keycloak.resourceAccess;
@@ -47,6 +49,7 @@ const mutations = {
     [UPDATE_TOKEN](state, keycloak) {
         state.idToken = keycloak.idToken;
         state.idTokenParsed = keycloak.idTokenParsed;
+        state.userId = keycloak.idTokenParsed.sub;
         state.accessToken = keycloak.token;
         state.name = keycloak.idTokenParsed.name;
         state.resourceAccess = keycloak.resourceAccess;
@@ -58,6 +61,7 @@ const mutations = {
         state.isAuthenticated = false;
         state.idToken = '';
         state.idTokenParsed = '';
+        state.userId = '';
         state.accessToken = '';
         state.name = '';
         localStorage.removeItem('token');
