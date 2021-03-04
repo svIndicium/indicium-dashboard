@@ -2,7 +2,7 @@
     <div>
         <h2>Ledenoverzicht</h2>
         <Button route-name="memberImport">Importeer gebruiker</Button>
-        <div v-if="loading">
+        <div v-if="membersState.isLoading">
             <Loading />
         </div>
         <div v-else-if="!error" class="table-container">
@@ -10,7 +10,7 @@
             <div class="header">Achternaam</div>
             <div class="header">Status</div>
             <div class="header">Acties</div>
-            <template v-for="(member, idx) in members">
+            <template v-for="(member, idx) in membersState.members">
                 <div v-bind:key="'firstName' + idx">{{member.memberDetails.name.firstName}}</div>
                 <div v-bind:key="'lastName' + idx">{{getFullLastName(member.memberDetails.name)}}</div>
                 <div v-bind:key="'status' + idx"><StatusLabel status="success">Actief</StatusLabel></div>
@@ -30,17 +30,17 @@
 </template>
 
 <script>
-    import Loading from '@svindicium/indicium-components';
+    import Loading from '../../components/Loading';
     import Icon from '../../components/Icon';
     import Button from '../../components/button';
     import StatusLabel from '../../components/StatusLabel';
+    import {FETCH_MEMBERS} from "@/store/actions";
 
     export default {
         name: "memberOverview",
         components: { StatusLabel, Button, Icon, Loading },
         data: () => ({
             error: null,
-            loading: false,
         }),
         methods: {
             getFullLastName(name) {
@@ -50,17 +50,24 @@
                 return `${name.lastName}`;
             },
             async requestData() {
-                this.loading = true;
-                await this.$store.dispatch("getAllMembers");
-                this.loading = false;
+                await this.$store.dispatch(FETCH_MEMBERS);
             }
         },
         async mounted() {
             await this.requestData();
         },
         computed: {
-            members() {
+            membersState() {
                 return this.$store.state.members;
+            },
+            members() {
+                return this.$store.state.members.members;
+            },
+            membersLength() {
+                return this.$store.state.members.membersLength;
+            },
+            isLoading() {
+                return this.$store.state.members.isLoading;
             },
             errorMessage() {
                 if (this.error.message === 'Network Error') {
