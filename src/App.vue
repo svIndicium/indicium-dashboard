@@ -33,7 +33,6 @@ export default {
             }
             this.$store.commit(INIT_KEYCLOAK, this.$keycloak);
         }).catch(() => {
-            console.error("Authenticated Failed");
         });
     }
 };
