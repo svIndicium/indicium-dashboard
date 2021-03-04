@@ -4,12 +4,14 @@ import members from "@/store/modules/members";
 import studyTypes from "@/store/modules/studyTypes";
 import user from "@/store/modules/user";
 import registrations from "@/store/modules/registrations";
+import events from "@/store/modules/events";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     modules: {
         members,
+        events,
         studyTypes,
         registrations,
         user
