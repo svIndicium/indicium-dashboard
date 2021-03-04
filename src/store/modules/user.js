@@ -9,7 +9,8 @@ const state = {
     roles: [],
     idToken: '',
     accessToken: '',
-    idTokenParsed: {}
+    idTokenParsed: {},
+    resourceAccess: {}
 }
 
 const getters = {
@@ -26,8 +27,8 @@ const actions = {
         commit(USER_LOGOUT);
         Vue.$keycloak.logout();
     },
-    async [REFRESH_TOKEN]({commit}) {
-        commit(UPDATE_TOKEN, Vue.$keycloak);
+    async [REFRESH_TOKEN]({commit}, keycloak) {
+        commit(UPDATE_TOKEN, keycloak);
     }
 }
 
@@ -38,14 +39,20 @@ const mutations = {
         state.idTokenParsed = keycloak.idTokenParsed;
         state.accessToken = keycloak.token;
         state.name = keycloak.idTokenParsed.name;
+        state.resourceAccess = keycloak.resourceAccess;
         localStorage.setItem('token', keycloak.token);
+        localStorage.setItem("idToken", keycloak.idToken);
+        localStorage.setItem("refreshToken", keycloak.refreshToken);
     },
     [UPDATE_TOKEN](state, keycloak) {
         state.idToken = keycloak.idToken;
         state.idTokenParsed = keycloak.idTokenParsed;
         state.accessToken = keycloak.token;
         state.name = keycloak.idTokenParsed.name;
+        state.resourceAccess = keycloak.resourceAccess;
         localStorage.setItem('token', keycloak.token);
+        localStorage.setItem("idToken", keycloak.idToken);
+        localStorage.setItem("refreshToken", keycloak.refreshToken);
     },
     [USER_LOGOUT](state) {
         state.isAuthenticated = false;
@@ -54,6 +61,8 @@ const mutations = {
         state.accessToken = '';
         state.name = '';
         localStorage.removeItem('token');
+        localStorage.removeItem('idToken');
+        localStorage.removeItem('refreshToken');
     }
 }
 

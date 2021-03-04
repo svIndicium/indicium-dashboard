@@ -27,18 +27,14 @@ export default {
 
         this.$keycloak.init(initialOptions).then((auth) => {
             if (auth) {
-                localStorage.setItem("token", this.$keycloak.token);
-                localStorage.setItem("idToken", this.$keycloak.idToken);
-                localStorage.setItem("refreshToken", this.$keycloak.refreshToken);
+                this.$keycloak.updateToken(5).then((refreshed) => {
+                    this.$store.dispatch(REFRESH_TOKEN, this.$keycloak);
+                })
             }
             this.$store.commit(INIT_KEYCLOAK, this.$keycloak);
         }).catch(() => {
             console.error("Authenticated Failed");
         });
-
-        this.$keycloak.updateToken(5).then((refreshed) => {
-            this.$store.dispatch(REFRESH_TOKEN);
-        })
     }
 };
 </script>
