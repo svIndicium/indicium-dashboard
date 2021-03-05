@@ -1,6 +1,12 @@
-import MemberService from "@/services";
+import {MemberService, StudyTypeService} from "@/services";
 import {FETCH_MEMBERS, FETCH_PROFILE, LOGOUT, REFRESH_TOKEN} from "@/store/actions";
-import {INIT_KEYCLOAK, STORE_PROFILE, UPDATE_TOKEN, USER_LOGOUT} from "@/store/mutations";
+import {
+    INIT_KEYCLOAK,
+    STORE_PROFILE, STORE_PROFILE_MAIL_ADDRESS, STORE_PROFILE_STUDY_TYPE,
+    STORE_STUDY_TYPES,
+    UPDATE_TOKEN,
+    USER_LOGOUT
+} from "@/store/mutations";
 import Vue from 'vue';
 
 const state = {
@@ -14,6 +20,8 @@ const state = {
     resourceAccess: {},
     member: {},
     memberIsLoading: true,
+    studyTypeIsLoading: true,
+    mailAddressIsLoading: true,
 }
 
 const getters = {
@@ -36,6 +44,8 @@ const actions = {
     async [FETCH_PROFILE]({commit}) {
         const memberResponse = await MemberService.getMemberById(state.userId);
         commit(STORE_PROFILE, memberResponse.data);
+        const studyTypeResponse = await StudyTypeService.getStudyTypeById(memberResponse.data.memberDetails.studyTypeId);
+        commit(STORE_PROFILE_STUDY_TYPE, studyTypeResponse.data);
     }
 }
 
@@ -74,9 +84,17 @@ const mutations = {
         localStorage.removeItem('idToken');
         localStorage.removeItem('refreshToken');
     },
-    [FETCH_PROFILE](state, member) {
+    [STORE_PROFILE](state, member) {
         state.member = member;
         state.memberIsLoading = false;
+    },
+    [STORE_PROFILE_STUDY_TYPE](state, studyType) {
+        state.member = {...state.member, studyType};
+        state.studyTypeIsLoading = false;
+    },
+    [STORE_PROFILE_MAIL_ADDRESS](state, mailAddresses) {
+        state.member = {...state.member, mailAddresses};
+        state.mailAddressIsLoading = false;
     }
 }
 

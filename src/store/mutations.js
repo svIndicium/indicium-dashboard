@@ -10,3 +10,5 @@ export const INIT_KEYCLOAK = 'initKeycloak';
 export const UPDATE_TOKEN = 'updateKeycloak';
 export const USER_LOGOUT = 'userLogout';
 export const STORE_PROFILE = 'storeProfile';
+export const STORE_PROFILE_STUDY_TYPE = 'storeProfileStudyType';
+export const STORE_PROFILE_MAIL_ADDRESS = 'storeProfileMailAddress';

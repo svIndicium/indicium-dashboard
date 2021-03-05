@@ -13,11 +13,15 @@
 <script>
     import InnerSidebar from '../../components/InnerSidebar';
     import Breadcrumbs from '../../components/Breadcrumbs';
+    import {FETCH_PROFILE} from "@/store/actions";
     export default {
         name: 'Profile',
         components: {
             InnerSidebar,
             Breadcrumbs
+        },
+        async mounted() {
+            await this.$store.dispatch(FETCH_PROFILE);
         },
         data: () => ({
             sidebar: [
