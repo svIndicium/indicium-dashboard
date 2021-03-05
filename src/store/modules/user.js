@@ -1,4 +1,4 @@
-import {MemberService, StudyTypeService} from "@/services";
+import {MailAddressService, MemberService, StudyTypeService} from "@/services";
 import {FETCH_MEMBERS, FETCH_PROFILE, LOGOUT, REFRESH_TOKEN} from "@/store/actions";
 import {
     INIT_KEYCLOAK,
@@ -46,6 +46,8 @@ const actions = {
         commit(STORE_PROFILE, memberResponse.data);
         const studyTypeResponse = await StudyTypeService.getStudyTypeById(memberResponse.data.memberDetails.studyTypeId);
         commit(STORE_PROFILE_STUDY_TYPE, studyTypeResponse.data);
+        const mailAddressResponse = await MailAddressService.getMailAddressesByMemberId(state.userId);
+        commit(STORE_PROFILE_MAIL_ADDRESS, mailAddressResponse.data);
     }
 }
 
@@ -93,7 +95,7 @@ const mutations = {
         state.studyTypeIsLoading = false;
     },
     [STORE_PROFILE_MAIL_ADDRESS](state, mailAddresses) {
-        state.member = {...state.member, mailAddresses};
+        state.member = {...state.member, mailAddresses: mailAddresses};
         state.mailAddressIsLoading = false;
     }
 }
