@@ -6,8 +6,8 @@
 
         <div class="menu-items">
             <template v-if="userState.isAuthenticated">
-                <SidebarItem :title="userState.name" route-name="profile" :collapsed="collapsed"></SidebarItem>
-                <SidebarItem title="Leden" route-name="memberDashboard" icon="user" v-if="hasPermission('ledenadministratie-api', 'manage-members')" :collapsed="collapsed"></SidebarItem>
+                <SidebarItem :title="userState.name" icon="user" route-name="profile" :collapsed="collapsed"></SidebarItem>
+                <SidebarItem title="Leden" route-name="memberDashboard" icon="users" v-if="hasPermission('ledenadministratie-api', 'manage-members')" :collapsed="collapsed"></SidebarItem>
                 <SidebarItem title="Activiteiten" route-name="eventDashboard" icon="calendar" :collapsed="collapsed"></SidebarItem>
             </template>
             <template v-else>
