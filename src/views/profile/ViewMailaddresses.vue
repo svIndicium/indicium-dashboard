@@ -1,18 +1,18 @@
 <template>
     <div>
         <h2>Mailadressen</h2>
-        <div v-if="loading">
+        <div v-if="mailAddressIsLoading">
             <Loading />
         </div>
-        <div v-else-if="!error" class="table-container">
+        <div v-else class="table-container">
             <div class="header">Mailadres</div>
             <div class="header">Status</div>
             <div class="header">Nieuwsbrief status</div>
-            <template v-for="(mailAddress, idx) in mailAddresses" >
+            <template v-for="(mailAddress, idx) in member.mailAddresses" >
                 <div v-bind:key="'adres' + idx" class="cell">{{mailAddress.address}}</div>
                 <div v-bind:key="'verified' + idx" class="cell">
-                    <StatusLabel v-if="mailAddress.verifiedAt !== null" status="success" :title="`Bevestigd op ${getPrettyDateTime(mailAddress.verifiedAt)}`">Bevestigd</StatusLabel>
-                    <StatusLabel v-else status="warning" :title="`Bevestiging verstuurd op ${getPrettyDateTime(mailAddress.verificationRequestedAt)}`">Nog niet bevestigd</StatusLabel>
+                    <StatusLabel v-if="mailAddress.verifiedAt !== null" status="success" :title="`Bevestigd op ${this.$utils.getPrettyDateTime(mailAddress.verifiedAt)}`">Bevestigd</StatusLabel>
+                    <StatusLabel v-else status="warning" :title="`Bevestiging verstuurd op ${this.$utils.getPrettyDateTime(mailAddress.verificationRequestedAt)}`">Nog niet bevestigd</StatusLabel>
                 </div>
                 <div v-bind:key="'newsletter' + idx" class="cell">
                     <StatusLabel v-if="!!mailAddress.receivesNewsletter" status="success">Ontvangt nieuwsbrief</StatusLabel>
@@ -20,64 +20,25 @@
                 </div>
             </template>
         </div>
-        <div v-else>
-            <div class="errorcontainer">
-                <Icon type="alert-circle" class="icon" />
-                <span class="message">
-                    {{ errorMessage }}
-                </span>
-            </div>
-            <Button :callback="getMailAddresses" size="l" class="button"><Icon type="refresh" class="buttonicon" />Probeer opnieuw</Button>
-        </div>
     </div>
 </template>
 
 <script>
-    import Icon from '../../components/Icon';
-    import Button from '../../components/button';
-    import Loading from '@svindicium/indicium-components';
     import StatusLabel from '../../components/StatusLabel';
+    import Loading from '../../components/Loading';
 
     export default {
         name: 'ViewMailAddresses',
         components: {
             StatusLabel,
-            Icon,
-            Button,
             Loading,
         },
-        data: () => ({
-            mailAddresses: [],
-            error: null,
-            loading: false,
-        }),
-        methods: {
-            async getMailAddresses() {
-                this.loading = true;
-                this.error = null;
-                try {
-                    const { data } = await this.$api.get(`/members/${this.$keycloak.subject}/mailaddresses`);
-                    this.mailAddresses = data;
-                } catch (e) {
-                    this.error = e;
-                }
-                this.loading = false;
-            },
-            getPrettyDateTime(dateString) {
-                return this.$utils.getPrettyDateTime(dateString);
-            }
-        },
-        async created() {
-            await this.getMailAddresses();
-        },
         computed: {
-            errorMessage() {
-                if (this.error.status === 404) {
-                    return "Profiel niet gevonden.";
-                } else if (this.error.status === 403) {
-                    return "Verboden toegang.";
-                }
-                return this.error.message;
+            member() {
+                return this.$store.state.user.member;
+            },
+            mailAddressIsLoading() {
+                return this.$store.state.user.mailAddressIsLoading;
             },
         },
     };
