@@ -1,6 +1,6 @@
 <template>
     <div>
-        <InnerSidebar :title="$keycloak.fullName" :content="sidebar" v-if="$keycloak.ready"></InnerSidebar>
+        <InnerSidebar :title="user.name" :content="sidebar"></InnerSidebar>
         <div class="profile">
             <div class="view-container">
                 <Breadcrumbs />
@@ -36,7 +36,12 @@
                     ]
                 },
             ]
-        })
+        }),
+        computed: {
+            user() {
+                return this.$store.state.user.idTokenParsed;
+            }
+        }
     };
 </script>
 
