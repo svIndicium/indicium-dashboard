@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import keycloak from "@/assets/js/keycloak";
+import keycloak from "@/auth/keycloak";
 
 export default {
     install(Vue) {

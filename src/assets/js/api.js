@@ -2,7 +2,7 @@ import axios from "axios";
 import {Service} from "axios-middleware";
 import DataMiddleware from "@/middleware/DataMiddleware";
 import AuthMiddleware from "@/middleware/AuthMiddleware";
-import keycloak from "@/assets/js/keycloak";
+import keycloak from "@/auth/keycloak";
 
 const baseURL = {
     live: 'https://api.indicium.hu/api/v1',
