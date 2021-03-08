@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "yarn serve-local",
-    "serve-local": "cross-env VUE_APP_MODE=local vue-cli-service serve --port 8083",
-    "serve-dev": "cross-env VUE_APP_MODE=dev vue-cli-service serve --port 8083",
-    "serve-live": "cross-env VUE_APP_MODE=live vue-cli-service serve --port 8083",
-    "build": "yarn build-live",
-    "build-local": "cross-env VUE_APP_MODE=local vue-cli-service build",
-    "build-dev": "cross-env VUE_APP_MODE=dev vue-cli-service build",
-    "build-live": "cross-env VUE_APP_MODE=live vue-cli-service build",
+    "serve": "yarn serve-development",
+    "serve-production": "cross-env NODE_ENV=production vue-cli-service serve --port 8083",
+    "serve-testing": "cross-env NODE_ENV=testing vue-cli-service serve --port 8083",
+    "serve-development": "cross-env NODE_ENV=development vue-cli-service serve --port 8083",
+    "build": "yarn build-production",
+    "build-production": "cross-env NODE_ENV=production vue-cli-service build",
+    "build-testing": "cross-env NODE_ENV=testing vue-cli-service build",
+    "build-development": "cross-env NODE_ENV=development vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

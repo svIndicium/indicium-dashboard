@@ -5,10 +5,10 @@ import AuthMiddleware from "@/middleware/AuthMiddleware";
 import keycloak from "@/auth/keycloak";
 
 const baseURL = {
-    live: 'https://api.indicium.hu/api/v1',
-    dev: 'https://dev.api.indicium.hu/api/v1',
-    local: 'http://localhost:8080/api/v1'
-}[process.env.VUE_APP_MODE || 'local']
+    production: 'https://api.indicium.hu/api/v1',
+    testing: 'https://dev.api.indicium.hu/api/v1',
+    development: 'http://localhost:8080/api/v1'
+}[process.env.NODE_ENV || 'development']
 
 const apiInstance = axios.create({ baseURL });
 
