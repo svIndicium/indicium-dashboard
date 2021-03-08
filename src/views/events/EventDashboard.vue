@@ -9,13 +9,13 @@
             <Loading />
         </div>
         <div class="calendar" v-else-if="view === 'calendar'">
-            <EventCalendar :events="events" @eventSelected="getOnEventClick" />
+            <EventCalendar @eventSelected="getOnEventClick" />
         </div>
         <div v-else-if="view === 'cards'">
-            <EventCardGrid :events="events" @eventSelected="getOnEventClick" />
+            <EventCardGrid @eventSelected="getOnEventClick" />
         </div>
         <div v-else>
-            <EventList :events="events" @eventSelected="getOnEventClick" />
+            <EventList @eventSelected="getOnEventClick" />
         </div>
     </div>
 </template>
@@ -28,11 +28,11 @@
     import ButtonGroup from '../../components/ButtonGroup';
     import Loading from '../../components/Loading';
     import axios from 'axios';
+    import {FETCH_EVENTS} from "@/store/actions";
     export default {
         name: 'EventDashboard',
         components: { ButtonGroup, EventList, EventCardGrid, EventCalendar, Button, Loading },
         data: () => ({
-            events: [],
             loading: false,
             view: localStorage.getItem('defaultEventView') || 'calendar',
         }),
@@ -45,28 +45,28 @@
             //         })
             //     );
             // },
-            async getEvents() {
-                this.loading = true;
-                const { data } = await axios.get('https://old.indicium.hu/json/events?filter[status]=published&page%5Bsize%5D=1000')
-                const events = data.data
-                // const today = new Date().getTime()
-                const featureEvents = events
-                    // .filter(evt => new Date(evt.attributes.start).getTime() > today)
-                    .sort((eventA, eventB) => new Date(eventA.attributes.start) - new Date(eventB.attributes.start))
-                    .map(evt => ({
-                        id: evt.id,
-                        title: evt.attributes.title,
-                        description: this.stripHTMLFromString(evt.attributes.contentblocks[0].content),
-                        startDate: new Date(evt.attributes.start).getTime(),
-                        endDate: new Date(evt.attributes.end).getTime(),
-                        url: `/activiteiten/${evt.id}-${evt.attributes.slug}`,
-                        categories: evt.attributes.categories
-                    }))
-                this.events = featureEvents;
-                this.loading = false;
-            },
-            stripHTMLFromString(str = '') {
-                return str.replace(/(<([^>]+)>)/ig, '').replace(/\n|\r/g, ' ').replace('&nbsp;', ' ')
+            // async getEvents() {
+            //     this.loading = true;
+            //     const { data } = await axios.get('https://old.indicium.hu/json/events?filter[status]=published&page%5Bsize%5D=1000')
+            //     const events = data.data
+            //     // const today = new Date().getTime()
+            //     const featureEvents = events
+            //         // .filter(evt => new Date(evt.attributes.start).getTime() > today)
+            //         .sort((eventA, eventB) => new Date(eventA.attributes.start) - new Date(eventB.attributes.start))
+            //         .map(evt => ({
+            //             id: evt.id,
+            //             title: evt.attributes.title,
+            //             description: this.stripHTMLFromString(evt.attributes.contentblocks[0].content),
+            //             startDate: new Date(evt.attributes.start).getTime(),
+            //             endDate: new Date(evt.attributes.end).getTime(),
+            //             url: `/activiteiten/${evt.id}-${evt.attributes.slug}`,
+            //             categories: evt.attributes.categories
+            //         }))
+            //     this.events = featureEvents;
+            //     this.loading = false;
+            // },
+            async requestData() {
+                await this.$store.dispatch(FETCH_EVENTS);
             },
             toggleView(viewName) {
                 this.view = viewName;
@@ -80,6 +80,9 @@
             },
         },
         computed: {
+            isLoading() {
+                return this.$store.state.events.isLoading;
+            },
             getButtons() {
                 return [
                     {
@@ -95,12 +98,10 @@
                         callback: () => this.toggleView('list'),
                     },
                 ];
-            }
+            },
         },
         async mounted() {
-            this.loading = true;
-            await this.getEvents();
-            this.loading = false;
+            await this.requestData();
         }
     };
 </script>

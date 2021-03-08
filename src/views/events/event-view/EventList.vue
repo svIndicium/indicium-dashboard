@@ -17,15 +17,14 @@
 <script>
     export default {
         name: 'EventList',
-        props: {
-            events: {
-                type: Array,
-                default: () => ([]),
-            }
-        },
         methods: {
             onClick(event) {
                 this.$emit('eventSelected', event);
+            }
+        },
+        computed: {
+            events() {
+                return this.$store.state.events.events;
             }
         }
     };

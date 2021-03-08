@@ -20,6 +20,7 @@ import EventDashboard from './views/events/EventDashboard';
 import ViewEvent from './views/events/ViewEvent';
 import CreateUser from "@/views/member/CreateUser";
 import Member from "@/views/member/Member";
+import {isAuthenticated} from "@/auth/authGuard";
 
 Vue.use(Router);
 
@@ -41,7 +42,7 @@ export default new Router({
             {
                 path: '/leden',
                 component: Member,
-                // beforeEnter: guardRoute,
+                beforeEnter: isAuthenticated,
                 meta: {
                     breadcrumb: [
                         {
@@ -58,7 +59,7 @@ export default new Router({
                         path: '',
                         name: 'memberDashboard',
                         component: ListMember,
-                        // beforeEnter: guardRoute,
+                        beforeEnter: isAuthenticated,
                         meta: {
                             breadcrumb: [
                                 {
@@ -79,6 +80,7 @@ export default new Router({
                         path: 'nieuw',
                         name: 'memberImport',
                         component: CreateUser,
+                        beforeEnter: isAuthenticated,
                         meta: {
                             breadcrumb: [
                                 {
@@ -99,6 +101,7 @@ export default new Router({
                         path: 'aanmeldingen',
                         name: 'registrationOverview',
                         component: ListRegistrations,
+                        beforeEnter: isAuthenticated,
                         meta: {
                             breadcrumb: [
                                 {
@@ -119,6 +122,7 @@ export default new Router({
                         path: 'aanmeldingen/:registrationId',
                         name: 'registrationView',
                         component: ViewRegistration,
+                        beforeEnter: isAuthenticated,
                         meta: {
                             breadcrumb: [
                                 {
@@ -143,6 +147,7 @@ export default new Router({
                         path: 'studierichtingen',
                         name: 'studyTypeOverview',
                         component: ListStudyType,
+                        beforeEnter: isAuthenticated,
                         meta: {
                             breadcrumb: [
                                 {
@@ -163,6 +168,7 @@ export default new Router({
                         path: 'studierichtingen/nieuw',
                         name: 'studyTypeCreate',
                         component: CreateStudyType,
+                        beforeEnter: isAuthenticated,
                         meta: {
                             breadcrumb: [
                                 {
@@ -187,6 +193,7 @@ export default new Router({
                         path: ':memberId',
                         name: 'memberView',
                         component: ViewMember,
+                        beforeEnter: isAuthenticated,
                         meta: {
                             breadcrumb: [
                                 {
@@ -260,6 +267,7 @@ export default new Router({
                         path: 'nieuw',
                         name: 'eventCreate',
                         component: CreateEvent,
+                        beforeEnter: isAuthenticated,
                         meta: {
                             breadcrumb: [
                                 {
@@ -302,12 +310,13 @@ export default new Router({
             {
                 path: '/profiel',
                 component: Profile,
-                // beforeEnter: authGuard,
+                beforeEnter: isAuthenticated,
                 children: [
                     {
                         path: '',
                         name: 'profile',
                         component: ViewProfile,
+                        beforeEnter: isAuthenticated,
                         meta: {
                             breadcrumb: [
                                 {
@@ -324,6 +333,7 @@ export default new Router({
                         path: 'mailadressen',
                         name: 'profileMailAddresses',
                         component: ViewMailaddresses,
+                        beforeEnter: isAuthenticated,
                         meta: {
                             breadcrumb: [
                                 {
@@ -345,7 +355,7 @@ export default new Router({
             {
                 path: '/instellingen',
                 component: Settings,
-                // beforeEnter: authGuard,
+                beforeEnter: isAuthenticated,
                 children: [
                     {
                         path: '',
@@ -367,6 +377,7 @@ export default new Router({
                         path: ':app',
                         name: 'appInstellingen',
                         component: SettingsPage,
+                        beforeEnter: isAuthenticated,
                         meta: {
                             breadcrumb: [
                                 {

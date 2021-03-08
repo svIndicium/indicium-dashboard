@@ -9,12 +9,6 @@
 
     export default {
         name: 'EventCardGrid',
-        props: {
-            events: {
-                type: Array,
-                default: () => ([]),
-            }
-        },
         components: {
             EventTile,
         },
@@ -25,7 +19,7 @@
         },
         computed: {
             lastTenEvents() {
-                return this.events.slice().reverse().slice(0, 10);
+                return this.$store.state.events.events.slice().reverse().slice(0, 10);
             }
         }
     };

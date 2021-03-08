@@ -1,23 +1,23 @@
 <template>
     <div>
         <h2>Profiel</h2>
-        <div v-if="!this.userLoading">
+        <div>
             <div class="section">
                 <h3 class="section-header">Algemene informatie</h3>
                 <div class="section-entry">
                     <p class="key">Voornaam</p>
-                    <p class="value">{{this.member.given_name}}</p>
+                    <p class="value">{{this.tokenData.given_name}}</p>
                 </div>
                 <div class="section-entry">
                     <p class="key">Achternaam</p>
-                    <p class="value">{{this.member.family_name}}</p>
+                    <p class="value">{{this.tokenData.family_name}}</p>
                 </div>
-                <div class="section-entry" v-if="retrievedProfile">
+                <div class="section-entry" v-if="!memberIsLoading">
                     <p class="key">Geboortedatum</p>
                     <p class="value">{{this.$utils.getPrettyDate(this.member.memberDetails.dateOfBirth)}}</p>
                 </div>
             </div>
-            <div class="section" v-if="retrievedStudyType">
+            <div class="section" v-if="!studyTypeIsLoading">
                 <h3 class="section-header">Opleidingsinformatie</h3>
                 <div class="section-entry" v-if="this.member.studyType">
                     <p class="key">Studierichting</p>
@@ -26,25 +26,15 @@
             </div>
             <div class="section">
                 <h3 class="section-header">Contact informatie</h3>
-                <div class="section-entry" v-if="retrievedProfile">
+                <div class="section-entry" v-if="!memberIsLoading">
                     <p class="key">Telefoonnummer</p>
                     <p class="value">{{this.$utils.getPrettyPhoneNumber(this.member.memberDetails.phoneNumber)}}</p>
                 </div>
                 <div class="section-entry">
                     <p class="key">Primaire e-mailadres</p>
-                    <p class="value">{{this.member.email}}</p>
+                    <p class="value">{{this.tokenData.email}}</p>
                 </div>
             </div>
-            <!--            <div class="section">-->
-            <!--                <h3 class="section-header">Profiel informatie</h3>-->
-            <!--                <div class="section-entry">-->
-            <!--                    <p class="key">Laatst bewerkt op</p>-->
-            <!--                    <p class="value">{{this.$utils.getPrettyDateTime(this.member.updated_at)}}</p>-->
-            <!--                </div>-->
-            <!--            </div>-->
-        </div>
-        <div v-if="loading || userLoading">
-            <Loading />
         </div>
         <div v-if="error">
             <div class="errorcontainer">
@@ -53,62 +43,34 @@
                     {{ errorMessage }}
                 </span>
             </div>
-            <Button :callback="getUserFromService" size="l" class="button"><Icon type="refresh" class="buttonicon" />Probeer opnieuw</Button>
+            <Button :callback="requestData" size="l" class="button"><Icon type="refresh" class="buttonicon" />Probeer opnieuw</Button>
         </div>
     </div>
 </template>
 
 <script>
-import Loading from '@svindicium/indicium-components';
 import Button from '../../components/button';
 import Icon from '../../components/Icon';
+import {FETCH_PROFILE} from "@/store/actions";
 
 export default {
     name: 'ViewProfile',
     components: {
-        Loading,
         Button,
         Icon,
     },
     data: () => ({
-        member: {},
         error: null,
         loading: false,
         userLoading: true,
     }),
     methods: {
-        getUser() {
-            this.member = this.$keycloak.idTokenParsed;
-            this.userLoading = false;
+        async requestData() {
+            await this.$store.dispatch(FETCH_PROFILE);
         },
-        async getUserFromService() {
-            this.error = null;
-            try {
-                const { data } = await this.$api.get(`/members/${this.$keycloak.subject}`);
-                this.member = { ...this.member, ...data };
-                await this.getStudyType();
-            } catch (e) {
-                if (e.response !== undefined) {
-                    this.setError(e.response.status, e.response.data.error);
-                } else {
-                    this.error = e;
-                }
-            }
-        },
-        async getStudyType() {
-            const { data } = await this.$api.get(`/studytypes/${this.member.memberDetails.studyTypeId}`);
-            this.member.studyType = data;
-        },
-        setError(status, error) {
-            this.error = error;
-            this.error.status = status;
-        }
     },
     async mounted() {
-        this.getUser();
-        this.loading = true;
-        await this.getUserFromService();
-        this.loading = false;
+        await this.requestData();
     },
     computed: {
         errorMessage() {
@@ -119,12 +81,18 @@ export default {
             }
             return this.error.message;
         },
-        retrievedProfile() {
-            return !this.loading && !!this.member.memberDetails;
+        tokenData() {
+            return this.$store.state.user.idTokenParsed;
         },
-        retrievedStudyType() {
-            return !this.loading && !!this.member.studyType;
+        member() {
+            return this.$store.state.user.member;
         },
+        memberIsLoading() {
+            return this.$store.state.user.memberIsLoading;
+        },
+        studyTypeIsLoading() {
+            return this.$store.state.user.studyTypeIsLoading;
+        }
     }
 };
 </script>
