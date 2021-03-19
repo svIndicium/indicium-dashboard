@@ -8856,10 +8856,10 @@ vue-cli-plugin-axios@^0.0.4:
   resolved "https://registry.yarnpkg.com/vue-cli-plugin-axios/-/vue-cli-plugin-axios-0.0.4.tgz#29d4eb48275c7fe15b92e1fd5d95fbe2a966436f"
   integrity sha512-p2b/fvPJuPBnvU8027PAAuU5DiOzUn2lku8XLG/f6c8FU0N+/MXWZAlOuHhqd9e7+KIZitwe/c8qlmv7TglbTg==
 
-vue-cli-plugin-vuetify@^2.0.7:
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/vue-cli-plugin-vuetify/-/vue-cli-plugin-vuetify-2.0.7.tgz#fcb4f1655e7c9199ee40dcbf6465e2355fd074d5"
-  integrity sha512-4riK5bzyvkZ4CxpQk/Vl6z8n8tmJUhuxh+k8xc/MZRdCt9RxAm3G4SxcEweroqKGXg+CRRfhqysaEQVtd4D40Q==
+vue-cli-plugin-vuetify@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/vue-cli-plugin-vuetify/-/vue-cli-plugin-vuetify-2.3.0.tgz#97ae8679e709b023e51a3135797dab59c5505d89"
+  integrity sha512-Cx6DmOC/awbtzRJtIZM+Dn13QGndhKmNbEYEhgZmcA0sZVyxYZCVBpcVdHky4LeTCj6vQA6AypLrWKTlnljhhg==
   dependencies:
     null-loader "^3.0.0"
     semver "^7.1.2"
