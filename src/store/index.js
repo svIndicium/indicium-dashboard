@@ -5,6 +5,7 @@ import studyTypes from "@/store/modules/studyTypes";
 import user from "@/store/modules/user";
 import registrations from "@/store/modules/registrations";
 import events from "@/store/modules/events";
+import payments from "@/store/modules/payments";
 
 Vue.use(Vuex);
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
         events,
         studyTypes,
         registrations,
-        user
+        user,
+        payments,
     }
 })

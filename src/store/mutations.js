@@ -6,6 +6,8 @@ export const STORE_REGISTRATIONS = 'storeRegistrations';
 
 export const STORE_EVENTS = 'storeEvents';
 
+export const STORE_PAYMENTS = 'storePayments';
+
 export const INIT_KEYCLOAK = 'initKeycloak';
 export const UPDATE_TOKEN = 'updateKeycloak';
 export const USER_LOGOUT = 'userLogout';
