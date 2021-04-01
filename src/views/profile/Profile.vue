@@ -33,6 +33,10 @@
                             title: 'Mailadressen',
                             routeName: 'profileMailAddresses'
                         },
+                        {
+                            title: 'Betalingen',
+                            routeName: 'profilePayments'
+                        },
                     ]
                 },
             ]

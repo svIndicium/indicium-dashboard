@@ -21,6 +21,7 @@ import ViewEvent from './views/events/ViewEvent';
 import CreateUser from "@/views/member/CreateUser";
 import Member from "@/views/member/Member";
 import {isAuthenticated} from "@/auth/authGuard";
+import ViewPayments from "@/views/profile/ViewPayments";
 
 Vue.use(Router);
 
@@ -349,7 +350,28 @@ export default new Router({
                                 },
                             ],
                         },
-                    }
+                    },
+                    {
+                        path: 'betalingen',
+                        name: 'profilePayments',
+                        component: ViewPayments,
+                        beforeEnter: isAuthenticated,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    name: 'Dashboard',
+                                    routeName: 'dashboard',
+                                },
+                                {
+                                    name: 'Profiel',
+                                    routeName: 'profile'
+                                },
+                                {
+                                    name: 'Betalingen',
+                                },
+                            ],
+                        },
+                    },
                 ]
             },
             {
