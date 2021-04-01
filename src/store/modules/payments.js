@@ -14,6 +14,9 @@ const getters = {
     },
     paymentsLength(state) {
         return state.paymentsLength;
+    },
+    getPaymentById: (state) => (paymentId) => {
+        return state.payments.find(payment => payment.id === paymentId);
     }
 }
 
@@ -26,6 +29,9 @@ const actions = {
 
 const mutations = {
     [STORE_PAYMENTS](state, payments) {
+        payments.sort((a, b) => {
+            return new Date(b.createdAt) - new Date(a.createdAt);
+        });
         state.payments = payments;
         state.paymentsLength = payments.length;
         state.isLoading = false;

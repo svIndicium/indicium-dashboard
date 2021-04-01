@@ -9,7 +9,8 @@ class MemberService {
     }
 
     async getMemberById(memberId) {
-        return await this.api.get(`/members/${memberId}`);
+        const memberResponse = await this.api.get(`/members/${memberId}`);
+        return memberResponse.data;
     }
 }
 export default new MemberService();

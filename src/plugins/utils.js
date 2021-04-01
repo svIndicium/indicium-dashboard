@@ -34,7 +34,7 @@ utils.install = function (Vue) {
         },
         getPrettyDateTime(dateString) {
             const date = new Date(dateString);
-            return `${this.getPrettyDate(dateString)} ${date.getUTCHours()}:${date.getUTCSeconds()}`;
+            return `${this.getPrettyDate(dateString)} ${date.getUTCHours()}:${date.getUTCMinutes()}`;
         },
         getPrettyDate(dateString) {
             const date = new Date(dateString);
@@ -46,6 +46,12 @@ utils.install = function (Vue) {
         },
         getPrettyCurrency(amount) {
             return `€${amount.toFixed(2)}`;
+        },
+        getFullName(name) {
+            if (name.middleName) {
+                return `${name.firstName} ${name.middleName} ${name.lastName}`;
+            }
+            return `${name.firstName} ${name.lastName}`;
         },
 
     };

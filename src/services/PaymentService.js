@@ -13,7 +13,8 @@ class PaymentService {
     }
 
     async getTransactionsForPaymentId(paymentId) {
-        return await this.api.get(`/payments/${paymentId}/transactions`);
+        const response = await this.api.get(`/payments/${paymentId}/transactions`);
+        return response.data;
     }
 
     async createIDealTransactionForPaymentId(paymentId, amount, description, redirectUrl) {

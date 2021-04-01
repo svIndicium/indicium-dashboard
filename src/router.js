@@ -22,6 +22,9 @@ import CreateUser from "@/views/member/CreateUser";
 import Member from "@/views/member/Member";
 import {isAuthenticated} from "@/auth/authGuard";
 import ViewPayments from "@/views/profile/ViewPayments";
+import Payment from "@/views/payment/Payment";
+import ListPayment from "@/views/payment/ListPayment";
+import ViewPayment from "@/views/payment/ViewPayment";
 
 Vue.use(Router);
 
@@ -301,6 +304,60 @@ export default new Router({
                                 },
                                 {
                                     name: 'Activiteit'
+                                }
+                            ]
+                        }
+                    }
+                ]
+
+            },
+            {
+                path: '/betalingen',
+                component: Payment,
+                meta: {
+                    breadcrumb: [
+                        {
+                            name: 'Dashboard',
+                            routeName: 'dashboard'
+                        },
+                        {
+                            name: 'Betalingen'
+                        }
+                    ]
+                },
+                children: [
+                    {
+                        path: '',
+                        name: 'paymentDashboard',
+                        component: ListPayment,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    name: 'Dashboard',
+                                    routeName: 'dashboard'
+                                },
+                                {
+                                    name: 'Betalingen'
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        path: ':paymentId',
+                        name: 'paymentView',
+                        component: ViewPayment,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    name: 'Dashboard',
+                                    routeName: 'dashboard'
+                                },
+                                {
+                                    name: 'Betalingen',
+                                    routeName: 'paymentDashboard'
+                                },
+                                {
+                                    name: 'Betaling'
                                 }
                             ]
                         }
