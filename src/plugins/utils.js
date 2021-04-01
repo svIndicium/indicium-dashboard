@@ -44,6 +44,10 @@ utils.install = function (Vue) {
             if (phoneNumber === undefined) return "";
             return `${phoneNumber.slice(0, 3)} ${phoneNumber.slice(3, 4)} ${phoneNumber.slice(4, 6)} ${phoneNumber.slice(6, 8)} ${phoneNumber.slice(8, 10)} ${phoneNumber.slice(10, 12)}`;
         },
+        getPrettyCurrency(amount) {
+            return `€${amount.toFixed(2)}`;
+        },
+
     };
 };
 
