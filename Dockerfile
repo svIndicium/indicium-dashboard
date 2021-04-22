@@ -4,7 +4,7 @@ FROM node:alpine AS base
 COPY . .
 # Build project
 ARG MODE=production
-RUN npm install
+RUN npm install --legacy-peer-deps
 RUN npm run build-$MODE
 
 # ---- Prod ----
