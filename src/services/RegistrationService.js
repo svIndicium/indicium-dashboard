@@ -9,7 +9,8 @@ class RegistrationService {
     }
 
     async getRegistrationsById(registrationId) {
-        return await this.api.get(`/registrations/${registrationId}`);
+        const response = await this.api.get(`/registrations/${registrationId}`);
+        return response.data;
     }
 }
 export default new RegistrationService();

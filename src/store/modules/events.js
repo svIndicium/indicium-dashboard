@@ -4,12 +4,13 @@ import {FETCH_EVENTS} from "@/store/actions";
 
 const mapEvent = (event) => ({
     id: event.id,
-    title: event.attributes.title,
+    name: event.attributes.title,
     description: stripHTMLFromString(event.attributes.contentblocks[0].content),
-    startDate: new Date(event.attributes.start).getTime(),
-    endDate: new Date(event.attributes.end).getTime(),
-    url: `/activiteiten/${event.id}-${event.attributes.slug}`,
-    categories: event.attributes.categories
+    start: new Date(event.attributes.start).getTime(),
+    end: new Date(event.attributes.end).getTime(),
+    toParams: {eventId: event.id, eventName: event.attributes.slug},
+    categories: event.attributes.categories,
+    timed: true,
 });
 
 

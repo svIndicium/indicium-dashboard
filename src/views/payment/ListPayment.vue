@@ -4,30 +4,67 @@
         <div v-if="paymentsState.isLoading">
             <Loading />
         </div>
-        <div v-else class="table-container">
-            <div class="header">Datum</div>
-            <div class="header">Bedrag</div>
-            <div class="header">Beschrijving</div>
-            <div class="header">Betaalstatus</div>
-            <div class="header">Acties</div>
-            <template v-for="(payment, idx) in paymentsState.payments">
-                <div v-bind:key="'date' + idx">{{$utils.getPrettyDateTime(payment.createdAt)}}</div>
-                <div v-bind:key="'amount' + idx">{{$utils.getPrettyCurrency(payment.amount)}}</div>
-                <div v-bind:key="'description' + idx">{{payment.description}}</div>
-                <div v-bind:key="'status' + idx">{{payment.status}}</div>
-                <div v-bind:key="'actions' + idx"><Button size="m" class="button" @click="() => goToPayment(payment.id)">Go!</Button></div>
+        <v-data-table :headers="table.headers" :items="paymentsState.payments">
+            <template v-slot:item.createdAt="{ item }">
+                {{ $utils.getPrettyDateTime(item.createdAt) }}
             </template>
-        </div>
+            <template v-slot:item.amount="{ item }">
+                {{ $utils.getPrettyCurrency(item.amount) }}
+            </template>
+            <template v-slot:item.status="{ item }">
+                <v-chip :color="getStatusColor(item.status)">
+                    {{ getStatusText(item.status) }}
+                </v-chip>
+            </template>
+        </v-data-table>
     </div>
 </template>
 
 <script>
 export default {
     name: "ListPayment",
+    data: () => ({
+        table: {
+            headers: [
+                {
+                    text: 'Datum',
+                    value: 'createdAt'
+                },
+                {
+                    text: 'Bedrag',
+                    value: 'amount'
+                },
+                {
+                    text: 'Beschrijving',
+                    value: 'description'
+                },
+                {
+                    text: 'Status',
+                    value: 'status'
+                },
+            ]
+        }
+    }),
     methods: {
         async goToPayment(paymentId) {
             await this.$router.push({name: 'paymentView', params: {paymentId}});
-        }
+        },
+        getStatusText(status) {
+            return {
+                OPEN: 'Nog niet betaald',
+                PENDING: 'In afwachting',
+                PAID: 'Betaald',
+                EXPIRED: 'Verlopen'
+            }[status];
+        },
+        getStatusColor(status) {
+            return {
+                OPEN: 'green',
+                PENDING: 'orange',
+                PAID: 'green',
+                EXPIRED: 'red'
+            }[status];
+        },
     },
     computed: {
         paymentsState() {

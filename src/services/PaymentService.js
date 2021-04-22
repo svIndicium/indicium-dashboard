@@ -9,7 +9,8 @@ class PaymentService {
     }
 
     async getPaymentsForMemberId(memberId) {
-        return await this.api.get(`/members/${memberId}/payments`);
+        const response = await this.api.get(`/members/${memberId}/payments`);
+        return response.data;
     }
 
     async getTransactionsForPaymentId(paymentId) {
@@ -18,7 +19,7 @@ class PaymentService {
     }
 
     async createIDealTransactionForPaymentId(paymentId, amount, description, redirectUrl) {
-        const res = await this.$api.post(`/payments/${paymentId}/transactions`, {method: 'ideal', amount, description, redirectUrl: 'https://google.com'});
+        const res = await this.api.post(`/payments/${paymentId}/transactions`, {method: 'ideal', amount, description, redirectUrl});
         return res.data;
     }
 }

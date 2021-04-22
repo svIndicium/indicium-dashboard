@@ -9,10 +9,10 @@ const state = {
 }
 
 const getters = {
-    registrations(state) {
+    getRegistrations(state) {
         return state.registrations;
     },
-    pendingRegistrations(state) {
+    getPendingRegistrations(state) {
         return state.registrations.filter((registration) => registration.reviewStatus === 'PENDING');
     },
     registrationsLength(state) {

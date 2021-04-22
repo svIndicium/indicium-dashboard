@@ -1,30 +1,32 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
-import ListStudyType from './views/member/ListStudyType';
-import CreateStudyType from './views/member/CreateStudyType';
-import ListMember from './views/member/ListMember';
+import ListMember from './views/member/Member';
 import Profile from './views/profile/Profile';
-import ViewProfile from './views/profile/ViewProfile';
-import ViewMailaddresses from './views/profile/ViewMailaddresses';
-import ListRegistrations from './views/member/registration/ListRegistrations';
 import Settings from './views/settings/Settings';
 import SettingsDashboard from './views/settings/SettingsDashboard';
 import SettingsPage from './views/settings/SettingsPage';
 import ViewMember from './views/member/ViewMember';
-import ViewRegistration from './views/member/registration/ViewRegistration';
 import Events from './views/events/Events';
 import AgendaConnection from './views/events/AgendaConnection';
-import CreateEvent from './views/events/CreateEvent';
 import EventDashboard from './views/events/EventDashboard';
 import ViewEvent from './views/events/ViewEvent';
-import CreateUser from "@/views/member/CreateUser";
-import Member from "@/views/member/Member";
 import {isAuthenticated} from "@/auth/authGuard";
-import ViewPayments from "@/views/profile/ViewPayments";
 import Payment from "@/views/payment/Payment";
 import ListPayment from "@/views/payment/ListPayment";
 import ViewPayment from "@/views/payment/ViewPayment";
+import ViewMemberInfo from "@/views/member/ViewMemberInfo";
+import ViewMemberMailAddresses from "@/views/member/ViewMemberMailAddresses";
+import ViewMemberMembership from "@/views/member/ViewMemberMembership";
+import ViewMemberPayments from "@/views/member/ViewMemberPayments";
+import ViewProfilePayments from "@/views/profile/ViewProfilePayments";
+import ViewProfileInfo from "@/views/profile/ViewProfileInfo";
+import ViewProfileMailaddresses from "@/views/profile/ViewProfileMailaddresses";
+import ViewProfileMemberships from "@/views/profile/ViewProfileMemberships";
+import StudyType from "@/views/studyTypes/StudyType";
+import Registration from "@/views/registrations/Registration";
+import ViewRegistration from "@/views/registrations/ViewRegistration";
+import ViewRegistrationInfo from "@/views/registrations/ViewRegistrationInfo";
 
 Vue.use(Router);
 
@@ -34,7 +36,7 @@ export default new Router({
         routes: [
             {
                 path: '/',
-                name: 'home',
+                name: 'Home',
                 component: Home,
                 meta: {
                     title: 'Home',
@@ -43,394 +45,425 @@ export default new Router({
                     ],
                 },
             },
+
             {
-                path: '/leden',
-                component: Member,
+                path: '/profiel',
+                name: 'ProfileView',
+                component: Profile,
                 beforeEnter: isAuthenticated,
                 meta: {
                     breadcrumb: [
                         {
-                            name: 'Dashboard',
-                            routeName: 'dashboard',
+                            text: 'Dashboard',
+                            to: {
+                                name: 'Home'
+                            },
                         },
                         {
-                            name: 'Leden',
+                            text: 'Profiel',
                         },
                     ],
                 },
                 children: [
                     {
-                        path: '',
-                        name: 'memberDashboard',
-                        component: ListMember,
+                        path: 'info',
+                        name: 'ProfileViewInfo',
+                        component: ViewProfileInfo,
                         beforeEnter: isAuthenticated,
                         meta: {
                             breadcrumb: [
                                 {
-                                    name: 'Dashboard',
-                                    routeName: 'dashboard',
+                                    text: 'Dashboard',
+                                    to: {
+                                        name: 'Home'
+                                    },
                                 },
                                 {
-                                    name: 'Leden',
-                                    routeName: 'memberDashboard',
-                                },
-                                {
-                                    name: 'Overzicht'
-                                }
-                            ],
-                        },
-                    },
-                    {
-                        path: 'nieuw',
-                        name: 'memberImport',
-                        component: CreateUser,
-                        beforeEnter: isAuthenticated,
-                        meta: {
-                            breadcrumb: [
-                                {
-                                    name: 'Dashboard',
-                                    routeName: 'dashboard',
-                                },
-                                {
-                                    name: 'Leden',
-                                    routeName: 'memberDashboard',
-                                },
-                                {
-                                    name: 'Nieuw'
-                                }
-                            ],
-                        },
-                    },
-                    {
-                        path: 'aanmeldingen',
-                        name: 'registrationOverview',
-                        component: ListRegistrations,
-                        beforeEnter: isAuthenticated,
-                        meta: {
-                            breadcrumb: [
-                                {
-                                    name: 'Dashboard',
-                                    routeName: 'dashboard',
-                                },
-                                {
-                                    name: 'Leden',
-                                    routeName: 'memberDashboard',
-                                },
-                                {
-                                    name: 'Aanmeldingen',
-                                }
-                            ],
-                        },
-                    },
-                    {
-                        path: 'aanmeldingen/:registrationId',
-                        name: 'registrationView',
-                        component: ViewRegistration,
-                        beforeEnter: isAuthenticated,
-                        meta: {
-                            breadcrumb: [
-                                {
-                                    name: 'Dashboard',
-                                    routeName: 'dashboard',
-                                },
-                                {
-                                    name: 'Leden',
-                                    routeName: 'memberDashboard',
-                                },
-                                {
-                                    name: 'Aanmeldingen',
-                                    routeName: 'registrationOverview'
-                                },
-                                {
-                                    name: 'Aanmelding'
-                                }
-                            ],
-                        }
-                    },
-                    {
-                        path: 'studierichtingen',
-                        name: 'studyTypeOverview',
-                        component: ListStudyType,
-                        beforeEnter: isAuthenticated,
-                        meta: {
-                            breadcrumb: [
-                                {
-                                    name: 'Dashboard',
-                                    routeName: 'dashboard',
-                                },
-                                {
-                                    name: 'Leden',
-                                    routeName: 'memberDashboard',
-                                },
-                                {
-                                    name: 'Studierichtingen',
-                                }
-                            ],
-                        }
-                    },
-                    {
-                        path: 'studierichtingen/nieuw',
-                        name: 'studyTypeCreate',
-                        component: CreateStudyType,
-                        beforeEnter: isAuthenticated,
-                        meta: {
-                            breadcrumb: [
-                                {
-                                    name: 'Dashboard',
-                                    routeName: 'dashboard',
-                                },
-                                {
-                                    name: 'Leden',
-                                    routeName: 'memberDashboard',
-                                },
-                                {
-                                    name: 'Studierichtingen',
-                                    routeName: 'studyTypeOverview',
-                                },
-                                {
-                                    name: 'Nieuw'
-                                }
-                            ],
-                        }
-                    },
-                    {
-                        path: ':memberId',
-                        name: 'memberView',
-                        component: ViewMember,
-                        beforeEnter: isAuthenticated,
-                        meta: {
-                            breadcrumb: [
-                                {
-                                    name: 'Dashboard',
-                                    routeName: 'dashboard',
-                                },
-                                {
-                                    name: 'Leden',
-                                    routeName: 'memberDashboard',
-                                },
-                                {
-                                    name: 'Lid'
-                                }
-                            ],
-                        }
-                    },
-                ]
-            },
-            {
-                path: '/activiteiten',
-                component: Events,
-                meta: {
-                    breadcrumb: [
-                        {
-                            name: 'Dashboard',
-                            routeName: 'dashboard'
-                        },
-                        {
-                            name: 'Activiteiten'
-                        }
-                    ]
-                },
-                children: [
-                    {
-                        path: '',
-                        name: 'eventDashboard',
-                        component: EventDashboard,
-                        meta: {
-                            breadcrumb: [
-                                {
-                                    name: 'Dashboard',
-                                    routeName: 'dashboard'
-                                },
-                                {
-                                    name: 'Activiteiten'
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        path: 'agendakoppeling',
-                        name: 'agendaConnection',
-                        component: AgendaConnection,
-                        meta: {
-                            breadcrumb: [
-                                {
-                                    name: 'Dashboard',
-                                    routeName: 'dashboard'
-                                },
-                                {
-                                    name: 'Activiteiten',
-                                    routeName: 'eventDashboard'
-                                },
-                                {
-                                    name: 'Koppelen met agenda'
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        path: 'nieuw',
-                        name: 'eventCreate',
-                        component: CreateEvent,
-                        beforeEnter: isAuthenticated,
-                        meta: {
-                            breadcrumb: [
-                                {
-                                    name: 'Dashboard',
-                                    routeName: 'dashboard'
-                                },
-                                {
-                                    name: 'Activiteiten',
-                                    routeName: 'eventDashboard'
-                                },
-                                {
-                                    name: 'Nieuwe activiteit'
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        path: ':eventId-:eventName',
-                        name: 'ViewEvent',
-                        component: ViewEvent,
-                        meta: {
-                            breadcrumb: [
-                                {
-                                    name: 'Dashboard',
-                                    routeName: 'dashboard'
-                                },
-                                {
-                                    name: 'Activiteiten',
-                                    routeName: 'eventDashboard'
-                                },
-                                {
-                                    name: 'Activiteit'
-                                }
-                            ]
-                        }
-                    }
-                ]
-
-            },
-            {
-                path: '/betalingen',
-                component: Payment,
-                meta: {
-                    breadcrumb: [
-                        {
-                            name: 'Dashboard',
-                            routeName: 'dashboard'
-                        },
-                        {
-                            name: 'Betalingen'
-                        }
-                    ]
-                },
-                children: [
-                    {
-                        path: '',
-                        name: 'paymentDashboard',
-                        component: ListPayment,
-                        meta: {
-                            breadcrumb: [
-                                {
-                                    name: 'Dashboard',
-                                    routeName: 'dashboard'
-                                },
-                                {
-                                    name: 'Betalingen'
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        path: ':paymentId',
-                        name: 'paymentView',
-                        component: ViewPayment,
-                        meta: {
-                            breadcrumb: [
-                                {
-                                    name: 'Dashboard',
-                                    routeName: 'dashboard'
-                                },
-                                {
-                                    name: 'Betalingen',
-                                    routeName: 'paymentDashboard'
-                                },
-                                {
-                                    name: 'Betaling'
-                                }
-                            ]
-                        }
-                    }
-                ]
-
-            },
-            {
-                path: '/profiel',
-                component: Profile,
-                beforeEnter: isAuthenticated,
-                children: [
-                    {
-                        path: '',
-                        name: 'profile',
-                        component: ViewProfile,
-                        beforeEnter: isAuthenticated,
-                        meta: {
-                            breadcrumb: [
-                                {
-                                    name: 'Dashboard',
-                                    routeName: 'dashboard',
-                                },
-                                {
-                                    name: 'Profiel',
+                                    text: 'Profiel',
                                 },
                             ],
                         },
                     },
                     {
-                        path: 'mailadressen',
-                        name: 'profileMailAddresses',
-                        component: ViewMailaddresses,
+                        path: 'mailaddressen',
+                        name: 'ProfileViewMailAddresses',
+                        component: ViewProfileMailaddresses,
                         beforeEnter: isAuthenticated,
                         meta: {
                             breadcrumb: [
                                 {
-                                    name: 'Dashboard',
-                                    routeName: 'dashboard',
+                                    text: 'Dashboard',
+                                    to: {
+                                        name: 'Home'
+                                    },
                                 },
                                 {
-                                    name: 'Profiel',
-                                    routeName: 'profile'
-                                },
-                                {
-                                    name: 'Mailadressen',
+                                    text: 'Profiel',
                                 },
                             ],
                         },
                     },
                     {
                         path: 'betalingen',
-                        name: 'profilePayments',
-                        component: ViewPayments,
+                        name: 'ProfileViewPayments',
+                        component: ViewProfilePayments,
                         beforeEnter: isAuthenticated,
                         meta: {
                             breadcrumb: [
                                 {
-                                    name: 'Dashboard',
-                                    routeName: 'dashboard',
+                                    text: 'Dashboard',
+                                    to: {
+                                        name: 'Home'
+                                    },
                                 },
                                 {
-                                    name: 'Profiel',
-                                    routeName: 'profile'
+                                    text: 'Profiel',
+                                },
+                            ],
+                        },
+                    },
+                    {
+                        path: 'lidmaatschappen',
+                        name: 'ProfileViewMemberships',
+                        component: ViewProfileMemberships,
+                        beforeEnter: isAuthenticated,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    text: 'Dashboard',
+                                    to: {
+                                        name: 'Home'
+                                    },
                                 },
                                 {
-                                    name: 'Betalingen',
+                                    text: 'Profiel',
                                 },
                             ],
                         },
                     },
                 ]
             },
+
+            {
+                path: '/leden',
+                name: 'MemberDashboard',
+                component: ListMember,
+                beforeEnter: isAuthenticated,
+                meta: {
+                    breadcrumb: [
+                        {
+                            text: 'Dashboard',
+                            to: {
+                                name: 'Home'
+                            },
+                        },
+                        {
+                            text: 'Leden'
+                        },
+                    ],
+                },
+            },
+            {
+                path: '/leden/:memberId',
+                name: 'MemberView',
+                component: ViewMember,
+                beforeEnter: isAuthenticated,
+                meta: {
+                    breadcrumb: [
+                        {
+                            text: 'Dashboard',
+                            to: {
+                                name: 'Home'
+                            },
+                        },
+                        {
+                            text: 'Leden',
+                            to: {
+                                name: 'MemberDashboard'
+                            },
+                        },
+                        {
+                            text: 'Lid',
+                        }
+                    ],
+                },
+                children: [
+                    {
+                        path: 'info',
+                        name: 'MemberViewInfo',
+                        component: ViewMemberInfo,
+                        beforeEnter: isAuthenticated,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    text: 'Dashboard',
+                                    to: {
+                                        name: 'Home'
+                                    },
+                                },
+                                {
+                                    text: 'Leden',
+                                    to: {
+                                        name: 'MemberDashboard'
+                                    },
+                                },
+                                {
+                                    text: 'Lid',
+                                }
+                            ],
+                        },
+                    },
+                    {
+                        path: 'mail',
+                        name: 'MemberViewMailAddresses',
+                        component: ViewMemberMailAddresses,
+                        beforeEnter: isAuthenticated,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    text: 'Dashboard',
+                                    to: {
+                                        name: 'Home'
+                                    },
+                                },
+                                {
+                                    text: 'Leden',
+                                    to: {
+                                        name: 'MemberDashboard'
+                                    },
+                                },
+                                {
+                                    text: 'Lid',
+                                }
+                            ],
+                        },
+                    },
+                    {
+                        path: 'lidmaatschap',
+                        name: 'MemberViewMembership',
+                        component: ViewMemberMembership,
+                        beforeEnter: isAuthenticated,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    text: 'Dashboard',
+                                    to: {
+                                        name: 'Home'
+                                    },
+                                },
+                                {
+                                    text: 'Leden',
+                                    to: {
+                                        name: 'MemberDashboard'
+                                    },
+                                },
+                                {
+                                    text: 'Lid',
+                                }
+                            ],
+                        },
+                    },
+                    {
+                        path: 'betalingen',
+                        name: 'MemberViewPayments',
+                        component: ViewMemberPayments,
+                        beforeEnter: isAuthenticated,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    text: 'Dashboard',
+                                    to: {
+                                        name: 'Home'
+                                    },
+                                },
+                                {
+                                    text: 'Leden',
+                                    to: {
+                                        name: 'MemberDashboard'
+                                    },
+                                },
+                                {
+                                    text: 'Lid',
+                                }
+                            ],
+                        },
+                    },
+                ]
+            },
+
+            {
+                path: '/aanmeldingen',
+                name: 'RegistrationDashboard',
+                component: Registration,
+                beforeEnter: isAuthenticated,
+                meta: {
+                    breadcrumb: [
+                        {
+                            text: 'Dashboard',
+                            to: {
+                                name: 'Home'
+                            },
+                        },
+                        {
+                            text: 'Aanmeldingen'
+                        },
+                    ],
+                },
+            },
+            {
+                path: '/aanmeldingen/:registrationId',
+                name: 'RegistrationView',
+                component: ViewRegistration,
+                beforeEnter: isAuthenticated,
+                meta: {
+                    breadcrumb: [
+                        {
+                            text: 'Dashboard',
+                            to: {
+                                name: 'Home'
+                            },
+                        },
+                        {
+                            text: 'Aanmeldingen',
+                            to: {
+                                name: 'RegistrationDashboard'
+                            },
+                        },
+                        {
+                            text: 'Aanmelding'
+                        },
+                    ],
+                },
+                children: [
+                    {
+                        path: 'info',
+                        name: 'RegistrationViewInfo',
+                        component: ViewRegistrationInfo,
+                        beforeEnter: isAuthenticated,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    text: 'Dashboard',
+                                    to: {
+                                        name: 'Home'
+                                    },
+                                },
+                                {
+                                    text: 'Aanmeldingen',
+                                    to: {
+                                        name: 'RegistrationDashboard'
+                                    },
+                                },
+                                {
+                                    text: 'Aanmelding'
+                                },
+                            ],
+                        },
+                    },
+                ]
+            },
+
+            {
+                path: '/studierichtingen',
+                name: 'StudyTypeDashboard',
+                component: StudyType,
+                beforeEnter: isAuthenticated,
+                meta: {
+                    breadcrumb: [
+                        {
+                            text: 'Dashboard',
+                            to: {
+                                name: 'Home'
+                            },
+                        },
+                        {
+                            text: 'Studierichtingen'
+                        },
+                    ],
+                }
+            },
+
+            {
+                path: '/activiteiten',
+                name: 'EventDashboard',
+                component: Events,
+                meta: {
+                    breadcrumb: [
+                        {
+                            text: 'Dashboard',
+                            to: {
+                                name: 'Home'
+                            },
+                        },
+                        {
+                            text: 'Activiteiten',
+                        },
+                    ],
+                },
+            },
+            {
+                path: '/activiteiten/:eventId-:eventName',
+                name: 'EventView',
+                component: ViewEvent,
+                meta: {
+                    breadcrumb: [
+                        {
+                            text: 'Dashboard',
+                            to: {
+                                name: 'Home'
+                            },
+                        },
+                        {
+                            text: 'Activiteiten',
+                            to: {
+                                name: 'EventDashboard'
+                            },
+                        },
+                        {
+                            text: 'Activiteit',
+                        },
+                    ]
+                }
+            },
+
+            {
+                path: '/activiteiten/agendakoppeling',
+                name: 'AgendaConnection',
+                component: AgendaConnection,
+                meta: {
+                    breadcrumb: [
+                        {
+                            text: 'Dashboard',
+                            to: {
+                                name: 'Home'
+                            },
+                        },
+                        {
+                            text: 'Agenda koppeling'
+                        },
+                    ],
+                }
+            },
+
+            {
+                path: '/betalingen',
+                component: Payment,
+                name: 'PaymentDashboard',
+                meta: {
+                    breadcrumb: [
+                        {
+                            text: 'Dashboard',
+                            to: {
+                                name: 'Home'
+                            },
+                        },
+                        {
+                            text: 'Betalingen'
+                        },
+                    ],
+                },
+            },
+
             {
                 path: '/instellingen',
                 component: Settings,

@@ -14,6 +14,9 @@ const getters = {
     },
     studyTypesLength(state) {
         return state.studyTypesLength;
+    },
+    studyTypeById: (state) => (studyTypeId) => {
+        return state.studyTypes.find((studyType) => studyType.id === studyTypeId);
     }
 }
 

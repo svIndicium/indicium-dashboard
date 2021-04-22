@@ -53,7 +53,24 @@ utils.install = function (Vue) {
             }
             return `${name.firstName} ${name.lastName}`;
         },
-
+        getFullLastName(name) {
+            if (name.middleName) {
+                return `${name.middleName} ${name.lastName}`;
+            }
+            return `${name.lastName}`;
+        },
+        getAge(dateOfBirth) {
+            const ageDifMs = Date.now() - dateOfBirth.getTime();
+            const ageDate = new Date(ageDifMs);
+            return Math.abs(ageDate.getUTCFullYear() - 1970);
+        },
+        getWhatsappLink(phoneNumber) {
+            if (phoneNumber === undefined) return "";
+            return `https://wa.me/${phoneNumber.replace("+", "")}`;
+        },
+        getMailLink(mailAddress) {
+            return `mailto:${mailAddress}`;
+        }
     };
 };
 
