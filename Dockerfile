@@ -4,6 +4,7 @@ FROM node:alpine AS base
 COPY . .
 # Build project
 ARG MODE=production
+RUN npm install
 RUN npm run build-$MODE
 
 # ---- Prod ----
