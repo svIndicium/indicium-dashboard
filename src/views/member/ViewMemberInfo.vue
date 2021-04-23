@@ -11,10 +11,10 @@
                     <v-checkbox v-model="receivesNewsletter" label="Ontvangt nieuwsbrief" disabled></v-checkbox>
                 </v-card-text>
                 <v-card-actions>
-                    <v-btn icon>
+                    <v-btn icon :href="whatsAppLink" target="_blank">
                         <v-icon>mdi-whatsapp</v-icon>
                     </v-btn>
-                    <v-btn icon>
+                    <v-btn icon :href="mailtoLink" target="_blank">
                         <v-icon>mdi-email</v-icon>
                     </v-btn>
                 </v-card-actions>
@@ -73,7 +73,7 @@ export default {
             return "";
         },
         whatsAppLink() {
-            return this.$utils.getWhatsappLink(this.member.phoneNumber);
+            return this.$utils.getWhatsappLink(this.member.memberDetails.phoneNumber);
         },
         receivesNewsletter() {
             if (this.mailAddresses.length === 0) return false;
