@@ -31,7 +31,7 @@
             </v-col>
             <v-col>
                 <v-card>
-                    <v-card-title>Transacties</v-card-title>
+                    <v-card-title>Transacties <ViewPaymentAddTransactionModal :open-amount="payment.openAmount" :payment-id="payment.id"></ViewPaymentAddTransactionModal></v-card-title>
                     <v-data-table :headers="transactionTable.headers" :items="transactions">
                         <template v-slot:[`item.createdAt`]="{ item }">
                             {{ $utils.getPrettyDateTime(item.createdAt) }}
@@ -54,10 +54,12 @@
 <script>
 import {MemberService, PaymentService} from "@/services";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import ViewPaymentAddTransactionModal from "@/views/payment/ViewPaymentAddTransactionModal";
 
 export default {
     name: "ViewPayment",
     components: {
+        ViewPaymentAddTransactionModal,
         Breadcrumbs,
     },
     data: () => ({
@@ -128,46 +130,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-@import "src/assets/scss/table";
-@import "src/assets/scss/error";
-.table-container {
-    @extend .table-container;
-    max-width: 100%;
-    grid-template-columns: 1fr 0.5fr 1fr 1fr 1fr;
-}
-
-.section {
-    max-width: 600px;
-
-    .section-header {
-        margin-top: 24px;
-        font-weight: 300;
-        font-size: 16px;
-        text-transform: uppercase;
-    }
-
-    .section-entry {
-        padding-top: 8px;
-        font-size: 20px;
-        display: flex;
-        justify-content: space-between;
-        .key {
-        }
-
-        .value {
-            font-weight: 300;
-        }
-
-        .error {
-            color: red;
-        }
-    }
-
-    .action-buttons {
-        display: flex;
-        justify-content: flex-end;
-    }
-
-}
 </style>

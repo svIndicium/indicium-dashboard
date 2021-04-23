@@ -27,6 +27,11 @@ class PaymentService {
         const res = await this.api.post(`/payments/${paymentId}/transactions`, {method: 'ideal', amount, description, redirectUrl});
         return res.data;
     }
+
+    async addCashTransactionForPaymentId(paymentId, amount) {
+        const res = await this.api.post(`/payments/${paymentId}/transactions`, {method: 'cash', amount});
+        return res.data;
+    }
 }
 
 export default new PaymentService();
