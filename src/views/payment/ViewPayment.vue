@@ -1,64 +1,127 @@
 <template>
-    <div>
-        <div v-if="loading">
-            <Loading />
-        </div>
-        <div v-else>
-            <h2>{{ payment.description }}</h2>
-            <StatusLabel status="success">{{payment.status}}</StatusLabel>
-            <div class="section">
-                <div class="section-entry">
-                    <p class="key">Totaalbedrag</p>
-                    <p class="value">{{$utils.getPrettyCurrency(payment.amount)}}</p>
-                </div>
-                <div class="section-entry">
-                    <p class="key">Aangemaakt op</p>
-                    <p class="value">{{$utils.getPrettyDateTime(payment.createdAt)}}</p>
-                </div>
-                <div class="section-entry" v-if="member">
-                    <p class="key">Behoort tot</p>
-                    <p class="value">{{$utils.getFullName(member.memberDetails.name)}}</p>
-                </div>
-            </div>
-            <TransactionCard v-for="(transaction, idx) in transactions" :key="idx" :transaction="transaction"></TransactionCard>
-        </div>
-    </div>
+    <v-container>
+        <v-row>
+            <v-col>
+                <v-card>
+                    <Breadcrumbs />
+                </v-card>
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col>
+                <v-card>
+                    <v-card-title>{{payment.description}}</v-card-title>
+                    <v-card-text>
+                        Status: {{getStatusText(payment.status)}}
+                    </v-card-text>
+                </v-card>
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col>
+                <v-card>
+                    <v-card-title>Betalingsinformatie</v-card-title>
+                    <v-card-text>
+                        <v-text-field :value="this.$utils.getFullName(this.member.memberDetails.name)" label="Lid" disabled></v-text-field>
+                        <v-text-field :value="this.$utils.getPrettyDateTime(this.payment.createdAt)" label="Aangemaakt op" disabled></v-text-field>
+                        <v-text-field :value="this.$utils.getPrettyCurrency(this.payment.amount)" label="Bedrag" disabled></v-text-field>
+                        <v-text-field :value="this.$utils.getPrettyCurrency(this.payment.openAmount)" label="Nog te voldoen" disabled v-if="payment.openAmount !== 0"></v-text-field>
+                    </v-card-text>
+                </v-card>
+            </v-col>
+            <v-col>
+                <v-card>
+                    <v-card-title>Transacties</v-card-title>
+                    <v-data-table :headers="transactionTable.headers" :items="transactions">
+                        <template v-slot:[`item.createdAt`]="{ item }">
+                            {{ $utils.getPrettyDateTime(item.createdAt) }}
+                        </template>
+                        <template v-slot:[`item.amount`]="{ item }">
+                            {{ $utils.getPrettyCurrency(item.amount) }}
+                        </template>
+                        <template v-slot:[`item.status`]="{ item }">
+                            <v-chip :color="getStatusColor(item.status)">
+                                {{ getStatusText(item.status) }}
+                            </v-chip>
+                        </template>
+                    </v-data-table>
+                </v-card>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
 <script>
 import {MemberService, PaymentService} from "@/services";
-import StatusLabel from "@/components/StatusLabel";
-import TransactionCard from "@/components/TransactionCard";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default {
     name: "ViewPayment",
     components: {
-        TransactionCard,
-        StatusLabel,
+        Breadcrumbs,
     },
     data: () => ({
-        loading: true,
+        paymentId: null,
         payment: null,
         member: null,
-        transactions: null,
+        transactions: [],
+        transactionTable: {
+            headers: [
+                {
+                    text: 'Datum',
+                    value: 'createdAt'
+                },
+                {
+                    text: 'Bedrag',
+                    value: 'amount'
+                },
+                {
+                    text: 'Methode',
+                    value: 'paymentProvider'
+                },
+                {
+                    text: 'Status',
+                    value: 'status'
+                },
+            ]
+        }
     }),
     async mounted() {
-        this.getPayment();
+        this.paymentId = this.$route.params.paymentId;
+        await this.getPayment();
         await this.getTransactions();
         await this.getMember();
     },
     methods: {
-        getPayment() {
-            const paymentId = this.$route.params.paymentId;
-            this.payment = this.$store.getters.getPaymentById(paymentId);
-            this.loading = false;
+        async getPayment() {
+            this.payment = await PaymentService.getPaymentByPaymentId(this.paymentId);
         },
         async getTransactions() {
-            const paymentId = this.$route.params.paymentId;
-            this.transactions = await PaymentService.getTransactionsForPaymentId(paymentId);
+            this.transactions = await PaymentService.getTransactionsForPaymentId(this.paymentId);
         },
         async getMember() {
             this.member = await MemberService.getMemberById(this.payment.memberId);
+        },
+        getStatusText(status) {
+            return {
+                OPEN: 'Nog niet betaald',
+                PENDING: 'In afwachting',
+                PAID: 'Betaald',
+                EXPIRED: 'Verlopen',
+                FAILED: 'Mislukt'
+            }[status];
+        },
+        getStatusColor(status) {
+            return {
+                OPEN: 'green',
+                PENDING: 'orange',
+                PAID: 'green',
+                EXPIRED: 'red',
+                FAILED: 'red'
+            }[status];
+        },
+        async goToMember() {
+            await this.$router.push({name: 'MemberView', params: {memberId: this.member.id}});
         }
     }
 }

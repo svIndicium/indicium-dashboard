@@ -465,6 +465,31 @@ export default new Router({
             },
 
             {
+                path: '/betalingen/:paymentId',
+                component: ViewPayment,
+                name: 'PaymentView',
+                meta: {
+                    breadcrumb: [
+                        {
+                            text: 'Dashboard',
+                            to: {
+                                name: 'Home'
+                            },
+                        },
+                        {
+                            text: 'Betalingen',
+                            to: {
+                                name: 'PaymentDashboard'
+                            },
+                        },
+                        {
+                            text: 'Betaling'
+                        },
+                    ],
+                },
+            },
+
+            {
                 path: '/instellingen',
                 component: Settings,
                 beforeEnter: isAuthenticated,

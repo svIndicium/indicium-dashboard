@@ -13,6 +13,11 @@ class PaymentService {
         return response.data;
     }
 
+    async getPaymentByPaymentId(paymentId) {
+        const response = await this.api.get(`/payments/${paymentId}`);
+        return response.data;
+    }
+
     async getTransactionsForPaymentId(paymentId) {
         const response = await this.api.get(`/payments/${paymentId}/transactions`);
         return response.data;
