@@ -5,7 +5,7 @@
         v-model="open"
     >
         <template v-slot:prepend v-if="isAuthenticated">
-            <v-list-item two-line :to="{name: 'ProfileView'}">
+            <v-list-item two-line :to="{name: 'ProfileViewInfo'}">
                 <v-list-item-avatar>
                     <v-icon>mdi-account</v-icon>
                 </v-list-item-avatar>
