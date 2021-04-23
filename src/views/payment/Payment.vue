@@ -14,13 +14,13 @@
                         Betalingen
                     </v-card-title>
                     <v-data-table :headers="table.headers" :items="payments">
-                        <template v-slot:item.createdAt="{ item }">
+                        <template v-slot:[`item.createdAt`]="{ item }">
                             {{ $utils.getPrettyDateTime(item.createdAt) }}
                         </template>
-                        <template v-slot:item.amount="{ item }">
+                        <template v-slot:[`item.amount`]="{ item }">
                             {{ $utils.getPrettyCurrency(item.amount) }}
                         </template>
-                        <template v-slot:item.status="{ item }">
+                        <template v-slot:[`item.status`]="{ item }">
                             <v-chip :color="getStatusColor(item.status)">
                                 {{ getStatusText(item.status) }}
                             </v-chip>

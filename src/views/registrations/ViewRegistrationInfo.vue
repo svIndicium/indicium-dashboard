@@ -7,8 +7,8 @@
             <v-card>
                 <v-card-title>Contactinformatie</v-card-title>
                 <v-card-text>
-                    <v-text-field v-model="registration.memberDetails.phoneNumber" label="Telefoonnummer" disabled></v-text-field>
-                    <v-text-field v-model="registration.mailAddress" label="Primaire emailadres" disabled></v-text-field>
+                    <v-text-field :value="registration.memberDetails.phoneNumber" label="Telefoonnummer" disabled></v-text-field>
+                    <v-text-field :value="registration.mailAddress" label="Primaire emailadres" disabled></v-text-field>
                     <v-checkbox v-model="receivesNewsletter" label="Ontvangt nieuwsbrief" disabled></v-checkbox>
                 </v-card-text>
                 <v-card-actions>

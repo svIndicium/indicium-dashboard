@@ -14,24 +14,24 @@
                         Ledenoverzicht
                     </v-card-title>
                     <v-data-table :headers="table.headers" :items="members">
-                        <template v-slot:item.createdAt="{ item }">
+                        <template v-slot:[`item.createdAt`]="{ item }">
                             {{ $utils.getPrettyDateTime(item.memberDetails.createdAt) }}
                         </template>
-                        <template v-slot:item.memberDetails.dateOfBirth="{ item }">
+                        <template v-slot:[`item.memberDetails.dateOfBirth`]="{ item }">
                             {{ $utils.getPrettyDate(item.memberDetails.dateOfBirth) }}
                         </template>
-                        <template v-slot:item.lastName="{ item }">
+                        <template v-slot:[`item.lastName`]="{ item }">
                             {{ $utils.getFullLastName(item.memberDetails.name) }}
                         </template>
-                        <template v-slot:item.studyType="{ item }">
+                        <template v-slot:[`item.studyType`]="{ item }">
                             {{ getStudyTypeById(item.memberDetails.studyTypeId).name }}
                         </template>
-                        <template v-slot:item.status="">
+                        <template v-slot:[`item.status`]="">
                             <v-chip color="success">
                                 Actief
                             </v-chip>
                         </template>
-                        <template v-slot:item.actions="{ item }">
+                        <template v-slot:[`item.actions`]="{ item }">
                             <v-btn icon :to="{name: 'MemberViewInfo', params: {memberId: item.id}}"><v-icon>mdi-pencil</v-icon></v-btn>
                         </template>
                     </v-data-table>

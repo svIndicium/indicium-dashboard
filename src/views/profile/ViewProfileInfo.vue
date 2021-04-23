@@ -6,9 +6,9 @@
             <v-card>
                 <v-card-title>Contactinformatie</v-card-title>
                 <v-card-text>
-                    <v-text-field v-model="member.memberDetails.phoneNumber" label="Telefoonnummer" disabled></v-text-field>
-                    <v-text-field v-model="mailAddresses[0].address" label="Primaire emailadres" disabled></v-text-field>
-                    <v-checkbox v-model="receivesNewsletter" label="Ontvangt nieuwsbrief" disabled></v-checkbox>
+                    <v-text-field :value="member.memberDetails.phoneNumber" label="Telefoonnummer" disabled></v-text-field>
+                    <v-text-field :value="mailAddresses[0].address" label="Primaire emailadres" disabled></v-text-field>
+                    <v-checkbox :value="receivesNewsletter" label="Ontvangt nieuwsbrief" disabled></v-checkbox>
                 </v-card-text>
             </v-card>
         </v-col>
@@ -68,9 +68,6 @@ export default {
         await this.requestData();
     },
     computed: {
-        tokenData() {
-            return this.$store.state.user.idTokenParsed;
-        },
         member() {
             return this.$store.state.user.member;
         },
@@ -102,6 +99,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "src/assets/scss/profile";
-@import "src/assets/scss/error";
 </style>

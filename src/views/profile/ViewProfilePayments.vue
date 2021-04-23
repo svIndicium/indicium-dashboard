@@ -13,16 +13,16 @@
                     show-expand
                     single-expand
                 >
-                    <template v-slot:item.createdAt="{ item }">
+                    <template v-slot:[`item.createdAt`]="{ item }">
                         {{ $utils.getPrettyDateTime(item.createdAt) }}
                     </template>
-                    <template v-slot:item.amount="{ item }">
+                    <template v-slot:[`item.amount`]="{ item }">
                         {{ $utils.getPrettyCurrency(item.amount) }}
                     </template>
-                    <template v-slot:item.openAmount="{ item }">
+                    <template v-slot:[`item.openAmount`]="{ item }">
                         {{ $utils.getPrettyCurrency(item.openAmount) }}
                     </template>
-                    <template v-slot:item.status="{ item }">
+                    <template v-slot:[`item.status`]="{ item }">
                         <v-chip :color="getStatusColor(item.status)">
                             {{ getStatusText(item.status) }}
                         </v-chip>
@@ -167,11 +167,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "src/assets/scss/table";
-@import "src/assets/scss/error";
-.table-container {
-    @extend .table-container;
-    max-width: 100%;
-    grid-template-columns: 1fr 0.5fr 1fr 1fr 1fr 1fr;
-}
 </style>

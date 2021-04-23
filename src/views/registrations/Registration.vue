@@ -16,24 +16,24 @@
                         <v-switch label="Alleen afwachtend" v-model="onlyShowFinished"></v-switch>
                     </v-card-title>
                     <v-data-table :headers="table.headers" :items="getRegistrations">
-                        <template v-slot:item.createdAt="{ item }">
+                        <template v-slot:[`item.createdAt`]="{ item }">
                             {{ $utils.getPrettyDateTime(item.memberDetails.createdAt) }}
                         </template>
-                        <template v-slot:item.memberDetails.dateOfBirth="{ item }">
+                        <template v-slot:[`item.memberDetails.dateOfBirth`]="{ item }">
                             {{ $utils.getPrettyDate(item.memberDetails.dateOfBirth) }}
                         </template>
-                        <template v-slot:item.memberDetails.createdAt="{ item }">
+                        <template v-slot:[`item.memberDetails.createdAt`]="{ item }">
                             {{ $utils.getPrettyDateTime(item.memberDetails.createdAt) }}
                         </template>
-                        <template v-slot:item.lastName="{ item }">
+                        <template v-slot:[`item.lastName`]="{ item }">
                             {{ $utils.getFullLastName(item.memberDetails.name) }}
                         </template>
-                        <template v-slot:item.status="{ item }">
+                        <template v-slot:[`item.status`]="{ item }">
                             <v-chip :color="getStatusColor(item)">
                                 {{ getStatusText(item) }}
                             </v-chip>
                         </template>
-                        <template v-slot:item.actions="{ item }">
+                        <template v-slot:[`item.actions`]="{ item }">
                             <v-btn @click="() => viewRegistration(item.id)" icon>
                                 <v-icon>mdi-eye</v-icon>
                             </v-btn>

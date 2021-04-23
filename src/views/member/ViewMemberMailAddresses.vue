@@ -6,8 +6,8 @@
             <v-card>
                 <v-card-title>Mailadres</v-card-title>
                 <v-card-text>
-                    <v-text-field v-model="mailAddresses[0].address" label="Primaire emailadres" disabled></v-text-field>
-                    <v-checkbox v-model="mailAddresses[0].receivesNewsletter" label="Ontvangt nieuwsbrief" disabled></v-checkbox>
+                    <v-text-field :value="mailAddresses[0].address" label="Primaire emailadres" disabled></v-text-field>
+                    <v-checkbox :value="mailAddresses[0].receivesNewsletter" label="Ontvangt nieuwsbrief" disabled></v-checkbox>
                 </v-card-text>
             </v-card>
         </v-col>
