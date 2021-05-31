@@ -1,4 +1,10 @@
-import {MailAddressService, MemberService, PaymentService, StudyTypeService} from "@/services";
+import {
+    MailAddressService,
+    MemberService,
+    MembershipService,
+    PaymentService,
+    StudyTypeService
+} from "@/services";
 import {
     FETCH_MEMBERS,
     FETCH_PROFILE,
@@ -8,7 +14,11 @@ import {
 } from "@/store/actions";
 import {
     INIT_KEYCLOAK,
-    STORE_PROFILE, STORE_PROFILE_MAIL_ADDRESS, STORE_PROFILE_PAYMENTS, STORE_PROFILE_STUDY_TYPE,
+    STORE_PROFILE,
+    STORE_PROFILE_MAIL_ADDRESS,
+    STORE_PROFILE_MEMBERSHIPS,
+    STORE_PROFILE_PAYMENTS,
+    STORE_PROFILE_STUDY_TYPE,
     STORE_STUDY_TYPES,
     UPDATE_TOKEN,
     USER_LOGOUT
@@ -29,6 +39,7 @@ const state = {
     studyTypeIsLoading: true,
     mailAddressIsLoading: true,
     paymentIsLoading: true,
+    membershipIsLoading: true,
 }
 
 const getters = {
@@ -61,6 +72,8 @@ const actions = {
         commit(STORE_PROFILE_MAIL_ADDRESS, mailAddressResponse);
         const paymentResponse = await PaymentService.getPaymentsForMemberId(state.userId);
         commit(STORE_PROFILE_PAYMENTS, paymentResponse);
+        const membershipResponse = await MembershipService.getMembershipsByMemberId(state.userId);
+        commit(STORE_PROFILE_MEMBERSHIPS, membershipResponse);
     },
 }
 
@@ -115,8 +128,15 @@ const mutations = {
         payments.sort((a, b) => {
             return new Date(b.createdAt) - new Date(a.createdAt);
         });
-        state.member = {...state.member, payments: payments};
+        state.member = {...state.member, payments};
         state.paymentIsLoading = false;
+    },
+    [STORE_PROFILE_MEMBERSHIPS](state, memberships) {
+        memberships.sort((a, b) => {
+            return new Date(b.start) - new Date(a.start);
+        });
+        state.member = {...state.member, memberships};
+        state.membershipIsLoading = false;
     },
 }
 

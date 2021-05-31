@@ -15,3 +15,4 @@ export const STORE_PROFILE = 'storeProfile';
 export const STORE_PROFILE_STUDY_TYPE = 'storeProfileStudyType';
 export const STORE_PROFILE_MAIL_ADDRESS = 'storeProfileMailAddress';
 export const STORE_PROFILE_PAYMENTS = 'storeProfilePayments';
+export const STORE_PROFILE_MEMBERSHIPS = 'storeProfileMemberships';

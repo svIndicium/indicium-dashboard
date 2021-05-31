@@ -36,13 +36,13 @@
                 </v-card>
             </v-col>
         </v-row>
-        <router-view :memberId="memberId" :member="member" :studyType="studyType" :mailAddresses="mailAddresses" :payments="payments"></router-view>
+        <router-view :memberId="memberId" :member="member" :studyType="studyType" :mailAddresses="mailAddresses" :payments="payments" :memberships="memberships"></router-view>
     </v-container>
 </template>
 
 <script>
 import Breadcrumbs from "@/components/Breadcrumbs";
-import {MailAddressService, MemberService, PaymentService, StudyTypeService} from "@/services";
+import {MailAddressService, MemberService, MembershipService, PaymentService, StudyTypeService} from "@/services";
 
 export default {
     name: 'ViewMember',
@@ -53,6 +53,7 @@ export default {
         studyType: {},
         mailAddresses: [],
         payments: [],
+        memberships: [],
     }),
     methods: {
         async getMemberData() {
@@ -60,6 +61,7 @@ export default {
             this.studyType = await StudyTypeService.getStudyTypeById(this.member.memberDetails.studyTypeId);
             this.mailAddresses = await MailAddressService.getMailAddressesByMemberId(this.memberId);
             this.payments = await PaymentService.getPaymentsForMemberId(this.memberId);
+            this.memberships = await MembershipService.getMembershipsByMemberId(this.memberId);
         },
     },
     async created() {

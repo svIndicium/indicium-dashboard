@@ -4,6 +4,7 @@ import RegistrationService from "./RegistrationService";
 import EventService from "./EventService";
 import MailAddressService from "./MailAddressService";
 import PaymentService from "./PaymentService";
+import MembershipService from "./MembershipService";
 
 export {
     MemberService,
@@ -11,6 +12,7 @@ export {
     StudyTypeService,
     RegistrationService,
     EventService,
-    PaymentService
+    PaymentService,
+    MembershipService
 };
 
