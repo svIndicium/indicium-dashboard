@@ -13,7 +13,7 @@ import {
     UPDATE_TOKEN,
     USER_LOGOUT
 } from "@/store/mutations";
-import Vue from 'vue';
+import keycloak from '@/auth/keycloak';
 
 const state = {
     isAuthenticated: false,
@@ -47,7 +47,7 @@ const getters = {
 const actions = {
     async [LOGOUT]({commit}) {
         commit(USER_LOGOUT);
-        await Vue.$keycloak.logout();
+        await keycloak.logout();
     },
     [REFRESH_TOKEN]({commit}, keycloak) {
         commit(UPDATE_TOKEN, keycloak);
