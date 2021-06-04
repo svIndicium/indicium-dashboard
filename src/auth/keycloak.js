@@ -3,7 +3,7 @@ import Keycloak from "keycloak-js";
 const realm = {
     production: 'indicium',
     testing: 'devindicium',
-    development: 'indicium',
+    development: 'devindicium',
 }[process.env.NODE_ENV || 'testing']
 
 let initOptions = {

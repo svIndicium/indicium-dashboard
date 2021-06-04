@@ -39,10 +39,16 @@
                         <template v-slot:[`item.amount`]="{ item }">
                             {{ $utils.getPrettyCurrency(item.amount) }}
                         </template>
+                        <template v-slot:[`item.type`]="{ item }">
+                            {{ getPaymentMethod(item.type) }}
+                        </template>
                         <template v-slot:[`item.status`]="{ item }">
                             <v-chip :color="getStatusColor(item.status)">
                                 {{ getStatusText(item.status) }}
                             </v-chip>
+                        </template>
+                        <template v-slot:[`item.actions`]="{ item }">
+                            <FinishTransferTransactionModal :transaction="item" :member="member" :payment="payment" v-if="item.type === 'TRANSFER' && item.status === 'PENDING'"></FinishTransferTransactionModal>
                         </template>
                     </v-data-table>
                 </v-card>
@@ -55,10 +61,12 @@
 import {MemberService, PaymentService} from "@/services";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ViewPaymentAddTransactionModal from "@/views/payment/ViewPaymentAddTransactionModal";
+import FinishTransferTransactionModal from "@/views/payment/FinishTransferTransactionModal";
 
 export default {
     name: "ViewPayment",
     components: {
+        FinishTransferTransactionModal,
         ViewPaymentAddTransactionModal,
         Breadcrumbs,
     },
@@ -79,11 +87,15 @@ export default {
                 },
                 {
                     text: 'Methode',
-                    value: 'paymentProvider'
+                    value: 'type'
                 },
                 {
                     text: 'Status',
                     value: 'status'
+                },
+                {
+                    text: 'Acties',
+                    value: 'actions'
                 },
             ]
         }
@@ -121,6 +133,13 @@ export default {
                 EXPIRED: 'red',
                 FAILED: 'red'
             }[status];
+        },
+        getPaymentMethod(method) {
+            return {
+                CASH: 'Cash',
+                TRANSFER: 'Overboeking',
+                IDEAL: 'Mollie'
+            }[method];
         },
         async goToMember() {
             await this.$router.push({name: 'MemberView', params: {memberId: this.member.id}});

@@ -8,6 +8,10 @@ class PaymentService {
         return await this.api.get("/payments");
     }
 
+    async getPaymentsWithOpenTransferTransactions() {
+        return await this.api.get("/payments/transfer");
+    }
+
     async getPaymentsForMemberId(memberId) {
         const response = await this.api.get(`/members/${memberId}/payments`);
         return response.data;
@@ -28,8 +32,13 @@ class PaymentService {
         return res.data;
     }
 
-    async addCashTransactionForPaymentId(paymentId, amount) {
-        const res = await this.api.post(`/payments/${paymentId}/transactions`, {method: 'cash', amount});
+    async addTransactionForPayment(paymentId, method, amount) {
+        const res = await this.api.post(`/payments/${paymentId}/transactions`, {method, amount});
+        return res.data;
+    }
+
+    async confirmTransferTransaction(paymentId, transactionId, transactionDetails) {
+        const res = await this.api.put(`/payments/${paymentId}/transactions/${transactionId}/details`, {paid: transactionDetails.paid, transferredAt: transactionDetails.transferredAt, transactionStatus: "PAID", description: transactionDetails.description});
         return res.data;
     }
 }

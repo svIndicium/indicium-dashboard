@@ -37,6 +37,7 @@
                                         <v-text-field :value="$utils.getPrettyCurrency(item.openAmount)" label="Nog te voldoen" disabled></v-text-field>
                                         <template v-if="item.openAmount !== 0">
                                             <v-btn color="primary" @click="() => createIDealTransactionForPayment(item)">iDeal</v-btn>
+                                            <RequestTransferTransactionModal :payment="item"></RequestTransferTransactionModal>
                                         </template>
 
                                     </v-col>
@@ -92,9 +93,11 @@
 
 <script>
 import {PaymentService} from "@/services";
+import RequestTransferTransactionModal from "@/views/profile/RequestTransferTransactionModal";
 
 export default {
     name: "ViewPayments",
+    components: {RequestTransferTransactionModal},
     data: () => ({
         expanded: {},
         table: {

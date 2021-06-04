@@ -176,6 +176,14 @@ export default {
                             },
                             condition: () => this.isAuthenticated,
                         },
+                        {
+                            title: "Overboekingen",
+                            icon: "mdi-bank-transfer",
+                            to: {
+                                name: "PaymentListOpenTransfer"
+                            },
+                            condition: () => this.isAuthenticated,
+                        },
                     ],
                 },
                 {

@@ -7,6 +7,7 @@ export const STORE_REGISTRATIONS = 'storeRegistrations';
 export const STORE_EVENTS = 'storeEvents';
 
 export const STORE_PAYMENTS = 'storePayments';
+export const STORE_OPEN_TRANSFER_PAYMENTS = 'storeOpenTransferPayments';
 
 export const INIT_KEYCLOAK = 'initKeycloak';
 export const UPDATE_TOKEN = 'updateKeycloak';

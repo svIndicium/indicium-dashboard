@@ -20,12 +20,22 @@
             </template>
             <v-card>
                 <v-card-title>
-                    <span class="headline">Voeg cashtransactie toe</span>
+                    <span class="headline">Voeg transactie toe</span>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
                         <v-row>
                             <v-col cols="12">
+                                <v-radio-group v-model="method">
+                                    <v-radio
+                                        label="Cash"
+                                        value="cash"
+                                    ></v-radio>
+                                    <v-radio
+                                        label="Overboeking"
+                                        value="transfer"
+                                    ></v-radio>
+                                </v-radio-group>
                             </v-col>
                             <v-col cols="12">
                                 <v-text-field
@@ -71,6 +81,7 @@ export default {
     ],
     data: () => ({
         open: false,
+        method: 'cash',
         transaction: {
             amount: 0.00
         }
@@ -84,7 +95,7 @@ export default {
         },
         async addTransaction() {
             const goodAmount = this.transaction.amount;
-            await PaymentService.addCashTransactionForPaymentId(this.paymentId, parseFloat(goodAmount.replace(',', '.')))
+            await PaymentService.addTransactionForPayment(this.paymentId, this.method, parseFloat(goodAmount.replace(',', '.')))
             this.resetForm();
         }
     }
