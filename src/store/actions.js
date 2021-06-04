@@ -12,3 +12,5 @@ export const FETCH_OPEN_TRANSFER_PAYMENTS = 'fetchOpenTransferPayments';
 export const LOGOUT = 'logout';
 export const REFRESH_TOKEN = 'refreshToken';
 export const FETCH_PROFILE = 'fetchProfile';
+
+export const RESET_STATE = 'resetState';

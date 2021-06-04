@@ -1,6 +1,6 @@
 import {EventService} from "@/services";
 import {STORE_EVENTS} from "@/store/mutations";
-import {FETCH_EVENTS} from "@/store/actions";
+import {FETCH_EVENTS, RESET_STATE} from "@/store/actions";
 
 const mapEvent = (event) => ({
     id: event.id,
@@ -18,11 +18,15 @@ const stripHTMLFromString = (str = '') => {
     return str.replace(/(<([^>]+)>)/ig, '').replace(/\n|\r/g, ' ').replace('&nbsp;', ' ')
 }
 
-const state = {
-    events: [],
-    eventsLength: 0,
-    isLoading: true,
+const getDefaultState = () => {
+    return {
+        events: [],
+        eventsLength: 0,
+        isLoading: true,
+    }
 }
+
+const state = getDefaultState();
 
 const getters = {
     events(state) {
@@ -40,7 +44,10 @@ const actions = {
             .sort((eventA, eventB) => new Date(eventA.attributes.start) - new Date(eventB.attributes.start))
             .map(mapEvent);
         commit(STORE_EVENTS, events);
-    }
+    },
+    [RESET_STATE](state) {
+        Object.assign(state, getDefaultState())
+    },
 }
 
 const mutations = {

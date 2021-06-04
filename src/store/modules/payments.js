@@ -1,13 +1,18 @@
 import {PaymentService} from "@/services";
 import {STORE_OPEN_TRANSFER_PAYMENTS, STORE_PAYMENTS} from "@/store/mutations";
-import {FETCH_OPEN_TRANSFER_PAYMENTS, FETCH_PAYMENTS} from "@/store/actions";
+import {FETCH_OPEN_TRANSFER_PAYMENTS, FETCH_PAYMENTS, RESET_STATE} from "@/store/actions";
 
-const state = {
-    payments: [],
-    paymentsLength: 0,
-    isLoading: true,
-    openTransferPayments: [],
+
+const getDefaultState = () => {
+    return {
+        payments: [],
+        paymentsLength: 0,
+        isLoading: true,
+        openTransferPayments: [],
+    }
 }
+
+const state = getDefaultState();
 
 const getters = {
     payments(state) {
@@ -29,6 +34,9 @@ const actions = {
     async [FETCH_OPEN_TRANSFER_PAYMENTS]({commit}) {
         const paymentsResponse = await PaymentService.getPaymentsWithOpenTransferTransactions();
         commit(STORE_OPEN_TRANSFER_PAYMENTS, paymentsResponse.data);
+    },
+    [RESET_STATE](state) {
+        Object.assign(state, getDefaultState())
     },
 }
 

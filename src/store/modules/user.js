@@ -10,7 +10,7 @@ import {
     FETCH_PROFILE,
     FETCH_PROFILE_PAYMENT_TRANSACTION,
     LOGOUT,
-    REFRESH_TOKEN
+    REFRESH_TOKEN, RESET_STATE
 } from "@/store/actions";
 import {
     INIT_KEYCLOAK,
@@ -25,22 +25,26 @@ import {
 } from "@/store/mutations";
 import keycloak from '@/auth/keycloak';
 
-const state = {
-    isAuthenticated: false,
-    name: '',
-    roles: [],
-    userId: '',
-    idToken: '',
-    accessToken: '',
-    idTokenParsed: {},
-    resourceAccess: {},
-    member: {},
-    memberIsLoading: true,
-    studyTypeIsLoading: true,
-    mailAddressIsLoading: true,
-    paymentIsLoading: true,
-    membershipIsLoading: true,
+const getDefaultState = () => {
+    return {
+        isAuthenticated: false,
+        name: '',
+        roles: [],
+        userId: '',
+        idToken: '',
+        accessToken: '',
+        idTokenParsed: {},
+        resourceAccess: {},
+        member: {},
+        memberIsLoading: true,
+        studyTypeIsLoading: true,
+        mailAddressIsLoading: true,
+        paymentIsLoading: true,
+        membershipIsLoading: true,
+    }
 }
+
+const state = getDefaultState();
 
 const getters = {
     isAuthenticated(state) {
@@ -56,9 +60,10 @@ const getters = {
 }
 
 const actions = {
-    async [LOGOUT]({commit}) {
+    async [LOGOUT]({commit, dispatch}) {
         commit(USER_LOGOUT);
         await keycloak.logout();
+        dispatch(RESET_STATE)
     },
     [REFRESH_TOKEN]({commit}, keycloak) {
         commit(UPDATE_TOKEN, keycloak);
@@ -74,6 +79,9 @@ const actions = {
         commit(STORE_PROFILE_PAYMENTS, paymentResponse);
         const membershipResponse = await MembershipService.getMembershipsByMemberId(state.userId);
         commit(STORE_PROFILE_MEMBERSHIPS, membershipResponse);
+    },
+    [RESET_STATE](state) {
+        Object.assign(state, getDefaultState())
     },
 }
 

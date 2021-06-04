@@ -1,12 +1,16 @@
 import {RegistrationService} from "@/services";
 import {STORE_REGISTRATIONS} from "@/store/mutations";
-import {FETCH_REGISTRATIONS} from "@/store/actions";
+import {FETCH_REGISTRATIONS, RESET_STATE} from "@/store/actions";
 
-const state = {
-    registrations: [],
-    registrationsLength: 0,
-    isLoading: true,
+const getDefaultState = () => {
+    return {
+        registrations: [],
+        registrationsLength: 0,
+        isLoading: true,
+    }
 }
+
+const state = getDefaultState();
 
 const getters = {
     getRegistrations(state) {
@@ -24,7 +28,10 @@ const actions = {
     async [FETCH_REGISTRATIONS]({commit}) {
         const registrationsResponse = await RegistrationService.getRegistrations();
         commit(STORE_REGISTRATIONS, registrationsResponse.data);
-    }
+    },
+    [RESET_STATE](state) {
+        Object.assign(state, getDefaultState())
+    },
 }
 
 const mutations = {

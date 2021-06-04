@@ -1,12 +1,16 @@
 import {MemberService} from "@/services";
 import {STORE_MEMBERS} from "@/store/mutations";
-import {FETCH_MEMBERS} from "@/store/actions";
+import {FETCH_MEMBERS, RESET_STATE} from "@/store/actions";
 
-const state = {
-    members: [],
-    membersLength: 0,
-    isLoading: true,
+const getDefaultState = () => {
+    return {
+        members: [],
+        membersLength: 0,
+        isLoading: true,
+    }
 }
+
+const state = getDefaultState();
 
 const getters = {
     members(state) {
@@ -21,7 +25,10 @@ const actions = {
     async [FETCH_MEMBERS]({commit}) {
         const membersResponse = await MemberService.getMembers();
         commit(STORE_MEMBERS, membersResponse.data);
-    }
+    },
+    [RESET_STATE](state) {
+        Object.assign(state, getDefaultState())
+    },
 }
 
 const mutations = {
