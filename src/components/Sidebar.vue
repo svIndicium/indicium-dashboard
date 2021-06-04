@@ -1,53 +1,92 @@
 <template>
-    <div :class="['sidebar', collapsed ? 'collapsed' : '']">
-        <div class="logo">
-            <Logo fill-color="white" :subname="false" :name="!collapsed"/>
-        </div>
+    <v-navigation-drawer
+        app
+        clipped
+        v-model="open"
+    >
+        <template v-slot:prepend v-if="isAuthenticated">
+            <v-list-item two-line :to="{name: 'ProfileViewInfo'}">
+                <v-list-item-avatar>
+                    <v-icon>mdi-account</v-icon>
+                </v-list-item-avatar>
 
-        <div class="menu-items">
-            <template v-if="userState.isAuthenticated">
-                <SidebarItem :title="userState.name" icon="user" route-name="profile" :collapsed="collapsed"></SidebarItem>
-                <SidebarItem title="Leden" route-name="memberDashboard" icon="users" v-if="hasPermission('ledenadministratie-api', 'manage-members')" :collapsed="collapsed"></SidebarItem>
-                <SidebarItem title="Activiteiten" route-name="eventDashboard" icon="calendar" :collapsed="collapsed"></SidebarItem>
-            </template>
-            <template v-else>
-                <SidebarItem title="Login" :callback="login" icon="login" :collapsed="collapsed"></SidebarItem>
-            </template>
-        </div>
+                <v-list-item-content>
+                    <v-list-item-title>{{ userState }}</v-list-item-title>
+                    <v-list-item-subtitle>Profiel</v-list-item-subtitle>
+                </v-list-item-content>
+            </v-list-item>
+        </template>
 
-        <div class="bottom-bar">
-            <SidebarItem title="Uitloggen" icon="logout" :callback="logout" :collapsed="collapsed" v-if="userState.isAuthenticated"></SidebarItem>
-            <SidebarItem title="Instellingen" icon="settings" route-name="instellingenDashboard" :collapsed="collapsed" v-if="userState.isAuthenticated"></SidebarItem>
-            <SidebarItem :title="collapsed ? 'Uitvouwen' : 'Invouwen'" :icon="collapsed ? 'chevron-right' : 'chevron-left'" :callback="toggleCollapse" :collapsed="collapsed"></SidebarItem>
-        </div>
-    </div>
+        <v-divider v-if="isAuthenticated"></v-divider>
+
+        <v-list dense>
+            <template
+                v-for="item in allowedItems">
+                <v-list-group
+                    :key="item.title"
+                    no-action
+                    v-if="item.children"
+                >
+                    <template v-slot:activator>
+                        <v-list-item-content>
+                            <v-list-item-title v-text="item.title"></v-list-item-title>
+                        </v-list-item-content>
+                    </template>
+
+                    <v-list-item
+                        v-for="(subitem, i) in item.children"
+                        :key="i"
+                        link
+                        :to="subitem.to"
+                    >
+                        <v-list-item-title v-text="subitem.title"></v-list-item-title>
+
+                        <v-list-item-icon>
+                            <v-icon v-text="subitem.icon"></v-icon>
+                        </v-list-item-icon>
+                    </v-list-item>
+                </v-list-group>
+                <v-list-item
+                    :key="item.title"
+                    @click="item.action"
+                    :to="item.to"
+                    v-else
+                >
+                    <v-list-item-icon>
+                        <v-icon>{{ item.icon }}</v-icon>
+                    </v-list-item-icon>
+
+                    <v-list-item-content>
+                        <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+            </template>
+        </v-list>
+    </v-navigation-drawer>
 </template>
 
 <script>
-import SidebarItem from './SidebarItem';
-import Logo from './Logo';
 import {LOGOUT} from "@/store/actions";
 
 export default {
     components: {
-        Logo,
-        SidebarItem
     },
     data() {
-       return {
-           collapsed: JSON.parse(sessionStorage.getItem('sidebar-collapsed')) || false
-       }
+        return {
+            open: null,
+
+        }
     },
     mounted() {
+        this.$eventBus.$on('toggle-nav', this.toggleCollapse);
     },
     methods: {
         hasPermission(resource, role) {
             return this.$keycloak.hasResourceRole(role, resource);
         },
         toggleCollapse() {
-            this.$set(this, 'collapsed', !this.collapsed);
-            sessionStorage.setItem('sidebar-collapsed', this.collapsed);
-            this.$eventBus.$emit('nav-toggle', this.collapsed);
+            this.$set(this, 'open', !this.open);
+            sessionStorage.setItem('sidebar-collapsed', this.open);
         },
         logout() {
             this.$store.dispatch(LOGOUT);
@@ -57,8 +96,111 @@ export default {
         },
     },
     computed: {
+        allowedItems() {
+            const items = [
+                {
+                    title: "Log in",
+                    icon: "mdi-login",
+                    action: this.login,
+                    condition: () => !this.isAuthenticated
+                },
+                {
+                    title: "Home",
+                    icon: "mdi-home",
+                    to: {
+                        name: 'Home'
+                    },
+                    condition: () => this.isAuthenticated
+                },
+                {
+                    title: "Leden",
+                    condition: () => this.isAuthenticated,
+                    children: [
+                        {
+                            title: "Ledenoverzicht",
+                            icon: "mdi-account-group",
+                            to: {
+                                name: "MemberDashboard"
+                            },
+                            condition: () => this.isAuthenticated,
+                        },
+                        {
+                            title: "Aanmeldingen",
+                            icon: "mdi-account-multiple-plus",
+                            to: {
+                                name: "RegistrationDashboard"
+                            },
+                            condition: () => this.isAuthenticated,
+                        },
+                        {
+                            title: "Studierichtingen",
+                            icon: "mdi-sign-direction",
+                            to: {
+                                name: "StudyTypeDashboard"
+                            },
+                            condition: () => this.isAuthenticated,
+                        },
+                    ],
+                },
+                {
+                    title: "Activiteiten",
+                    condition: () => this.isAuthenticated,
+                    children: [
+                        {
+                            title: "Overzicht",
+                            icon: "mdi-calendar",
+                            to: {
+                                name: "EventDashboard"
+                            },
+                            condition: () => this.isAuthenticated,
+                        },
+                        {
+                            title: "Agenda koppeling",
+                            icon: "mdi-connection",
+                            to: {
+                                name: "AgendaConnection"
+                            },
+                            condition: () => this.isAuthenticated,
+                        },
+                    ],
+                },
+                {
+                    title: "Betalingen",
+                    condition: () => this.isAuthenticated,
+                    children: [
+                        {
+                            title: "Overzicht",
+                            icon: "mdi-currency-eur",
+                            to: {
+                                name: "PaymentDashboard"
+                            },
+                            condition: () => this.isAuthenticated,
+                        },
+                        {
+                            title: "Overboekingen",
+                            icon: "mdi-bank-transfer",
+                            to: {
+                                name: "PaymentListOpenTransfer"
+                            },
+                            condition: () => this.isAuthenticated,
+                        },
+                    ],
+                },
+                {
+                    title: "Uitloggen",
+                    icon: "mdi-logout",
+                    action: this.logout,
+                    condition: () => this.isAuthenticated
+                },
+            ]
+            return items
+                .filter((item) => item.condition && item.condition() !== false)
+        },
         userState() {
-            return this.$store.state.user;
+            return this.$store.getters.name;
+        },
+        isAuthenticated() {
+            return this.$store.getters.isAuthenticated;
         }
     }
 }

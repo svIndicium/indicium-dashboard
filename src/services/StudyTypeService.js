@@ -9,7 +9,13 @@ class StudyTypeService {
     }
 
     async getStudyTypeById(studyTypeId) {
-        return await this.api.get(`/studytypes/${studyTypeId}`);
+        const response = await this.api.get(`/studytypes/${studyTypeId}`);
+        return response.data;
+    }
+
+    async createStudyType(studyType) {
+        const response = await this.api.post(`/studytypes`, studyType);
+        return response.data;
     }
 }
 export default new StudyTypeService();

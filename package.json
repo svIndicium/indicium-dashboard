@@ -14,11 +14,9 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@auth0/auth0-spa-js": "^1.11.0",
     "@fullcalendar/core": "^5.5.0",
     "@fullcalendar/daygrid": "^5.5.0",
     "@fullcalendar/vue": "^5.5.0",
-    "@svindicium/indicium-components": "^0.1.2",
     "axios": "^0.19.2",
     "axios-middleware": "^0.3.1",
     "core-js": "^3.6.5",
@@ -28,6 +26,7 @@
     "vue-ctk-date-time-picker": "^2.5.0",
     "vue-router": "^3.4.1",
     "vuejs-datepicker": "^1.6.2",
+    "vuetify": "^2.4.9",
     "vuex": "^3.6.2"
   },
   "devDependencies": {
@@ -40,9 +39,10 @@
     "eslint": "^7.6.0",
     "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.26.10",
-    "sass-loader": "^9.0.3",
+    "sass-loader": "^10.0.0",
     "vue-cli-plugin-axios": "^0.0.4",
-    "vue-cli-plugin-vuetify": "^2.0.7",
-    "vue-template-compiler": "^2.6.11"
+    "vue-cli-plugin-vuetify": "~2.3.1",
+    "vue-template-compiler": "^2.6.11",
+    "vuetify-loader": "^1.7.0"
   }
 }

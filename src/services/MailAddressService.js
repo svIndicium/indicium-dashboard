@@ -5,7 +5,8 @@ class MailAddressService {
     api = apiInstance;
 
     async getMailAddressesByMemberId(memberId) {
-        return await this.api.get(`/members/${memberId}/mailaddresses`);
+        const response = await this.api.get(`/members/${memberId}/mailaddresses`);
+        return response.data;
     }
 }
 export default new MailAddressService();

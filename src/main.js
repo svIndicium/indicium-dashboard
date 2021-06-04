@@ -10,6 +10,7 @@ import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import {REFRESH_TOKEN} from "@/store/actions";
 import {INIT_KEYCLOAK} from "@/store/mutations";
 import keycloak from "@/auth/keycloak";
+import vuetify from "@/plugins/vuetify";
 
 Vue.config.productionTip = false;
 const devEnv = process.env.VUE_APP_MODE !== 'live';
@@ -47,5 +48,6 @@ keycloak.init(initialOptions).then((auth) => {
 new Vue({
     store,
     router,
+    vuetify,
     render: h => h(App),
 }).$mount('#app');

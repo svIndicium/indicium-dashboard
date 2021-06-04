@@ -10,7 +10,22 @@ class EventService {
     }
 
     async getEventById(eventId) {
-        return await axios.get(`https://old.indicium.hu/json/events/${eventId}`);
+        const eventResponse = await axios.get(`https://old.indicium.hu/json/events/${eventId}`);
+        const res = eventResponse.data.data;
+        return {
+            id: res.id,
+            title: res.attributes.title,
+            url: res.attributes.inschrijflink,
+            description: this.stripHTMLFromString(res.attributes.contentblocks[0].content),
+            image: res.attributes.contentblocks.length > 1 ? res.attributes.contentblocks[1].image.url : null,
+            categories: res.attributes.categories,
+            start: new Date(res.attributes.start),
+            end: new Date(res.attributes.end)
+        };
+    }
+
+    stripHTMLFromString(str = '') {
+        return str.replace(/(<([^>]+)>)/ig, '').replace(/\n|\r/g, ' ').replace('&nbsp;', ' ')
     }
 }
 export default new EventService();
