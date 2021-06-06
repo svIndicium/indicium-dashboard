@@ -6,7 +6,6 @@ import store from './store';
 import './plugins/busje';
 import App from './App.vue';
 import router from './router';
-import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import {REFRESH_TOKEN} from "@/store/actions";
 import {INIT_KEYCLOAK} from "@/store/mutations";
 import keycloak from "@/auth/keycloak";
@@ -18,8 +17,6 @@ const devEnv = process.env.VUE_APP_MODE !== 'live';
 Vue.use(api);
 Vue.use(keycloakPlugin);
 Vue.use(utils);
-
-Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 
 function getKey(key) {
     const value = localStorage.getItem(key);

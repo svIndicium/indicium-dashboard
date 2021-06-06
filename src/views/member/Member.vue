@@ -114,10 +114,4 @@ import {FETCH_MEMBERS, FETCH_STUDY_TYPES} from "@/store/actions";
 </script>
 
 <style lang="scss" scoped>
-    @import "src/assets/scss/table";
-    @import "src/assets/scss/error";
-    .table-container {
-        @extend .table-container;
-        grid-template-columns: 1fr 1fr 64px 32px;
-    }
 </style>

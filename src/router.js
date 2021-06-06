@@ -9,11 +9,9 @@ import SettingsPage from './views/settings/SettingsPage';
 import ViewMember from './views/member/ViewMember';
 import Events from './views/events/Events';
 import AgendaConnection from './views/events/AgendaConnection';
-import EventDashboard from './views/events/EventDashboard';
 import ViewEvent from './views/events/ViewEvent';
 import {isAuthenticated} from "@/auth/authGuard";
 import Payment from "@/views/payment/Payment";
-import ListPayment from "@/views/payment/ListPayment";
 import ViewPayment from "@/views/payment/ViewPayment";
 import ViewMemberInfo from "@/views/member/ViewMemberInfo";
 import ViewMemberMailAddresses from "@/views/member/ViewMemberMailAddresses";
@@ -507,48 +505,6 @@ export default new Router({
                     ],
                 },
             },
-
-            {
-                path: '/instellingen',
-                component: Settings,
-                beforeEnter: isAuthenticated,
-                children: [
-                    {
-                        path: '',
-                        name: 'instellingenDashboard',
-                        component: SettingsDashboard,
-                        meta: {
-                            breadcrumb: [
-                                {
-                                    name: 'Dashboard',
-                                    routeName: 'dashboard',
-                                },
-                                {
-                                    name: 'Instellingen',
-                                },
-                            ],
-                        },
-                    },
-                    {
-                        path: ':app',
-                        name: 'appInstellingen',
-                        component: SettingsPage,
-                        beforeEnter: isAuthenticated,
-                        meta: {
-                            breadcrumb: [
-                                {
-                                    name: 'Dashboard',
-                                    routeName: 'dashboard',
-                                },
-                                {
-                                    name: 'Instellingen',
-                                    routeName: 'instellingenDashboard'
-                                },
-                            ],
-                        },
-                    },
-                ]
-            }
         ],
     }
 );

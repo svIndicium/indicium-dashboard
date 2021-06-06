@@ -75,12 +75,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-@import "src/assets/scss/table";
-@import "src/assets/scss/error";
-.table-container {
-    @extend .table-container;
-    max-width: 100%;
-    grid-template-columns: 1fr 0.5fr 1fr 1fr 1fr;
-}
 </style>
