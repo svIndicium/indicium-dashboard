@@ -5,7 +5,7 @@ on:
     # Publish `dev` as Docker `latest` image.
     branches:
       - dev
-      - payments
+      - master
 
     # Publish `v1.2.3` tags as releases.
     tags:
@@ -73,6 +73,7 @@ jobs:
 
           # Use Docker `latest` tag convention
           [ "$VERSION" == "dev" ] && VERSION=latest
+          [ "$VERSION" == "master" ] && VERSION=stable
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
