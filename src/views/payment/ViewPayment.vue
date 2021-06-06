@@ -105,6 +105,9 @@ export default {
         await this.getPayment();
         await this.getTransactions();
         await this.getMember();
+        this.$eventBus.$on('updateTransactions', () => {
+            this.getTransactions().then();
+        });
     },
     methods: {
         async getPayment() {

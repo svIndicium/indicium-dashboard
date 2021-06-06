@@ -118,10 +118,11 @@ export default {
         async addTransaction() {
             const goodAmount = this.updatedTransaction.amount;
             await PaymentService.confirmTransferTransaction(this.payment.id, this.transaction.id, {
-                paid: parseFloat(goodAmount.replace(',', '.')),
+                paid: parseFloat(goodAmount.toString().replace(',', '.')),
                 description: this.updatedTransaction.description,
                 transferredAt: this.updatedTransaction.transferredAt
             });
+            this.$eventBus.$emit('updateTransactions');
             this.resetForm();
         },
         autoFillForm() {
