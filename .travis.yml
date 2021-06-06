@@ -1,6 +1,6 @@
 sudo: required
 
-dist: trusty
+dist: xenial
 
 language: node_js
 
@@ -39,7 +39,7 @@ install:
 script:
   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then sonar-scanner; fi'
   - echo "Skipping tests"
-  - export MODE=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "live"; else echo "dev"; fi`
+  - export MODE=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "production"; else echo "testing"; fi`
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "stable"; elif [ "$TRAVIS_BRANCH" == "dev" ]; then echo "latest"; else echo $TRAVIS_BRANCH | tr "/" -; fi`
   - docker build --build-arg MODE -t docker.pkg.github.com/svindicium/indicium-dashboard/dashboard:$TAG .
 

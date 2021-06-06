@@ -1,58 +1,43 @@
 <template>
-    <div>
-        <h2>Koppelen met agenda</h2>
-        <p>Wil je alle activiteiten van Indicium in je agenda zodat je niks vergeet? Dat kan nu automatisch door een koppeling met je agenda!</p>
-        <div v-if="loading">
-            <Loading />
-        </div>
-        <div>
-            <div v-for="(studyType, idx) in studyTypes" :key="idx">
-                <CheckBox :label="studyType.name" v-model="studyType.selected">{{studyType.name}}</CheckBox>
-            </div>
-            <Button
-                size="l"
-                :center="true"
-                url=""
-                @click.native="copyFeedLinkToClipboard"
-            >
-                Kopieër naar klembord
-            </Button>
-        </div>
-    </div>
+    <v-container>
+        <v-card>
+            <v-card-title>
+                Koppelen met agenda
+            </v-card-title>
+            <v-card-text>
+                Wil je alle activiteiten van Indicium in je agenda zodat je niks vergeet? Dat kan nu automatisch door een koppeling met je agenda!
+                <Loading v-if="studyTypeState.isLoading"></Loading>
+                <v-checkbox v-else v-for="(studyType, idx) in studyTypeState.studyTypes" :label="studyType.name" :key="idx" v-model="studyType.selected" value="studyType.shortName" dense></v-checkbox>
+            </v-card-text>
+            <v-card-actions>
+                <v-btn
+                    plain
+                    color="primary"
+                    @click="copyFeedLinkToClipboard"
+                >
+                    Kopieër link naar klembord
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-container>
 </template>
 
 <script>
     import Loading from '../../components/Loading';
-    import CheckBox from '../../components/CheckBox';
-    import Button from '../../components/button';
+    import {FETCH_STUDY_TYPES} from "@/store/actions";
     export default {
         name: 'AgendaConnection',
         components: {
-            CheckBox,
             Loading,
-            Button,
         },
         data: () => ({
             error: null,
             loading: false,
-            studyTypes: [],
         }),
-        async created() {
-            await this.getStudyTypes();
+        async mounted() {
+            await this.$store.dispatch(FETCH_STUDY_TYPES);
         },
         methods: {
-            async getStudyTypes() {
-                this.error = null;
-                this.loading = true;
-                try {
-                    const { data } = await this.$api.get('/studytypes');
-                    data.map((studyType) => studyType.selected = true)
-                    this.studyTypes = data;
-                } catch (e) {
-                    this.error = e;
-                }
-                this.loading = false;
-            },
             copyFeedLinkToClipboard() {
                 this.copyToClipboard(this.iCalLink)
                     .then(() => {});
@@ -65,8 +50,11 @@
             }
         },
         computed: {
+            studyTypeState() {
+                return this.$store.state.studyTypes;
+            },
             iCalLink() {
-                const selected = this.studyTypes.filter((studyType) => studyType.selected).map((studyType) => studyType.name);
+                const selected = this.studyTypes.filter((studyType) => studyType.selected).map((studyType) => studyType.shortName);
                 const url = 'https://ics.indicium.hu/v1/ics'
                 const categories = selected.join(",")
                 if (selected.length === this.studyTypes.length) {

@@ -1,21 +1,17 @@
 <template>
-    <div class="center">
-        <div v-if="!$keycloak.ready">
-            <Loading></Loading>
-        </div>
-
-        <div v-else>
-            <p>Officall Indicium society dashboard for all things!! It's a GODDD.</p>
-        </div>
-    </div>
+    <v-container>
+        <v-card>
+            <v-card-title>
+                Dashboard
+            </v-card-title>
+        </v-card>
+    </v-container>
 </template>
 
 <script>
-    import Loading from '@svindicium/indicium-components';
 
     export default {
         components: {
-            Loading,
         },
         methods: {
             login() {

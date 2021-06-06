@@ -3,7 +3,8 @@ FROM node:alpine AS base
 # Copy project file
 COPY . .
 # Build project
-ARG MODE=live
+ARG MODE=production
+RUN npm install --legacy-peer-deps
 RUN npm run build-$MODE
 
 # ---- Prod ----
