@@ -17,6 +17,11 @@
                             {{ getStatusText(item.status) }}
                         </v-chip>
                     </template>
+                    <template v-slot:[`item.actions`]="{ item }">
+                        <v-btn @click="() => viewPayment(item.id)" icon>
+                            <v-icon>mdi-eye</v-icon>
+                        </v-btn>
+                    </template>
                 </v-data-table>
             </v-card>
         </v-col>
@@ -48,6 +53,10 @@ export default {
                     text: 'Status',
                     value: 'status'
                 },
+                {
+                    text: 'Acties',
+                    value: 'actions'
+                },
             ]
         }
     }),
@@ -67,6 +76,9 @@ export default {
                 PAID: 'green',
                 EXPIRED: 'red'
             }[status];
+        },
+        async viewPayment(paymentId) {
+            await this.$router.push({name: 'PaymentView', params: {paymentId}});
         },
     }
 }
