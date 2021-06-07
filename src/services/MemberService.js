@@ -12,5 +12,10 @@ class MemberService {
         const memberResponse = await this.api.get(`/members/${memberId}`);
         return memberResponse.data;
     }
+
+    async getOpenTransferPaymentsForMemberId(memberId) {
+        const memberResponse = await this.api.get(`/members/${memberId}/payments/transfer`);
+        return memberResponse.data;
+    }
 }
 export default new MemberService();

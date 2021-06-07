@@ -12,6 +12,9 @@
                 <v-card>
                     <v-card-title>
                         Betalingen
+                        <v-spacer>
+                        </v-spacer>
+                        <UploadTransferCsvModal></UploadTransferCsvModal>
                     </v-card-title>
                     <v-data-table :headers="table.headers" :items="payments">
                         <template v-slot:[`item.createdAt`]="{ item }">
@@ -40,10 +43,11 @@
 <script>
 import Breadcrumbs from "@/components/Breadcrumbs";
 import {FETCH_OPEN_TRANSFER_PAYMENTS} from "@/store/actions";
+import UploadTransferCsvModal from "@/views/payment/UploadTransferCsvModal";
 
 export default {
     name: "ViewTransferPayments",
-    components: { Breadcrumbs },
+    components: {UploadTransferCsvModal, Breadcrumbs },
     data: () => ({
         table: {
             headers: [
