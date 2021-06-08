@@ -18,6 +18,9 @@ const getters = {
     },
     membersLength(state) {
         return state.membersLength;
+    },
+    getMemberById: (state) => (memberId) => {
+        return state.members.find(member => member.id === memberId);
     }
 }
 

@@ -42,6 +42,7 @@
 
                 <v-stepper-items>
                     <v-stepper-content step="1">
+                        Om betaalde overboekingen te importeren kan je hier een CSV uploaden die je bij de Rabobank kan exporteren.
                         <v-file-input
                             @change="filesChanged"
                         ></v-file-input>
@@ -91,13 +92,18 @@
                             <template v-slot:[`item.transaction`]="{ item }">
                                 <v-autocomplete
                                     v-model="item.transaction"
-                                    :filter="customFilter"
+                                    :filter="transactionFilter"
                                     item-text="description"
                                     item-value="id"
                                     :items="openTransactions[item.user]"
                                     v-if="!!item.user && !!openTransactions[item.user]"
                                 >
                                 </v-autocomplete>
+                            </template>
+                            <template v-slot:[`item.state`]="{ item }">
+                                <v-icon v-if="!item.user && !item.transaction" color="red">
+                                    mdi-alert
+                                </v-icon>
                             </template>
 
                         </v-data-table>
@@ -145,7 +151,8 @@
                                         v-for="error in errors"
                                         :key="error.id"
                                     >
-                                        <td>{{ error.transaction.user }}</td>
+                                        <td v-if="error.transaction.user">{{ $utils.getFullName(getMember(error.transaction.user).memberDetails.name) }}</td>
+                                        <td v-else>-</td>
                                         <td>{{ error.transaction.description }}</td>
                                         <td>{{ error.e }}</td>
                                     </tr>
@@ -153,8 +160,6 @@
                                 </template>
                             </v-simple-table>
                         </template>
-
-                        {{errors}}
 
                         <v-btn
                             v-if="state !== 'finished'"
@@ -232,6 +237,10 @@ export default {
                     text: 'Betaling',
                     value: 'transaction'
                 },
+                {
+                    text: 'Status',
+                    value: 'state'
+                },
             ]
         },
         openTransactions: {},
@@ -257,6 +266,12 @@ export default {
 
             return textOne.indexOf(searchText) > -1
         },
+        transactionFilter (item, queryText, itemText) {
+            const textOne = item.description.toLowerCase()
+            const searchText = queryText.toLowerCase()
+
+            return textOne.indexOf(searchText) > -1
+        },
         async getTransactionsForMember(memberId) {
             this.openTransactions[memberId] = await MemberService.getOpenTransferPaymentsForMemberId(memberId);
         },
@@ -271,6 +286,12 @@ export default {
             for (let transaction of this.selected) {
                 this.progressCount++;
                 try {
+                    if (!transaction.user) {
+                        throw new Error("Geen lid geselecteerd");
+                    }
+                    if (!transaction.transaction) {
+                        throw new Error("Geen betaling geselecteerd");
+                    }
                     await PaymentService.confirmTransferTransaction(this.getPayment(transaction.user, transaction.transaction), transaction.transaction, {
                         paid: parseFloat(transaction.amount),
                         description: transaction.description,
@@ -281,6 +302,9 @@ export default {
                 }
             }
             this.state = "finished";
+        },
+        getMember(memberId) {
+            return this.$store.getters.getMemberById(memberId);
         }
     },
     computed: {
