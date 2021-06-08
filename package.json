@@ -20,7 +20,7 @@
     "keycloak-js": "^12.0.1",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",
-    "vuetify": "^2.4.9",
+    "vuetify": "^2.5.3",
     "vuex": "^3.6.2"
   },
   "devDependencies": {
