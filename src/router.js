@@ -1,28 +1,31 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
-import ListMember from './views/member/Member';
 import Profile from './views/profile/Profile';
-import ViewMember from './views/member/ViewMember';
 import Events from './views/events/Events';
 import AgendaConnection from './views/events/AgendaConnection';
 import ViewEvent from './views/events/ViewEvent';
 import {isAuthenticated} from "@/auth/authGuard";
-import Payment from "@/views/payment/Payment";
-import ViewPayment from "@/views/payment/ViewPayment";
-import ViewMemberInfo from "@/views/member/ViewMemberInfo";
-import ViewMemberMailAddresses from "@/views/member/ViewMemberMailAddresses";
-import ViewMemberMembership from "@/views/member/ViewMemberMembership";
-import ViewMemberPayments from "@/views/member/ViewMemberPayments";
 import ViewProfilePayments from "@/views/profile/ViewProfilePayments";
 import ViewProfileInfo from "@/views/profile/ViewProfileInfo";
 import ViewProfileMailaddresses from "@/views/profile/ViewProfileMailaddresses";
 import ViewProfileMemberships from "@/views/profile/ViewProfileMemberships";
 import StudyType from "@/views/studyTypes/StudyType";
-import Registration from "@/views/registrations/Registration";
-import ViewRegistration from "@/views/registrations/ViewRegistration";
-import ViewRegistrationInfo from "@/views/registrations/ViewRegistrationInfo";
-import ListTransferPayments from "@/views/payment/ListTransferPayments";
+
+const Registration = () => import(/* webpackChunkName: "registration" */ '@/views/registrations/Registration');
+const ViewRegistration = () => import(/* webpackChunkName: "registration" */ '@/views/registrations/ViewRegistration');
+const ViewRegistrationInfo = () => import(/* webpackChunkName: "registration" */ '@/views/registrations/ViewRegistrationInfo');
+
+const Payment = () => import(/* webpackChunkName: "payment" */ "@/views/payment/Payment");
+const ViewPayment = () => import(/* webpackChunkName: "payment" */ "@/views/payment/ViewPayment");
+const ListTransferPayments = () => import(/* webpackChunkName: "payment" */ "@/views/payment/ListTransferPayments");
+
+const Member = () => import(/* webpackChunkName: "member" */ './views/member/Member');
+const ViewMember = () => import(/* webpackChunkName: "member" */ './views/member/ViewMember');
+const ViewMemberInfo = () => import(/* webpackChunkName: "member" */ './views/member/ViewMemberInfo');
+const ViewMemberMailAddresses = () => import(/* webpackChunkName: "member" */ './views/member/ViewMemberMailAddresses');
+const ViewMemberMembership = () => import(/* webpackChunkName: "member" */ './views/member/ViewMemberMembership');
+const ViewMemberPayments = () => import(/* webpackChunkName: "member" */ './views/member/ViewMemberPayments');
 
 Vue.use(Router);
 
@@ -143,7 +146,7 @@ export default new Router({
             {
                 path: '/leden',
                 name: 'MemberDashboard',
-                component: ListMember,
+                component: Member,
                 beforeEnter: isAuthenticated,
                 meta: {
                     breadcrumb: [
