@@ -14,3 +14,6 @@ export const REFRESH_TOKEN = 'refreshToken';
 export const FETCH_PROFILE = 'fetchProfile';
 
 export const RESET_STATE = 'resetState';
+
+export const TOGGLE_DARK_MODE = 'toggleDarkMode';
+export const LOAD_THEME_SETTINGS = 'loadThemeSettings';

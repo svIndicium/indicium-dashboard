@@ -23,6 +23,8 @@ import Registration from "@/views/registrations/Registration";
 import ViewRegistration from "@/views/registrations/ViewRegistration";
 import ViewRegistrationInfo from "@/views/registrations/ViewRegistrationInfo";
 import ListTransferPayments from "@/views/payment/ListTransferPayments";
+import Settings from "@/views/settings/Settings";
+import ThemeSettings from "@/views/settings/ThemeSettings";
 
 Vue.use(Router);
 
@@ -501,6 +503,48 @@ export default new Router({
                         },
                     ],
                 },
+            },
+
+
+
+            {
+                path: '/instellingen',
+                component: Settings,
+                name: 'SettingsDashboard',
+                meta: {
+                    breadcrumb: [
+                        {
+                            text: 'Dashboard',
+                            to: {
+                                name: 'Home'
+                            },
+                        },
+                        {
+                            text: 'Instellingen'
+                        },
+                    ],
+                },
+                children: [
+                    {
+                        path: 'thema',
+                        name: 'ThemeSettings',
+                        component: ThemeSettings,
+                        beforeEnter: isAuthenticated,
+                        meta: {
+                            breadcrumb: [
+                                {
+                                    text: 'Dashboard',
+                                    to: {
+                                        name: 'Home'
+                                    },
+                                },
+                                {
+                                    text: 'Instellingen',
+                                },
+                            ],
+                        },
+                    },
+                ]
             },
         ],
     }

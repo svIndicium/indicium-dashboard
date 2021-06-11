@@ -10,7 +10,7 @@
             </v-toolbar-title>
         </v-app-bar>
         <v-main
-            class="grey lighten-4"
+            class="main"
         >
             <router-view></router-view>
         </v-main>
@@ -34,4 +34,7 @@ export default {
 </script>
 
 <style lang="scss">
+.main {
+    background-color: var(--v-background-base);
+}
 </style>

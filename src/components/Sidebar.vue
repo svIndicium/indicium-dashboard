@@ -187,6 +187,14 @@ export default {
                     ],
                 },
                 {
+                    title: "Instellingen",
+                    icon: "mdi-cog",
+                    to: {
+                        name: 'SettingsDashboard'
+                    },
+                    condition: () => this.isAuthenticated,
+                },
+                {
                     title: "Uitloggen",
                     icon: "mdi-logout",
                     action: this.logout,
