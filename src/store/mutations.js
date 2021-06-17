@@ -19,3 +19,5 @@ export const STORE_PROFILE_PAYMENTS = 'storeProfilePayments';
 export const STORE_PROFILE_MEMBERSHIPS = 'storeProfileMemberships';
 
 export const STORE_THEME_SETTINGS = 'storeThemeSettings';
+
+export const STORE_SETTING = 'storeSetting';

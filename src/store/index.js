@@ -7,6 +7,7 @@ import registrations from "@/store/modules/registrations";
 import events from "@/store/modules/events";
 import payments from "@/store/modules/payments";
 import app from "@/store/modules/app";
+import settings from "@/store/modules/settings";
 
 Vue.use(Vuex);
 
@@ -19,5 +20,6 @@ export default new Vuex.Store({
         user,
         payments,
         app,
+        settings,
     }
 })

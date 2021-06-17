@@ -63,6 +63,13 @@ export default {
                 to: {
                     name: 'ThemeSettings'
                 }
+            },
+            {
+                icon: 'mdi-currency-eur',
+                title: 'Betalingen',
+                to: {
+                    name: 'PaymentSettings'
+                }
             }
         ]
     }),

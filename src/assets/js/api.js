@@ -6,8 +6,8 @@ import keycloak from "@/auth/keycloak";
 
 const baseURL = {
     production: 'https://api.indicium.hu/api/v1',
-    testing: 'https://dev.api.indicium.hu/api/v1',
-    development: 'https://api.indicium.hu/api/v1'
+    testing: 'http://localhost/api/v1',
+    development: 'https://dev.api.indicium.hu/api/v1'
 }[process.env.NODE_ENV || 'development']
 
 const apiInstance = axios.create({ baseURL });
